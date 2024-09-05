@@ -11,7 +11,7 @@ A **FitTech** é uma aplicação mobile desenvolvida em **Kotlin** voltada para 
 ## Instalação
 1. Clone o repositório:
    ```bash
-   git clone https://github.com/seu-usuario/fittech-mobile.git
+   git clone https://github.com/SPECTRUM-SYNC/client-kt
    ```
 2. Navegue até o diretório do projeto:
    ```bash
