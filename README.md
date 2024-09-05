@@ -30,5 +30,5 @@ A **FitTech** é uma aplicação mobile desenvolvida em **Kotlin** voltada para 
 ## Contribuição
 Contribuições são bem-vindas! Se você encontrou um bug, tem uma ideia para um novo recurso ou quer melhorar a documentação, sinta-se à vontade para abrir uma issue ou enviar um pull request.
 
-Licença
+## Licença
 Este projeto está licenciado sob a MIT [MIT License](https://opensource.org/licenses/MIT).
