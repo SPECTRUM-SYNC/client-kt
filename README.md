@@ -15,7 +15,7 @@ A **FitTech** é uma aplicação mobile desenvolvida em **Kotlin** voltada para 
    ```
 2. Navegue até o diretório do projeto:
    ```bash
-   cd fittech-mobile
+   cd fittech
    ```
 3. Abra o projeto no Android Studio.
 4. Compile e execute o aplicativo em um dispositivo ou emulador Android.
