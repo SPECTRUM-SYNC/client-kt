@@ -9,12 +9,16 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -30,6 +34,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -40,10 +45,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import coil.compose.rememberAsyncImagePainter
 import spectrum.fittech.ui.theme.FittechTheme
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import coil.compose.rememberImagePainter
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
 
 class Home : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,7 +86,8 @@ fun saudacaoAtual(): String {
 @Composable
 fun HomeRun(name: String, modifier: Modifier = Modifier, navController: NavHostController) {
     Scaffold(
-        bottomBar = { BottomNavigationBar(navController = navController) }
+        bottomBar = { BottomNavigationBar(navController = navController) },
+        modifier = modifier.navigationBarsPadding()
     ) { innerPadding ->
         val dataAtual = Calendar.getInstance().time
         val dataFormat = SimpleDateFormat("EEE dd MMM", Locale("pt", "BR"))
@@ -85,7 +95,7 @@ fun HomeRun(name: String, modifier: Modifier = Modifier, navController: NavHostC
 
         // Container rolável
         Column(
-            modifier = modifier
+            modifier = Modifier
                 .background(Color(0xFF1C1C1E))
                 .padding(horizontal = 32.dp)
                 .padding(innerPadding)
@@ -188,39 +198,48 @@ fun HomeRun(name: String, modifier: Modifier = Modifier, navController: NavHostC
                     )
                 )
 
-                Box(
+                LazyRow(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp)
+                        .navigationBarsPadding()
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    Image(
-                        painter = painterResource(id = R.mipmap.flexao),
-                        contentDescription = "Flexão",
-                        modifier = Modifier.fillMaxSize()
-                            .alpha(0.6f)
-                    )
-
-                    Column(
-                        modifier = Modifier
-                            .align(Alignment.BottomStart)
-                            .padding(16.dp)
-                            .padding(8.dp)
-                    ) {
-                        Text(
-                            text = "Aprendendo Treinos Básicos",
-                            style = TextStyle(
-                                fontSize = 16.sp,
-                                color = Color.White,
-                                fontWeight = FontWeight.Bold
+                    items(3) { index ->
+                        Box(
+                            modifier = Modifier
+                                .fillParentMaxSize()
+                                .height(200.dp)
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.mipmap.flexao),
+                                contentDescription = "Flexão",
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .alpha(0.6f)
                             )
-                        )
-                        Text(
-                            text = "Treinos para Iniciantes",
-                            style = TextStyle(
-                                fontSize = 14.sp,
-                                color = Color(0xFFFF6E77)
-                            )
-                        )
+                            Column(
+                                modifier = Modifier
+                                    .align(Alignment.BottomStart)
+                                    .padding(16.dp)
+                                    .padding(8.dp)
+                            ) {
+                                Text(
+                                    text = "Aprendendo Treinos Básicos ${index + 1}",
+                                    style = TextStyle(
+                                        fontSize = 16.sp,
+                                        color = Color.White,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                )
+                                Text(
+                                    text = "Treinos para Iniciantes",
+                                    style = TextStyle(
+                                        fontSize = 14.sp,
+                                        color = Color(0xFFFF6E77)
+                                    )
+                                )
+                            }
+                        }
                     }
                 }
             }
@@ -235,109 +254,142 @@ fun HomeRun(name: String, modifier: Modifier = Modifier, navController: NavHostC
                     )
                 )
 
-                Box(
+                LazyRow(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp)
+                        .navigationBarsPadding()
+                        .fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    Image(
-                        painter = painterResource(id = R.mipmap.alongamento),
-                        contentDescription = "Alongamento",
-                        modifier = Modifier.fillMaxSize()
-                            .alpha(0.5f)
-                    )
-
-                    Column(
-                        modifier = Modifier
-                            .align(Alignment.BottomStart)
-                            .padding(16.dp)
-                            .padding(8.dp)
-                    ) {
-                        Text(
-                            text = "Alongamento",
-                            style = TextStyle(
-                                fontSize = 16.sp,
-                                color = Color.White,
-                                fontWeight = FontWeight.Bold
+                    items(5) { index ->
+                        Box(
+                            modifier = Modifier
+                                .fillParentMaxSize()
+                                .height(200.dp)
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.mipmap.alongamento),
+                                contentDescription = "Alongamento",
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .alpha(0.5f)
                             )
-                        )
-                        Text(
-                            text = "Treino Extra",
-                            style = TextStyle(
-                                fontSize = 14.sp,
-                                color = Color.White
-                            )
-                        )
+                            Column(
+                                modifier = Modifier
+                                    .align(Alignment.BottomStart)
+                                    .padding(16.dp)
+                                    .padding(8.dp)
+                            ) {
+                                Text(
+                                    text = "Alongamento ${index + 1}",
+                                    style = TextStyle(
+                                        fontSize = 16.sp,
+                                        color = Color.White,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                )
+                                Text(
+                                    text = "Treino Extra",
+                                    style = TextStyle(
+                                        fontSize = 14.sp,
+                                        color = Color(0xFFFF6E77)
+                                    )
+                                )
+                            }
+                        }
                     }
                 }
             }
+
+
         }
+
     }
 }
 
+
 @Composable
 fun BottomNavigationBar(navController: NavHostController) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(8.dp)
-            .background(Color(0xFF2C2C2E))
-    )
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color(0xFF1C1C1E))
-            .padding(vertical = 8.dp)
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically
+    Column {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(2.dp)
+                .background(Color(0xFF2C2C2E))
+        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color(0xFF1C1C1E))
+                .padding(vertical = 8.dp)
         ) {
-            IconButton(
-                onClick = { navController.navigate("Home") }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    painter = painterResource(id = R.mipmap.homeselected),
-                    contentDescription = "Home",
-                    modifier = Modifier.size(24.dp),
-                    tint = Color.White
-                )
-            }
+                IconButton(onClick = { navController.navigate("Home") }) {
+                    Icon(
+                        painter = rememberAsyncImagePainter(
+                            model = ImageRequest.Builder(LocalContext.current)
+                                .data("android.resource://spectrum.fittech/raw/home")
+                                .decoderFactory(SvgDecoder.Factory())
+                                .build()
+                        ),
+                        contentDescription = "Home",
+                        modifier = Modifier.size(24.dp),
+                        tint = Color.Unspecified
+                    )
+                }
 
-            IconButton(onClick = { navController.navigate("Home") }) {
-                Icon(
-                    painter = painterResource(id = R.mipmap.ranking),
-                    contentDescription = "Ranking",
-                    modifier = Modifier.size(24.dp),
-                    tint = Color.Unspecified
-                )
-            }
+                IconButton(onClick = { navController.navigate("Home") }) {
+                    Icon(
+                        painter = rememberAsyncImagePainter(
+                            model = ImageRequest.Builder(LocalContext.current)
+                                .data("android.resource://spectrum.fittech/raw/ranking")
+                                .decoderFactory(SvgDecoder.Factory())
+                                .build()
+                        ),
+                        contentDescription = "Ranking",
+                        modifier = Modifier.size(24.dp),
+                        tint = Color.Unspecified
+                    )
+                }
 
-            IconButton(onClick = { navController.navigate("Home") }) {
-                Icon(
-                    painter = painterResource(id = R.mipmap.dashboards),
-                    contentDescription = "Dashboards",
-                    modifier = Modifier.size(24.dp),
-                    tint = Color.Unspecified
-                )
-            }
+                IconButton(onClick = { navController.navigate("Home") }) {
+                    Icon(
+                        painter = rememberAsyncImagePainter(
+                            model = ImageRequest.Builder(LocalContext.current)
+                                .data("android.resource://spectrum.fittech/raw/dashboards")
+                                .decoderFactory(SvgDecoder.Factory())
+                                .build()
+                        ),
+                        contentDescription = "Dashboards",
+                        modifier = Modifier.size(24.dp),
+                        tint = Color.Unspecified
+                    )
+                }
 
-            IconButton(onClick = { navController.navigate("Home") }) {
-                Icon(
-                    painter = painterResource(id = R.mipmap.nutri),
-                    contentDescription = "Nutri",
-                    modifier = Modifier.size(24.dp),
-                    tint = Color.Unspecified
-                )
-            }
+                IconButton(onClick = { navController.navigate("Home") }) {
+                    Icon(
+                        painter = rememberAsyncImagePainter(
+                            model = ImageRequest.Builder(LocalContext.current)
+                                .data("android.resource://spectrum.fittech/raw/nutri")
+                                .decoderFactory(SvgDecoder.Factory())
+                                .build()
+                        ),
+                        contentDescription = "Nutri",
+                        modifier = Modifier.size(24.dp),
+                        tint = Color.Unspecified
+                    )
+                }
 
-            IconButton(onClick = { navController.navigate("Home") }) {
-                Image(
-                    painter = painterResource(id = R.mipmap.dalva),
-                    contentDescription = "Profile",
-                    modifier = Modifier.size(24.dp)
-                )
+                IconButton(onClick = { navController.navigate("Home") }) {
+                    Image(
+                        painter = painterResource(id = R.mipmap.dalva),
+                        contentDescription = "Profile",
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
             }
         }
     }
@@ -345,8 +397,11 @@ fun BottomNavigationBar(navController: NavHostController) {
 
 @Preview(showBackground = true)
 @Composable
-fun HomePreview() {
+fun PreviewHome() {
     FittechTheme {
-        HomeRun(name = "Dalva", navController = rememberNavController())
+        HomeRun(
+            name = "Dalva",
+            navController = rememberNavController()
+        )
     }
 }
