@@ -58,7 +58,7 @@ import java.text.MessageFormat.Field
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 
-class TelaLogin : ComponentActivity() {
+class TelaCadastro : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -67,8 +67,8 @@ class TelaLogin : ComponentActivity() {
                     modifier = Modifier
                         .fillMaxSize()
                 ) { innerPadding ->
-                    TelaLog (
-                        name = "Dalva",
+                    TelaCad (
+                        name = "Novato",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -79,11 +79,13 @@ class TelaLogin : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TelaLog(name: String, modifier: Modifier = Modifier) {
+fun TelaCad(name: String, modifier: Modifier = Modifier) {
     var email by remember { mutableStateOf("") }
     var emailInvalido by remember { mutableStateOf(false) }
     var senha by remember { mutableStateOf("") }
     var senhaInvalida by remember { mutableStateOf(false) }
+    var senhaRepetida by remember { mutableStateOf("") }
+    var senhaInvalidaRepetida by remember { mutableStateOf(false) }
     var textWidth by remember { mutableStateOf(0f) }
     val senhaValidaRegex = Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@\$!%*?&])[A-Za-z\\d@\$!%*?&]{8,}\$")
 
@@ -95,119 +97,101 @@ fun TelaLog(name: String, modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(with(LocalConfiguration.current) { screenHeightDp.dp * 0.5f })
-                        .clip(
-                            GenericShape { size, _ ->
-                                moveTo(0f, 0f)
-                                lineTo(size.width, 0f)
-                                lineTo(size.width, size.height * 0.9f)
-                                lineTo(0f, size.height)
-                                close()
-                            }
-                        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(with(LocalConfiguration.current) { screenHeightDp.dp * 0.5f })
+                .clip(
+                    GenericShape { size, _ ->
+                        moveTo(0f, 0f)
+                        lineTo(size.width, 0f)
+                        lineTo(size.width, size.height * 0.9f)
+                        lineTo(0f, size.height)
+                        close()
+                    }
+                )
 
+        ) {
+            Image(
+                painter = painterResource(id = R.mipmap.backgroundcadastro),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize()
+                    .alpha(0.5f),
+                contentScale = ContentScale.Crop
+            )
+
+            // Conteúdo da tela (Rows e Columns)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 48.dp)
+                    .padding(horizontal = 32.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                // Primeiro Row contendo Login e Cadastrar
+                Row(
+                    modifier = Modifier,
+                    horizontalArrangement = Arrangement.spacedBy(24.dp)
                 ) {
-                    Image(
-                        painter = painterResource(id = R.mipmap.backgroundlogin),
-                        contentDescription = null,
-                        modifier = Modifier.fillMaxSize()
-                            .alpha(0.5f),
-                        contentScale = ContentScale.Crop
+                    Text(
+                        text = "Login",
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                            color = Color.White
+                        )
                     )
 
-                    // Conteúdo da tela (Rows e Columns)
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 48.dp)
-                            .padding(horizontal = 32.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        // Primeiro Row contendo Login e Cadastrar
-                        Row(
-                            modifier = Modifier,
-                            horizontalArrangement = Arrangement.spacedBy(24.dp)
-                        ) {
-                            Column {
-                                Text(
-                                    text = "Login",
-                                    style = TextStyle(
-                                        fontSize = 16.sp,
-                                        color = Color.White
-                                    ),
-                                    modifier = Modifier.onGloballyPositioned { coordinates: LayoutCoordinates ->
-                                        textWidth = coordinates.size.width.toFloat()
-                                    }
-                                )
-
-                                Spacer(modifier = Modifier.height(8.dp))
-
-                                Box(
-                                    modifier = Modifier
-                                        .width(with(LocalDensity.current) { textWidth.toDp() })
-                                        .height(4.dp)
-                                        .background(Color(0xFFFF3B47), shape = RectangleShape)
-                                )
+                    Column {
+                        Text(
+                            text = "Cadastrar",
+                            style = TextStyle(
+                                fontSize = 16.sp,
+                                color = Color.White
+                            ),
+                            modifier = Modifier.onGloballyPositioned { coordinates: LayoutCoordinates ->
+                                textWidth = coordinates.size.width.toFloat()
                             }
+                        )
 
-                            Text(
-                                text = "Cadastrar",
-                                style = TextStyle(
-                                    fontSize = 16.sp,
-                                    color = Color.White
-                                )
-                            )
-                        }
+                        Spacer(modifier = Modifier.height(8.dp))
 
-                        // Imagem com borda circular
                         Box(
                             modifier = Modifier
-                                .size(56.dp)
-                                .border(
-                                    BorderStroke(1.dp, Color.White),
-                                    shape = CircleShape
-                                ),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.mipmap.dalva),
-                                contentDescription = "Dalva",
-                                modifier = Modifier
-                                    .size(50.dp)
-                                    .clip(CircleShape)
-                            )
-                        }
-                    }
-
-                    // Coluna contendo textos
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(4.dp),
-                        horizontalAlignment = Alignment.Start,
-                        modifier = Modifier
-                            .padding(top = with(LocalConfiguration.current) { screenHeightDp.dp * 0.33f })
-                            .padding(horizontal = 32.dp)
-                    ) {
-                        Text(
-                            text = "Bem-vinda de volta,",
-                            style = TextStyle(
-                                fontSize = 32.sp,
-                                color = Color.White
-                            )
-                        )
-                        Text(
-                            text = "$name",
-                            style = TextStyle(
-                                fontSize = 32.sp,
-                                color = Color.White,
-                                fontWeight = FontWeight.Bold
-                            )
+                                .width(with(LocalDensity.current) { textWidth.toDp() })
+                                .height(4.dp)
+                                .background(Color(0xFFFF3B47), shape = RectangleShape)
                         )
                     }
                 }
+
+            }
+
+            // Coluna contendo textos
+            Column(
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+                horizontalAlignment = Alignment.Start,
+                modifier = Modifier
+                    .padding(top = with(LocalConfiguration.current) { screenHeightDp.dp * 0.33f })
+                    .padding(horizontal = 32.dp)
+            ) {
+                Text(
+                    text = "Olá $name,",
+                    style = TextStyle(
+                        fontSize = 32.sp,
+                        color = Color.White
+                    )
+                )
+                Text(
+                    text = "Entre com suas informações para realizar \n" +
+                            "o seu cadastro!",
+                    style = TextStyle(
+                        fontSize = 14.sp,
+                        color = Color.White
+                    )
+                )
+            }
+        }
 
 
         Column(
@@ -258,7 +242,7 @@ fun TelaLog(name: String, modifier: Modifier = Modifier) {
                 isError = senhaInvalida,
                 supportingText = {
                     if (senhaInvalida) {
-                        Text(text = "A senha inserida está inválida.")
+                        Text(text = "A senha deve conter ao menos 8 caracteres, incluindo 1 número, 1 letra minúscula, 1 letra maiúscula e 1 caractere especial.")
                     }
                 },
                 colors = TextFieldDefaults.textFieldColors(
@@ -277,20 +261,40 @@ fun TelaLog(name: String, modifier: Modifier = Modifier) {
                     .padding(bottom = 16.dp)
             )
 
-            // Texto "Esqueci a Senha"
-            Row(
+
+            // Campo de senha novamente
+            TextField(
+                label = { Text("Senha novamente") },
+                value = senhaRepetida,
+                onValueChange = { digitadaSenhaRepetida ->
+                    senhaRepetida = digitadaSenhaRepetida
+                    senhaInvalidaRepetida = senha != senhaRepetida || senha.length < 8
+                },
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                isError = senhaInvalidaRepetida,
+                supportingText = {
+                    if (senhaInvalidaRepetida) {
+                        Text(text = "As senhas não correspondem ou estão inválidas.")
+                    }
+                },
+                colors = TextFieldDefaults.textFieldColors(
+                    unfocusedLabelColor = Color.White,
+                    cursorColor = Color(0xFFFF3B47),
+                    focusedLabelColor = Color(0xFFFF3B47),
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    containerColor = Color.Transparent,
+                    errorContainerColor = Color.Transparent,
+                    errorTextColor = Color.White,
+                    focusedIndicatorColor = Color(0xFFFF3B47)
+                ),
                 modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
-            ) {
-                Text(
-                    text = "Esqueci a Senha",
-                    style = TextStyle(
-                        fontSize = 14.sp,
-                        color = Color(0xFFFF3B47)
-                    )
-                )
-            }
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp)
+            )
+
+
         }
 
         // Botões "Login"
@@ -329,7 +333,7 @@ fun TelaLog(name: String, modifier: Modifier = Modifier) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    Text(text = "Login")
+                    Text(text = "Cadastrar")
                     Spacer(modifier = Modifier.width(0.dp))
                     Image(
                         painter = painterResource(id = R.mipmap.setadireita),
@@ -345,8 +349,8 @@ fun TelaLog(name: String, modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun Login() {
+fun Cadastro() {
     FittechTheme {
-        TelaLog("Dalva")
+        TelaCad("Novato")
     }
 }

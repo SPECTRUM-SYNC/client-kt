@@ -13,28 +13,27 @@
         android:theme="@style/Theme.Fittech"
         tools:targetApi="31">
 
+        <!-- Configuração da TelaCadastro -->
+        <activity
+            android:name=".TelaCadastro"
+            android:exported="true"
+            android:label="@string/title_activity_tela_cadastro"
+            android:theme="@style/Theme.Fittech">
+        </activity>
+
         <!-- Configuração da Home Activity -->
         <activity
             android:name=".Home"
             android:exported="true"
             android:label="@string/title_activity_home"
-            android:theme="@style/Theme.Fittech">
-        </activity>
+            android:theme="@style/Theme.Fittech" />
 
         <!-- Configuração da TelaLogin -->
         <activity
             android:name=".TelaLogin"
             android:exported="true"
             android:label="@string/title_activity_tela_login"
-            android:theme="@style/Theme.Fittech">
-            <!-- Se for a Activity principal, adicione o intent-filter -->
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
-        </activity>
+            android:theme="@style/Theme.Fittech" />
 
         <!-- Configuração da MainActivity -->
         <activity
@@ -47,5 +46,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
+
 </manifest>

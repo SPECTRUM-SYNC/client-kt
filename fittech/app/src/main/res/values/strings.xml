@@ -2,4 +2,5 @@
     <string name="app_name">fittech</string>
     <string name="title_activity_tela_login">TelaLogin</string>
     <string name="title_activity_home">Home</string>
+    <string name="title_activity_tela_cadastro">TelaCadastro</string>
 </resources>
