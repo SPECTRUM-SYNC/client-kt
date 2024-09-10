@@ -3,4 +3,5 @@
     <string name="title_activity_tela_login">TelaLogin</string>
     <string name="title_activity_home">Home</string>
     <string name="title_activity_tela_cadastro">TelaCadastro</string>
+    <string name="title_activity_perfil">Perfil</string>
 </resources>
