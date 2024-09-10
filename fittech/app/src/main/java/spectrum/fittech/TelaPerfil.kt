@@ -76,10 +76,7 @@ fun TelaPer(name: String, modifier: Modifier = Modifier) {
             Box(
                 modifier = Modifier
                     .size(56.dp)
-                    .border(
-                        BorderStroke(1.dp, Color.White),
-                        shape = CircleShape
-                    ),
+                    .background(Color(0xFF2C2C2E), shape = CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 IconButton(onClick = { }) {
@@ -141,7 +138,7 @@ fun TelaPer(name: String, modifier: Modifier = Modifier) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(2.dp)
+                    .height(1.dp)
                     .background(Color(0xFF2C2C2E))
             )
 
@@ -180,7 +177,7 @@ fun TelaPer(name: String, modifier: Modifier = Modifier) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(2.dp)
+                    .height(1.dp)
                     .background(Color(0xFF2C2C2E))
             )
 
@@ -219,7 +216,7 @@ fun TelaPer(name: String, modifier: Modifier = Modifier) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(2.dp)
+                    .height(1.dp)
                     .background(Color(0xFF2C2C2E))
             )
 
@@ -258,7 +255,7 @@ fun TelaPer(name: String, modifier: Modifier = Modifier) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(2.dp)
+                    .height(1.dp)
                     .background(Color(0xFF2C2C2E))
             )
         }
@@ -272,7 +269,7 @@ fun TelaPer(name: String, modifier: Modifier = Modifier) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(2.dp)
+                    .height(1.dp)
                     .background(Color(0xFF2C2C2E))
             )
 
@@ -280,7 +277,7 @@ fun TelaPer(name: String, modifier: Modifier = Modifier) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp),
+                    .padding(vertical = 16.dp),
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -298,7 +295,7 @@ fun TelaPer(name: String, modifier: Modifier = Modifier) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(2.dp)
+                    .height(1.dp)
                     .background(Color(0xFF2C2C2E))
             )
         }
