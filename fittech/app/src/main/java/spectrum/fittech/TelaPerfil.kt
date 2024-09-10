@@ -103,7 +103,7 @@ fun TelaPer(name: String, modifier: Modifier = Modifier) {
             // Imagem com borda circular
             Box(
                 modifier = Modifier
-                    .size(100.dp)
+                    .size(120.dp)
                     .border(
                         BorderStroke(1.dp, Color.Unspecified),
                         shape = CircleShape
@@ -114,7 +114,7 @@ fun TelaPer(name: String, modifier: Modifier = Modifier) {
                     painter = painterResource(id = R.mipmap.dalva),
                     contentDescription = "user",
                     modifier = Modifier
-                        .size(100.dp)
+                        .size(120.dp)
                         .clip(CircleShape)
                 )
             }
@@ -146,6 +146,7 @@ fun TelaPer(name: String, modifier: Modifier = Modifier) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(horizontal = 8.dp)
                     .padding(vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
@@ -166,8 +167,8 @@ fun TelaPer(name: String, modifier: Modifier = Modifier) {
                                 .decoderFactory(SvgDecoder.Factory())
                                 .build()
                         ),
-                        contentDescription = "Home",
-                        modifier = Modifier.size(24.dp),
+                        contentDescription = "Editar Perfil",
+                        modifier = Modifier.size(16.dp),
                         tint = Color.White
                     )
                 }
@@ -185,6 +186,7 @@ fun TelaPer(name: String, modifier: Modifier = Modifier) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(horizontal = 8.dp)
                     .padding(vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
@@ -205,8 +207,8 @@ fun TelaPer(name: String, modifier: Modifier = Modifier) {
                                 .decoderFactory(SvgDecoder.Factory())
                                 .build()
                         ),
-                        contentDescription = "Home",
-                        modifier = Modifier.size(24.dp),
+                        contentDescription = "Politica de Privacidade",
+                        modifier = Modifier.size(16.dp),
                         tint = Color.White
                     )
                 }
@@ -224,6 +226,7 @@ fun TelaPer(name: String, modifier: Modifier = Modifier) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .padding(horizontal = 8.dp)
                     .padding(vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
@@ -244,8 +247,8 @@ fun TelaPer(name: String, modifier: Modifier = Modifier) {
                                 .decoderFactory(SvgDecoder.Factory())
                                 .build()
                         ),
-                        contentDescription = "Home",
-                        modifier = Modifier.size(24.dp),
+                        contentDescription = "Configuracoes",
+                        modifier = Modifier.size(16.dp),
                         tint = Color.White
                     )
                 }
@@ -273,11 +276,12 @@ fun TelaPer(name: String, modifier: Modifier = Modifier) {
                     .background(Color(0xFF2C2C2E))
             )
 
-            // Primeira Row
+            // Row Sair
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 16.dp),
+                    .padding(horizontal = 8.dp)
+                    .padding(vertical = 20.dp),
                 horizontalArrangement = Arrangement.Start,
                 verticalAlignment = Alignment.CenterVertically
             ) {
