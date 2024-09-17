@@ -57,6 +57,8 @@ import spectrum.fittech.ui.theme.FittechTheme
 import java.text.MessageFormat.Field
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import spectrum.fittech.backend.dtos.Usuario
+import spectrum.fittech.backend.service.realizarCadastro
 
 class TelaCadastro : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -324,10 +326,22 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
             }
 
             Button(
-                onClick = { /* Ação ao clicar */ },
+                onClick = {
+                    val usuario = Usuario(email = email, senha = senha, nome = "pica seca", img = "img")
+                    realizarCadastro(
+                        usuario = usuario,
+
+                        onSuccess = {
+                            println("Cadastro realizado com sucesso: UI PAPAI")
+                        },
+                        onFailure = {
+                            println("Erro ao realizar cadastro: UIA")
+                        }
+                    )
+                },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFFF3B47)
-                ),
+                )
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -342,6 +356,7 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
                     )
                 }
             }
+
 
         }
     }

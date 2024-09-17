@@ -7,7 +7,7 @@ import spectrum.fittech.backend.dtos.RespostaCadastro
 import spectrum.fittech.backend.dtos.Usuario
 
 interface ApiInterface {
-    @POST("cadastro") // substitua pela rota de cadastro correta
+    @POST("usuario") // substitua pela rota de cadastro correta
     fun cadastrarUsuario(@Body usuario: Usuario): Call<RespostaCadastro>
 }
 

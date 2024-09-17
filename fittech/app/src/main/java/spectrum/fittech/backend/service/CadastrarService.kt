@@ -25,3 +25,22 @@ fun realizarCadastro(usuario: Usuario, onSuccess: (String) -> Unit, onFailure: (
         }
     })
 }
+
+fun main() {
+    val user = Usuario(
+        nome = "RICARDO",
+        email = "RICARDO@GMAIL.COM",
+        senha = "OAISND",
+        img = "TOP10IMG"
+    )
+
+    realizarCadastro(
+        usuario = user,
+        onSuccess = { mensagem ->
+            println("Cadastro realizado com sucesso: $mensagem")
+        },
+        onFailure = { erro ->
+            println("Erro ao realizar cadastro: $erro")
+        }
+    )
+}
