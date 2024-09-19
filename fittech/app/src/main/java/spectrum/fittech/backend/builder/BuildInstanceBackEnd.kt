@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import spectrum.fittech.backend.interfaces.ApiInterface
 
 val retrofit = Retrofit.Builder()
-    .baseUrl("https://localhost:8080")
+    .baseUrl("http://localhost:8080/")
     .addConverterFactory(GsonConverterFactory.create())
     .build()
 
