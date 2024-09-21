@@ -54,7 +54,7 @@ interface ApiInterface {
         "Cache-Control: no-cache"
     )
     fun adicionarUsuarioRank(
-        @Body usuario: AdicionarTopRank,
+        @Body usuario: String,
         @Header("Authorization") token: String
     ): Call<RespostaRank>
 

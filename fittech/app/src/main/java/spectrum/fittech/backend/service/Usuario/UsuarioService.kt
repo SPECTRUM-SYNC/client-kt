@@ -1,19 +1,18 @@
 package spectrum.fittech.backend.service.Usuario
 
-import spectrum.fittech.backend.log.client;
-import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import spectrum.fittech.backend.builder.apiInterface
 import spectrum.fittech.backend.dtos.*
+import spectrum.fittech.backend.builder.gson
 import spectrum.fittech.backend.dtos.Usuario
 import spectrum.fittech.backend.interfaces.ApiInterface
-
 import retrofit2.Callback
 import retrofit2.Response
 import spectrum.fittech.backend.Object.TokenManager
+import spectrum.fittech.backend.log.client
 import java.time.LocalDateTime
+
 
 val usuario = Usuario(
     nome = "Rafael Reis",
@@ -38,7 +37,7 @@ val usuarioEnvioEmail = EnvioEmailUsuario(
 val objetivo = Objetivo(
     objetivo = "Ganho de Massa"
 )
-val userTopRank =  AdicionarTopRank(
+val userTopRank =  gson.toJson(AdicionarTopRank(
     nome = "Lula Molusco",
     email = "FazOL@gmail.com",
     senha = "boqueteParafuso",
@@ -53,19 +52,26 @@ val userTopRank =  AdicionarTopRank(
     pontuacao = 200000.0,
     horaSenhaAtualizacao = LocalDateTime.now(),
     objetivo = objetivo
-)
+))
 
 
 fun main() {
     //cadastrarUsuario(usuario);
-    loginUsuarioGoogle(usuarioLoginGoogle)
     //loginUsuarioGoogle(usuarioLoginGoogle);
     //envioEmail(usuarioEnvioEmail);
-   // reajustes adicionarRanking(usuario = userTopRank, token = TokenManager.token.toString())
+
+    loginUsuarioGoogle(usuarioLoginGoogle) { success ->
+        if (success) {
+            println("AQUI PAPAI ${TokenManager.token.toString()}")
+            adicionarRanking(usuario = userTopRank, token = "Bearer ${TokenManager.token.toString()}")
+        } else {
+            println("Login falhou")
+        }
+    }
 }
 
 
-fun adicionarRanking(usuario:AdicionarTopRank, token:String) {
+fun adicionarRanking(usuario: String, token:String) {
     val interfaceUsuario = gerarAmbiente();
 
     val call = interfaceUsuario.adicionarUsuarioRank(usuario, token)
@@ -139,7 +145,7 @@ fun loginUsuario(usuario:UsuarioLogin){
 
 }
 
-fun loginUsuarioGoogle(usuario: UsuarioLoginGoogle) {
+fun loginUsuarioGoogle(usuario: UsuarioLoginGoogle, callback: (Boolean) -> Unit) {
     val interfaceUsuario = gerarAmbiente()
     val call = interfaceUsuario.loginUsuarioGoogle(usuario)
 
@@ -150,13 +156,17 @@ fun loginUsuarioGoogle(usuario: UsuarioLoginGoogle) {
                 val token = response.body()?.token
                 TokenManager.saveToken(token) // Armazena o token globalmente
                 println("Token armazenado: ${TokenManager.token}")
+                callback(true)
+
             } else {
                 println("Login não realizado com sucesso : ${response.code()}")
+                callback(false)
             }
         }
 
         override fun onFailure(call: Call<RespostaLogin>, t: Throwable) {
             println("Falha na requisição. Erro: ${t.message}")
+            callback(false)
         }
     })
 }
@@ -200,7 +210,7 @@ fun cadastrarUsuario(usuario:Usuario) {
 private fun gerarAmbiente() : ApiInterface {
     val retrofit = Retrofit.Builder()
         .baseUrl("http://localhost:8080/")
-        //.client(client) // log
+        .client(client) // log
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
