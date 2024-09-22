@@ -4,4 +4,7 @@
     <string name="title_activity_home">Home</string>
     <string name="title_activity_tela_cadastro">TelaCadastro</string>
     <string name="title_activity_perfil">Perfil</string>
+    <string name="title_activity_questionario">Questionario</string>
+    <string name="title_activity_tela_inicial_dois">TelaInicialDois</string>
+    <string name="title_activity_tela_inicial_tres">TelaInicialTres</string>
 </resources>

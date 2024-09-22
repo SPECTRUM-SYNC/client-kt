@@ -1,5 +1,6 @@
 package spectrum.fittech
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -57,6 +58,7 @@ import spectrum.fittech.ui.theme.FittechTheme
 import java.text.MessageFormat.Field
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 
 class TelaLogin : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,6 +89,8 @@ fun TelaLog(name: String, modifier: Modifier = Modifier) {
     var textWidth by remember { mutableStateOf(0f) }
     val senhaValidaRegex = Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@\$!%*?&])[A-Za-z\\d@\$!%*?&]{8,}\$")
 
+    val context = LocalContext.current
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -103,7 +107,7 @@ fun TelaLog(name: String, modifier: Modifier = Modifier) {
                             GenericShape { size, _ ->
                                 moveTo(0f, 0f)
                                 lineTo(size.width, 0f)
-                                lineTo(size.width, size.height * 0.9f)
+                                lineTo(size.width, size.height * 0.8f)
                                 lineTo(0f, size.height)
                                 close()
                             }
@@ -156,6 +160,10 @@ fun TelaLog(name: String, modifier: Modifier = Modifier) {
 
                             Text(
                                 text = "Cadastrar",
+                                modifier = Modifier.clickable {
+                                    val telaCadastro = Intent(context, TelaCadastro::class.java)
+                                    context.startActivity(telaCadastro)
+                                },
                                 style = TextStyle(
                                     fontSize = 16.sp,
                                     color = Color.White
