@@ -4,10 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -46,21 +44,16 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import spectrum.fittech.ui.theme.FittechTheme
-import java.text.MessageFormat.Field
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import spectrum.fittech.backend.dtos.Usuario
-import spectrum.fittech.backend.service.realizarCadastro
 
 class TelaCadastro : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -335,17 +328,7 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
 
             Button(
                 onClick = {
-                    val usuario = Usuario(email = email, senha = senha, nome = "pica seca", img = "img")
-                    realizarCadastro(
-                        usuario = usuario,
 
-                        onSuccess = {
-                            println("Cadastro realizado com sucesso: UI PAPAI")
-                        },
-                        onFailure = {
-                            println("Erro ao realizar cadastro: UIA")
-                        }
-                    )
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFFF3B47)
