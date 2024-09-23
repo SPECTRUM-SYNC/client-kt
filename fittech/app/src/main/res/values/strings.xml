@@ -8,6 +8,7 @@
     <string name="title_activity_tela_inicial_dois">TelaInicialDois</string>
     <string name="title_activity_tela_inicial_tres">TelaInicialTres</string>
     <string name="title_activity_tela_esqueceu_senha">TelaEsqueceuSenha</string>
+    <string name="title_activity_tela_idioma">TelaIdioma</string>
 
     <!-- Tela de Cadastro -->
     <!-- Texts for inputs -->
