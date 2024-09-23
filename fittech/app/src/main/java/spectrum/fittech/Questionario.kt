@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -73,7 +74,7 @@ fun Tela(nome: String, modifier: Modifier = Modifier) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Conte um pouco de você!",
+                text = stringResource(id = R.string.txt_conte),
                 style = androidx.compose.ui.text.TextStyle(
                     textAlign = TextAlign.Center,
                     fontSize = 25.sp,
@@ -83,7 +84,7 @@ fun Tela(nome: String, modifier: Modifier = Modifier) {
             )
 
             Text(
-                text = "Para uma melhor experiência precisamos",
+                text = stringResource(id = R.string.txt_experiencia),
                 style = androidx.compose.ui.text.TextStyle(
                     textAlign = TextAlign.Center,
                     fontSize = 14.sp,
@@ -92,7 +93,7 @@ fun Tela(nome: String, modifier: Modifier = Modifier) {
             )
 
             Text(
-                text = "que você informe seu gênero",
+                text = stringResource(id = R.string.txt_informe_genero),
                 style = androidx.compose.ui.text.TextStyle(
                     textAlign = TextAlign.Center,
                     fontSize = 14.sp,
@@ -127,7 +128,7 @@ fun Tela(nome: String, modifier: Modifier = Modifier) {
                     modifier = modifier.size(48.dp)
                 )
                 Text(
-                    text = "Masculino",
+                    text = stringResource(id = R.string.txt_masculino),
                     modifier = Modifier
                         .padding(top = 16.dp),
                     style = androidx.compose.ui.text.TextStyle(
@@ -157,7 +158,7 @@ fun Tela(nome: String, modifier: Modifier = Modifier) {
                     modifier = modifier.size(48.dp)
                 )
                 Text(
-                    text = "Feminino",
+                    text = stringResource(id = R.string.txt_feminino),
                     modifier = Modifier
                         .padding(top = 16.dp),
                     style = androidx.compose.ui.text.TextStyle(

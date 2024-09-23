@@ -29,6 +29,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -152,7 +153,7 @@ fun TelaPer(name: String, modifier: Modifier = Modifier) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Editar Perfil",
+                    text = stringResource(id = R.string.txt_editar_perfil),
                     style = TextStyle(
                         fontSize = 16.sp,
                         color = Color.White,
@@ -192,7 +193,7 @@ fun TelaPer(name: String, modifier: Modifier = Modifier) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Política de Privacidade",
+                    text = stringResource(id = R.string.txt_politica_privacidade),
                     style = TextStyle(
                         fontSize = 16.sp,
                         color = Color.White,
@@ -232,7 +233,7 @@ fun TelaPer(name: String, modifier: Modifier = Modifier) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Configurações",
+                    text = stringResource(id = R.string.txt_configuracoes),
                     style = TextStyle(
                         fontSize = 16.sp,
                         color = Color.White,
@@ -286,7 +287,7 @@ fun TelaPer(name: String, modifier: Modifier = Modifier) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Sair",
+                    text = stringResource(id = R.string.txt_sair),
                     style = TextStyle(
                         fontSize = 16.sp,
                         color = Color(0xFFFF2424),

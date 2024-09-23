@@ -33,6 +33,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -120,14 +121,14 @@ fun TelaInicialDois(name: String, modifier: Modifier = Modifier) {
         ) {
 
             Text(
-                text = "Crie um plano de treino,",
+                text = stringResource(id = R.string.txt_init3),
                 style = TextStyle(
                     fontSize = 24.sp,
                     color = Color.White
                 )
             )
             Text(
-                text = "Para ficar forte",
+                text = stringResource(id = R.string.txt_init4),
                 style = TextStyle(
                     fontSize = 24.sp,
                     color = Color.White,

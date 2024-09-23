@@ -43,6 +43,7 @@ import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -53,7 +54,6 @@ import spectrum.fittech.ui.theme.FittechTheme
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import spectrum.fittech.backend.dtos.Usuario
 
 class TelaCadastro : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,7 +64,7 @@ class TelaCadastro : ComponentActivity() {
                     modifier = Modifier
                         .fillMaxSize()
                 ) { innerPadding ->
-                    TelaCad (
+                    TelaCad(
                         name = "Novato",
                         modifier = Modifier.padding(innerPadding)
                     )
@@ -83,7 +83,7 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
     var senhaInvalida by remember { mutableStateOf(false) }
     var senhaRepetida by remember { mutableStateOf("") }
     var senhaInvalidaRepetida by remember { mutableStateOf(false) }
-    var textWidth by remember { mutableStateOf(0f) }
+    var textWidth by remember { androidx.compose.runtime.mutableFloatStateOf(0f) }
     val senhaValidaRegex = Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@\$!%*?&])[A-Za-z\\d@\$!%*?&]{8,}\$")
 
     val context = LocalContext.current
@@ -114,12 +114,12 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
             Image(
                 painter = painterResource(id = R.mipmap.backgroundcadastro),
                 contentDescription = null,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
                     .alpha(0.5f),
                 contentScale = ContentScale.Crop
             )
 
-            // Conteúdo da tela (Rows e Columns)
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -128,13 +128,12 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Primeiro Row contendo Login e Cadastrar
                 Row(
                     modifier = Modifier,
                     horizontalArrangement = Arrangement.spacedBy(24.dp)
                 ) {
                     Text(
-                        text = "Login",
+                        text = stringResource(id = R.string.txt_login),
                         modifier = Modifier.clickable {
                             val telaLogin = Intent(context, TelaLogin::class.java)
                             context.startActivity(telaLogin)
@@ -147,7 +146,7 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
 
                     Column {
                         Text(
-                            text = "Cadastrar",
+                            text = stringResource(id = R.string.txt_cadastrar),
                             style = TextStyle(
                                 fontSize = 16.sp,
                                 color = Color.White
@@ -167,10 +166,8 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
                         )
                     }
                 }
-
             }
 
-            // Coluna contendo textos
             Column(
                 verticalArrangement = Arrangement.spacedBy(4.dp),
                 horizontalAlignment = Alignment.Start,
@@ -179,15 +176,14 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
                     .padding(horizontal = 32.dp)
             ) {
                 Text(
-                    text = "Olá $name,",
+                    text = stringResource(id = R.string.txt_ola, name),
                     style = TextStyle(
                         fontSize = 32.sp,
                         color = Color.White
                     )
                 )
                 Text(
-                    text = "Entre com suas informações para realizar \n" +
-                            "o seu cadastro!",
+                    text = stringResource(id = R.string.txt_entre_com_info),
                     style = TextStyle(
                         fontSize = 14.sp,
                         color = Color.White
@@ -196,15 +192,13 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
             }
         }
 
-
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 32.dp)
         ) {
-            // Campo de email
             TextField(
-                label = { Text("Email") },
+                label = { Text(stringResource(id = R.string.ipt_email)) },
                 value = email,
                 onValueChange = { digitadoEmail ->
                     email = digitadoEmail
@@ -213,7 +207,7 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
                 isError = emailInvalido,
                 supportingText = {
                     if (emailInvalido) {
-                        Text(text = "O e-mail inserido está inválido.")
+                        Text(text = stringResource(id = R.string.ipt_email_invalido))
                     }
                 },
                 colors = TextFieldDefaults.textFieldColors(
@@ -225,16 +219,15 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
                     containerColor = Color.Transparent,
                     errorContainerColor = Color.Transparent,
                     errorTextColor = Color.White,
-                    focusedIndicatorColor =Color(0xFFFF3B47)
+                    focusedIndicatorColor = Color(0xFFFF3B47)
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 16.dp)
             )
 
-            // Campo de senha
             TextField(
-                label = { Text("Senha") },
+                label = { Text(stringResource(id = R.string.ipt_senha)) },
                 value = senha,
                 onValueChange = { digitadaSenha ->
                     senha = digitadaSenha
@@ -245,7 +238,7 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
                 isError = senhaInvalida,
                 supportingText = {
                     if (senhaInvalida) {
-                        Text(text = "A senha deve conter ao menos 8 caracteres, incluindo 1 número, 1 letra minúscula, 1 letra maiúscula e 1 caractere especial.")
+                        Text(text = stringResource(id = R.string.ipt_senha_invalida))
                     }
                 },
                 colors = TextFieldDefaults.textFieldColors(
@@ -264,10 +257,8 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
                     .padding(bottom = 16.dp)
             )
 
-
-            // Campo de senha novamente
             TextField(
-                label = { Text("Senha novamente") },
+                label = { Text(stringResource(id = R.string.ipt_senha_novamente)) },
                 value = senhaRepetida,
                 onValueChange = { digitadaSenhaRepetida ->
                     senhaRepetida = digitadaSenhaRepetida
@@ -278,7 +269,7 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
                 isError = senhaInvalidaRepetida,
                 supportingText = {
                     if (senhaInvalidaRepetida) {
-                        Text(text = "As senhas não correspondem ou estão inválidas.")
+                        Text(text = stringResource(id = R.string.ipt_senha_nao_correspondem))
                     }
                 },
                 colors = TextFieldDefaults.textFieldColors(
@@ -296,11 +287,9 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
                     .fillMaxWidth()
                     .padding(bottom = 16.dp)
             )
-
-
         }
 
-        // Botões "Login"
+        // Botões de Cadastro
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -338,7 +327,7 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    Text(text = "Cadastrar")
+                    Text(text = stringResource(id = R.string.btn_cadastrar))
                     Spacer(modifier = Modifier.width(0.dp))
                     Image(
                         painter = painterResource(id = R.mipmap.setadireita),
@@ -347,15 +336,15 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
                     )
                 }
             }
-
-
         }
+
+
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun Cadastro() {
+fun TelaCadastroPreview() {
     FittechTheme {
         TelaCad("Novato")
     }

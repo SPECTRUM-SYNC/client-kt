@@ -59,6 +59,7 @@ import java.text.MessageFormat.Field
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 
 class TelaLogin : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -138,7 +139,7 @@ fun TelaLog(name: String, modifier: Modifier = Modifier) {
                         ) {
                             Column {
                                 Text(
-                                    text = "Login",
+                                    text = stringResource(id = R.string.txt_login),
                                     style = TextStyle(
                                         fontSize = 16.sp,
                                         color = Color.White
@@ -159,7 +160,7 @@ fun TelaLog(name: String, modifier: Modifier = Modifier) {
                             }
 
                             Text(
-                                text = "Cadastrar",
+                                text = stringResource(id = R.string.txt_cadastrar),
                                 modifier = Modifier.clickable {
                                     val telaCadastro = Intent(context, TelaCadastro::class.java)
                                     context.startActivity(telaCadastro)
@@ -200,7 +201,7 @@ fun TelaLog(name: String, modifier: Modifier = Modifier) {
                             .padding(horizontal = 32.dp)
                     ) {
                         Text(
-                            text = "Bem-vinda de volta,",
+                            text = stringResource(id = R.string.txt_bem_vinda_login),
                             style = TextStyle(
                                 fontSize = 32.sp,
                                 color = Color.White
@@ -225,7 +226,7 @@ fun TelaLog(name: String, modifier: Modifier = Modifier) {
         ) {
             // Campo de email
             TextField(
-                label = { Text("Email") },
+                label = { Text(stringResource(id = R.string.ipt_email)) },
                 value = email,
                 onValueChange = { digitadoEmail ->
                     email = digitadoEmail
@@ -234,7 +235,7 @@ fun TelaLog(name: String, modifier: Modifier = Modifier) {
                 isError = emailInvalido,
                 supportingText = {
                     if (emailInvalido) {
-                        Text(text = "O e-mail inserido está inválido.")
+                        Text(text = stringResource(id = R.string.ipt_email_invalido))
                     }
                 },
                 colors = TextFieldDefaults.textFieldColors(
@@ -255,7 +256,7 @@ fun TelaLog(name: String, modifier: Modifier = Modifier) {
 
             // Campo de senha
             TextField(
-                label = { Text("Senha") },
+                label = { Text(stringResource(id = R.string.ipt_senha)) },
                 value = senha,
                 onValueChange = { digitadaSenha ->
                     senha = digitadaSenha
@@ -266,7 +267,7 @@ fun TelaLog(name: String, modifier: Modifier = Modifier) {
                 isError = senhaInvalida,
                 supportingText = {
                     if (senhaInvalida) {
-                        Text(text = "A senha inserida está inválida.")
+                        Text(text = stringResource(id = R.string.ipt_senha_invalida_login))
                     }
                 },
                 colors = TextFieldDefaults.textFieldColors(
@@ -292,7 +293,7 @@ fun TelaLog(name: String, modifier: Modifier = Modifier) {
                 horizontalArrangement = Arrangement.End
             ) {
                 Text(
-                    text = "Esqueci a Senha",
+                    text = stringResource(id = R.string.txt_esqueci_senha),
                     style = TextStyle(
                         fontSize = 14.sp,
                         color = Color(0xFFFF3B47)
@@ -337,7 +338,7 @@ fun TelaLog(name: String, modifier: Modifier = Modifier) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    Text(text = "Login")
+                    Text(text = stringResource(id = R.string.btn_login))
                     Spacer(modifier = Modifier.width(0.dp))
                     Image(
                         painter = painterResource(id = R.mipmap.setadireita),

@@ -7,4 +7,67 @@
     <string name="title_activity_questionario">Questionario</string>
     <string name="title_activity_tela_inicial_dois">TelaInicialDois</string>
     <string name="title_activity_tela_inicial_tres">TelaInicialTres</string>
+
+    <!-- Tela de Cadastro -->
+    <!-- Texts for inputs -->
+    <string name="ipt_email">Email</string>
+    <string name="ipt_senha">Senha</string>
+    <string name="ipt_senha_novamente">Senha novamente</string>
+    <string name="ipt_email_invalido">O e-mail inserido está inválido.</string>
+    <string name="ipt_senha_invalida">A senha deve conter ao menos 8 caracteres, incluindo 1 número, 1 letra minúscula, 1 letra maiúscula e 1 caractere especial.</string>
+    <string name="ipt_senha_nao_correspondem">As senhas não correspondem ou estão inválidas.</string>
+    <!-- Texts for buttons -->
+    <string name="btn_cadastrar">Cadastrar</string>
+    <!-- Descriptions -->
+    <string name="desc_seta_direita">Seta Direita</string>
+    <string name="desc_google">Google</string>
+    <!-- General texts -->
+    <string name="txt_ola">Olá %1$s,</string>
+    <string name="txt_entre_com_info">Entre com suas informações para realizar \n o seu cadastro!</string>
+    <string name="txt_cadastrar">Cadastrar</string>
+    <string name="txt_login">Login</string>
+
+    <!-- Tela de Login -->
+    <string name="txt_bem_vindo_login">Bem-vindo de volta,</string>
+    <string name="txt_bem_vinda_login">Bem-vinda de volta,</string>
+    <string name="txt_esqueci_senha">Esqueci a Senha</string>
+    <!-- Texts for inputs -->
+    <string name="ipt_senha_invalida_login">A senha inserida está inválida.</string>
+    <!-- Texts for buttons -->
+    <string name="btn_login">Login</string>
+
+    <!-- Tela Inicial -->
+    <string name="txt_init1">Aprenda a treinar,</string>
+    <string name="txt_init2">Comece sua jornada</string>
+    <string name="txt_init3">Crie um plano de treino,</string>
+    <string name="txt_init4">Para ficar forte</string>
+    <string name="txt_init5">Ação é a</string>
+    <string name="txt_init6">Chave do sucesso</string>
+    <!-- Text for buttons -->
+    <string name="btn_init">Começar</string>
+
+    <!-- Tela de Perfil -->
+    <string name="txt_editar_perfil">Editar Perfil</string>
+    <string name="txt_politica_privacidade">Política de Privacidade</string>
+    <string name="txt_configuracoes">Configurações</string>
+    <string name="txt_sair">Sair</string>
+
+    <!-- Tela de Home -->
+    <string name="txt_bom_dia">Bom dia.</string>
+    <string name="txt_boa_noite">Boa noite.</string>
+    <string name="txt_boa_tarde">Boa tarde.</string>
+    <string name="txt_saudacao">Olá %1$s,</string>
+    <string name="txt_plano_treino">Plano de Treino</string>
+    <string name="txt_categorias_treino">Categorias de Treino</string>
+    <string name="txt_treinos_extras">Treinos Extras</string>
+
+    <!-- Tela de Questionario -->
+    <string name="txt_conte">Conte um pouco de você!</string>
+    <string name="txt_experiencia">Para uma melhor experiência precisamos</string>
+    <string name="txt_informe_genero">que você informe seu gênero</string>
+    <string name="txt_masculino">Masculino</string>
+    <string name="txt_feminino">Feminino</string>
+    <!-- Text for buttons -->
+    <string name="btn_proximo">Próximo</string>
+
 </resources>
