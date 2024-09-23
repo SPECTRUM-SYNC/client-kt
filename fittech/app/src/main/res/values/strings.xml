@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">fittech</string>
+    <string name="app_name">FitTech</string>
     <string name="title_activity_tela_login">TelaLogin</string>
     <string name="title_activity_home">Home</string>
     <string name="title_activity_tela_cadastro">TelaCadastro</string>
@@ -7,6 +7,7 @@
     <string name="title_activity_questionario">Questionario</string>
     <string name="title_activity_tela_inicial_dois">TelaInicialDois</string>
     <string name="title_activity_tela_inicial_tres">TelaInicialTres</string>
+    <string name="title_activity_tela_esqueceu_senha">TelaEsqueceuSenha</string>
 
     <!-- Tela de Cadastro -->
     <!-- Texts for inputs -->
@@ -69,5 +70,12 @@
     <string name="txt_feminino">Feminino</string>
     <!-- Text for buttons -->
     <string name="btn_proximo">Próximo</string>
+
+    <!-- Tela de Esqueceu a Senha -->
+    <string name="txt_esqueceu_senha">Esqueceu a Senha?</string>
+    <string name="txt_esqueceu_senha_txt">Insira seu email cadastrado no sistema para \nreceber o código de verificação</string>
+    <string name="txt_tentar_outra_maneira">Tentar de outra maneira</string>
+    <!-- Text for buttons -->
+    <string name="btn_entrar">Entrar</string>
 
 </resources>

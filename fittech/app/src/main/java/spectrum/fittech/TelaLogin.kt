@@ -289,7 +289,12 @@ fun TelaLog(name: String, modifier: Modifier = Modifier) {
             // Texto "Esqueci a Senha"
             Row(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .clickable {
+                        val telaEsqueceuSenha = Intent(context, TelaEsqueceuSenha::class.java)
+
+                        context.startActivity(telaEsqueceuSenha)
+                    },
                 horizontalArrangement = Arrangement.End
             ) {
                 Text(

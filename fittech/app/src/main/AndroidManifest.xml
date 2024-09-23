@@ -13,40 +13,45 @@
         android:theme="@style/Theme.Fittech"
         tools:targetApi="31">
         <activity
+            android:name=".TelaEsqueceuSenha"
+            android:exported="true"
+            android:label="@string/title_activity_tela_esqueceu_senha"
+            android:theme="@style/Theme.Fittech" />
+        <activity
             android:name=".TelaInicialTres"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_tela_inicial_tres"
             android:theme="@style/Theme.Fittech" />
         <activity
             android:name=".TelaInicialDois"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_tela_inicial_dois"
-            android:theme="@style/Theme.Fittech" /> <!-- Configuração do TelaInicialDois -->
+            android:theme="@style/Theme.Fittech" />
         <activity
             android:name=".Questionario"
-            android:exported="false"
+            android:exported="true"
             android:label="Questionario"
-            android:theme="@style/Theme.Fittech" /> <!-- Configuração do Questionario -->
+            android:theme="@style/Theme.Fittech" />
         <activity
             android:name=".TelaPerfil"
             android:exported="true"
             android:label="TelaPerfil"
-            android:theme="@style/Theme.Fittech" /> <!-- Configuração da TelaCadastro -->
+            android:theme="@style/Theme.Fittech" />
         <activity
             android:name=".TelaCadastro"
             android:exported="true"
             android:label="@string/title_activity_tela_cadastro"
-            android:theme="@style/Theme.Fittech" /> <!-- Configuração da Home Activity -->
+            android:theme="@style/Theme.Fittech" />
         <activity
             android:name=".Home"
             android:exported="true"
             android:label="@string/title_activity_home"
-            android:theme="@style/Theme.Fittech" /> <!-- Configuração da TelaLogin -->
+            android:theme="@style/Theme.Fittech" />
         <activity
             android:name=".TelaLogin"
             android:exported="true"
             android:label="@string/title_activity_tela_login"
-            android:theme="@style/Theme.Fittech" /> <!-- Configuração da MainActivity -->
+            android:theme="@style/Theme.Fittech" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
