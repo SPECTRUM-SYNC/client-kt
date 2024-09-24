@@ -39,6 +39,14 @@ val usuarioAtualizar = AtualizarUsuario(
     nivelCondicao = "Intermediário"
 )
 
+val usuarioAtualizarPerfil = AtualizarUsuarioPerfil(
+    nome = "João Silva",
+    altura = 175,
+    dataNascimento = "2001-01-10",
+    meta = "Perder peso",
+    nivelCondicao = "Intermediário"
+)
+
 val objetivo = Objetivo(
     objetivo = "Ganho de Massa"
 )
@@ -107,7 +115,8 @@ fun main() {
             //adicionarRanking(usuario = userTopRank, token = "Bearer ${TokenManager.token.toString()}")
             //ativarUsuario(id = IdUserManager.userId, usuario = usuarioAtivar, token = "Bearer ${TokenManager.token.toString()}" )
             //atualizarImagem(id = IdUserManager.userId, token = "Bearer ${TokenManager.token.toString()}", atualizarImagemUsuario)
-            atualizarUsuario(id = IdUserManager.userId, token = "Bearer ${TokenManager.token.toString()}", usuarioAtualizar)
+            //atualizarUsuario(id = IdUserManager.userId, token = "Bearer ${TokenManager.token.toString()}", usuarioAtualizar)
+            atualizarUsuarioPerfil(id = IdUserManager.userId, token = "Bearer ${TokenManager.token.toString()}", usuarioAtualizarPerfil)
         } else {
             println("Login falhou")
         }
@@ -141,10 +150,10 @@ fun atualizarUsuario(id: Int?, token: String?, usuario: AtualizarUsuario) {
 }
 
 
-fun atualizarUsuarioPerfil(id: Int?, token: String?, usuario: AtualizarUsuario) {
+fun atualizarUsuarioPerfil(id: Int?, token: String?, usuario: AtualizarUsuarioPerfil) {
     val interfaceUsuario = gerarAmbiente();
 
-    val call = interfaceUsuario.atualizarUsuarioPerfil(id =  id, token = token, usuario = usuario)
+    val call = interfaceUsuario.atualizarUsuarioPerfil(id =  id, token = token, usuario = usuarioAtualizarPerfil)
 
     call.enqueue(object : Callback<RespostaRequisicao> {
         override fun onResponse(
