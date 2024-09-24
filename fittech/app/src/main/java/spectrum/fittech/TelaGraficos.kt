@@ -9,7 +9,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,23 +16,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults.indicatorLine
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -48,56 +42,39 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import spectrum.fittech.ui.theme.FittechTheme
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
-import coil.compose.rememberImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import spectrum.fittech.componentes.BottomNavigationBar
 
-class Home : ComponentActivity() {
+class TelaGraficos : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             FittechTheme {
                 val navController = rememberNavController()
-                NavHost(navController = navController, startDestination = "Home") {
-                    composable("Home") {
-                        HomeRun(
+                NavHost(navController = navController, startDestination = "TelaGraficos") {
+                    composable("TelaGraficos") {
+                        TelaGraficosRun(
                             modifier = Modifier.fillMaxSize(),
                             navController = navController
                         )
                     }
-                    composable("TelaGraficos") { TelaGraficosRun(navController = navController) }
+                    composable("Home") { HomeRun(navController = navController) }
                     composable("TelaPerfil") { TelaPer() }
-
                 }
+
             }
         }
     }
 }
 
-fun saudacaoAtual(): String {
-    val horaAtual = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
-
-    return when {
-        horaAtual in 18..23 || horaAtual in 0..5 -> "Boa noite."
-        horaAtual in 5..11 -> "Bom dia."
-        else -> "Boa tarde."
-    }
-}
-
 @Composable
-fun HomeRun(modifier: Modifier = Modifier, navController: NavHostController) {
+fun TelaGraficosRun(modifier: Modifier = Modifier, navController: NavHostController) {
     Scaffold(
-        bottomBar = { BottomNavigationBar(navController = navController, modifier, "Home") },
+        bottomBar = { BottomNavigationBar(navController = navController, modifier, "Dashboards") },
         modifier = modifier.navigationBarsPadding()
     ) { innerPadding ->
-        val dataAtual = Calendar.getInstance().time
-        val dataFormat = SimpleDateFormat("EEE dd MMM", Locale("pt", "BR"))
-        val dataFormatada = dataFormat.format(dataAtual)
 
         // Container rolável
         Column(
@@ -118,17 +95,11 @@ fun HomeRun(modifier: Modifier = Modifier, navController: NavHostController) {
                     .padding(top = 48.dp, bottom = 48.dp)
                     .fillMaxSize()
             ) {
+
                 Text(
-                    text = "Olá Dalva,",
+                    text = stringResource(id = R.string.saudacaoGrafico, "Dalva"),
                     style = TextStyle(
-                        fontSize = 32.sp,
-                        color = Color.White
-                    )
-                )
-                Text(
-                    text = saudacaoAtual(),
-                    style = TextStyle(
-                        fontSize = 16.sp,
+                        fontSize = 20.sp,
                         color = Color.White
                     )
                 )
@@ -146,14 +117,6 @@ fun HomeRun(modifier: Modifier = Modifier, navController: NavHostController) {
                         style = TextStyle(
                             fontSize = 20.sp,
                             color = Color.White
-                        )
-                    )
-
-                    Text(
-                        text = dataFormatada,
-                        style = TextStyle(
-                            fontSize = 16.sp,
-                            color = Color(0xFFFF3B47)
                         )
                     )
                 }
@@ -314,12 +277,11 @@ fun HomeRun(modifier: Modifier = Modifier, navController: NavHostController) {
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
-fun PreviewGraficos() {
+fun PreviewHome() {
     FittechTheme {
-        HomeRun(
+        TelaGraficosRun(
             navController = rememberNavController()
         )
     }
