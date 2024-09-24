@@ -1,6 +1,7 @@
 package spectrum.fittech.backend.dtos
 
 import java.time.LocalDateTime
+import java.util.Date
 
 data class Usuario(
     val email: String,
@@ -24,6 +25,49 @@ data class AdicionarTopRank(
     val pontuacao : Double,
     val horaSenhaAtualizacao : LocalDateTime,
     val objetivo: Objetivo
+)
+
+data class AtualizarUsuario(
+    val nome: String,
+    val senha: String,
+    val img: String,
+    val genero: String,
+    val peso : Double,
+    val altura : Int,
+    val dataNascimento: String,
+    val meta : String,
+    val nivelCondicao : String
+)
+
+data class AtualizarUsuarioPerfil(
+    val nome: String,
+    val altura : Int,
+    val dataNascimento: String,
+    val meta : String,
+    val nivelCondicao : String
+)
+
+data class AtivarUsuario(
+    val nome: String,
+    val email: String,
+    val img: String,
+    val dataNascimento: LocalDateTime,
+    val genero: String,
+    val peso : Double,
+    val altura : Double,
+    val nivelCondicao : String,
+    val meta : String,
+    val contaAtiva : Boolean,
+    val pontuacao : Double,
+    val objetivo: Objetivo
+)
+
+data class AtualizarImagem(
+    val imageFile : String
+)
+
+data class RespostaRequisicao (
+    val mensagem : String
 )
 
 data class Objetivo (
@@ -60,5 +104,6 @@ data class UsuarioLoginGoogle(
 )
 
 data class RespostaLogin(
-    val token: String
+    val token: String,
+    val userId: Int
 )

@@ -9,9 +9,12 @@ import spectrum.fittech.backend.dtos.Usuario
 import spectrum.fittech.backend.interfaces.ApiInterface
 import retrofit2.Callback
 import retrofit2.Response
+import spectrum.fittech.backend.Object.IdUserManager
 import spectrum.fittech.backend.Object.TokenManager
 import spectrum.fittech.backend.log.client
+import java.text.SimpleDateFormat
 import java.time.LocalDateTime
+import java.util.Date
 
 
 val usuario = Usuario(
@@ -20,6 +23,45 @@ val usuario = Usuario(
     senha = "Madalena13#",
     img = "string"
 )
+
+val formatoData = SimpleDateFormat("yyyy-MM-dd")
+val dataNascimento = formatoData.format(Date(90, 5, 15))
+// Criando uma instância da classe AtualizarUsuario com valores fictícios
+val usuarioAtualizar = AtualizarUsuario(
+    nome = "João Silva",
+    senha = "9242#Rick",
+    img = "https://exemplo.com/imagem.png",
+    genero = "Masculino",
+    peso = 95.5,
+    altura = 175,
+    dataNascimento = "2001-01-10",
+    meta = "Perder peso",
+    nivelCondicao = "Intermediário"
+)
+
+val objetivo = Objetivo(
+    objetivo = "Ganho de Massa"
+)
+
+val usuarioAtivar =  AtivarUsuario(
+    nome = "Lula Molusco",
+    email = "FazOL@gmail.com",
+    img = "SiriSacudo",
+    meta = "Ganho de Massa",
+    dataNascimento = LocalDateTime.now(),
+    genero = "GAY",
+    peso = 20.0,
+    altura =  20.0,
+    nivelCondicao = "GORDOLASCADOMAIORQUESUAMAE",
+    contaAtiva = true,
+    pontuacao = 200000.0,
+    objetivo = objetivo
+)
+
+val atualizarImagemUsuario =  gson.toJson(AtualizarImagem(
+    imageFile = "profile.png"
+))
+
 val usuarioLogin = UsuarioLogin(
     email = "winycios@gmail.com",
     senha = "Madalena13#"
@@ -34,9 +76,7 @@ val usuarioEnvioEmail = EnvioEmailUsuario(
     nome = "Vinicius13"
 )
 
-val objetivo = Objetivo(
-    objetivo = "Ganho de Massa"
-)
+
 val userTopRank =  gson.toJson(AdicionarTopRank(
     nome = "Lula Molusco",
     email = "FazOL@gmail.com",
@@ -59,18 +99,128 @@ fun main() {
     //cadastrarUsuario(usuario);
     //loginUsuarioGoogle(usuarioLoginGoogle);
     //envioEmail(usuarioEnvioEmail);
-
-    loginUsuarioGoogle(usuarioLoginGoogle) { success ->
+    loginUsuario(usuarioLogin) { success ->
         if (success) {
-            println("AQUI PAPAI ${TokenManager.token.toString()}")
-            adicionarRanking(usuario = userTopRank, token = "Bearer ${TokenManager.token.toString()}")
+            println("TOKEN :  ${TokenManager.token.toString()}")
+            println("Id User : ${IdUserManager.userId}")
+
+            //adicionarRanking(usuario = userTopRank, token = "Bearer ${TokenManager.token.toString()}")
+            //ativarUsuario(id = IdUserManager.userId, usuario = usuarioAtivar, token = "Bearer ${TokenManager.token.toString()}" )
+            //atualizarImagem(id = IdUserManager.userId, token = "Bearer ${TokenManager.token.toString()}", atualizarImagemUsuario)
+            atualizarUsuario(id = IdUserManager.userId, token = "Bearer ${TokenManager.token.toString()}", usuarioAtualizar)
         } else {
             println("Login falhou")
         }
     }
 }
 
+fun atualizarUsuario(id: Int?, token: String?, usuario: AtualizarUsuario) {
+    val interfaceUsuario = gerarAmbiente();
 
+    val call = interfaceUsuario.atualizarUsuario(id =  id, token = token, usuario = usuario)
+
+    call.enqueue(object : Callback<RespostaRequisicao> {
+        override fun onResponse(
+            call: Call<RespostaRequisicao>,
+            response: Response<RespostaRequisicao>
+        ) {
+            if(response.isSuccessful){
+                println("Corpo : ${response.body()}")
+            } else {
+                println("Erro ao relaizar atualização : ${response.body()}")
+            }
+        }
+
+        override fun onFailure(call: Call<RespostaRequisicao>, t: Throwable) {
+            println("Falha na requisição. Código de resposta: ${t.message}")
+            return
+        }
+
+    })
+
+}
+
+
+fun atualizarUsuarioPerfil(id: Int?, token: String?, usuario: AtualizarUsuario) {
+    val interfaceUsuario = gerarAmbiente();
+
+    val call = interfaceUsuario.atualizarUsuarioPerfil(id =  id, token = token, usuario = usuario)
+
+    call.enqueue(object : Callback<RespostaRequisicao> {
+        override fun onResponse(
+            call: Call<RespostaRequisicao>,
+            response: Response<RespostaRequisicao>
+        ) {
+            if(response.isSuccessful){
+                println("Corpo : ${response.body()}")
+            } else {
+                println("Erro ao relaizar atualização : ${response.body()}")
+            }
+        }
+
+        override fun onFailure(call: Call<RespostaRequisicao>, t: Throwable) {
+            println("Falha na requisição. Código de resposta: ${t.message}")
+            return
+        }
+
+    })
+
+}
+
+
+
+// PATCHS
+fun atualizarImagem(id: Int?, token: String?, imagem : String) {
+    val interfaceUsuario = gerarAmbiente();
+
+    val call = interfaceUsuario.atualizarImagem(id =  id, token = token, imagem = imagem)
+
+    call.enqueue(object : Callback<RespostaRequisicao> {
+        override fun onResponse(
+            call: Call<RespostaRequisicao>,
+            response: Response<RespostaRequisicao>
+        ) {
+            if(response.isSuccessful) {
+                println("Corpo : ${response.body()}")
+            } else {
+                println("Erro ao atualizar Imagem : ${response.body()}")
+            }
+        }
+
+        override fun onFailure(call: Call<RespostaRequisicao>, t: Throwable) {
+            println("Falha na requisição. Código de resposta: ${t.message}")
+            return
+        }
+    })
+}
+
+fun ativarUsuario(id: Int?, usuario: String, token: String?) {
+    val interfaceUsuario = gerarAmbiente();
+
+    val call = interfaceUsuario.ativarUsuario(id, usuario, token)
+
+    call.enqueue(object : Callback<RespostaRequisicao> {
+        override fun onResponse(
+            call: Call<RespostaRequisicao>,
+            response: Response<RespostaRequisicao>
+        ) {
+            if(response.isSuccessful){
+                println("Resposta : ${response.body()}" )
+            } else {
+                println("Erro ao ativar usuario, corpo : ${response.body()}")
+            }
+        }
+
+        override fun onFailure(call: Call<RespostaRequisicao>, t: Throwable) {
+            println("Falha na requisição. Código de resposta: ${t.message}")
+            return
+        }
+    })
+
+}
+
+
+// POSTS
 fun adicionarRanking(usuario: String, token:String) {
     val interfaceUsuario = gerarAmbiente();
 
@@ -116,8 +266,7 @@ fun envioEmail(usuario:EnvioEmailUsuario) {
     })
 }
 
-
-fun loginUsuario(usuario:UsuarioLogin){
+fun loginUsuario(usuario:UsuarioLogin, callback: (Boolean) -> Unit){
     val interfaceUsuario = gerarAmbiente();
 
     val call = interfaceUsuario.loginUsuario(usuario)
@@ -126,13 +275,18 @@ fun loginUsuario(usuario:UsuarioLogin){
         override fun onResponse(call: Call<RespostaLogin>, response: Response<RespostaLogin>) {
             if(response.isSuccessful) {
                 println("Login realizado com sucesso : ${response.code()}")
+
                 val token = response.body()?.token
+                val idUsuario = response.body()?.userId;
+
+                IdUserManager.saveId(idUsuario) // Armazena o id globalmente
                 TokenManager.saveToken(token) // Armazena o token globalmente
+
                 println("Token armazenado: ${TokenManager.token}")
-                return ;
+                callback(true)
             } else {
                 println("Login não realizado com sucesso : ${response.code()}")
-                return
+                callback(false)
             }
         }
 
@@ -140,9 +294,7 @@ fun loginUsuario(usuario:UsuarioLogin){
             println("Falha na requisição. Código de resposta: ${t.message}")
             return
         }
-
     })
-
 }
 
 fun loginUsuarioGoogle(usuario: UsuarioLoginGoogle, callback: (Boolean) -> Unit) {
@@ -154,10 +306,13 @@ fun loginUsuarioGoogle(usuario: UsuarioLoginGoogle, callback: (Boolean) -> Unit)
             if (response.isSuccessful) {
                 println("Login realizado com sucesso : ${response.code()}")
                 val token = response.body()?.token
+                val idUsuario = response.body()?.userId;
+
+                IdUserManager.saveId(idUsuario)
                 TokenManager.saveToken(token) // Armazena o token globalmente
+
                 println("Token armazenado: ${TokenManager.token}")
                 callback(true)
-
             } else {
                 println("Login não realizado com sucesso : ${response.code()}")
                 callback(false)
@@ -170,7 +325,6 @@ fun loginUsuarioGoogle(usuario: UsuarioLoginGoogle, callback: (Boolean) -> Unit)
         }
     })
 }
-
 
 fun cadastrarUsuario(usuario:Usuario) {
     val interfaceUsuario = gerarAmbiente();
@@ -199,6 +353,10 @@ fun cadastrarUsuario(usuario:Usuario) {
         }
     })
 }
+
+
+
+
 
 /*
     - Metódo responsável para gerar o ambiente para criação dos
