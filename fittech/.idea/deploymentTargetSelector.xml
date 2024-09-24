@@ -5,9 +5,12 @@
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+<<<<<<< HEAD
+=======
       <SelectionState runConfigName="TelaIdioma">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+>>>>>>> cea387793826dda583ce802e054344214274eda4
     </selectionStates>
   </component>
 </project>
