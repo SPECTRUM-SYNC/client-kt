@@ -80,5 +80,6 @@
     <string name="btn_entrar">Entrar</string>
     <string name="title_activity_tela_configuracao">TelaConfiguracao</string>
     <string name="title_activity_tela_notificacao">TelaNotificacao</string>
+    <string name="title_activity_tela_politica_privacidade">TelaPoliticaPrivacidade</string>
 
 </resources>

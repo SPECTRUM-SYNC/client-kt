@@ -13,6 +13,11 @@
         android:theme="@style/Theme.Fittech"
         tools:targetApi="31">
         <activity
+            android:name=".TelaPoliticaPrivacidade"
+            android:exported="true"
+            android:label="@string/title_activity_tela_politica_privacidade"
+            android:theme="@style/Theme.Fittech" />
+        <activity
             android:name=".TelaNotificacao"
             android:exported="true"
             android:label="@string/title_activity_tela_notificacao"
