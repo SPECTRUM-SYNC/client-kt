@@ -145,6 +145,7 @@ fun HomeRun(modifier: Modifier = Modifier, navController: NavHostController) {
                         text = stringResource(id = R.string.txt_plano_treino),
                         style = TextStyle(
                             fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold,
                             color = Color.White
                         )
                     )
@@ -202,6 +203,7 @@ fun HomeRun(modifier: Modifier = Modifier, navController: NavHostController) {
                     text = stringResource(id = R.string.txt_categorias_treino),
                     style = TextStyle(
                         fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
                         color = Color.White
                     )
                 )
@@ -258,6 +260,7 @@ fun HomeRun(modifier: Modifier = Modifier, navController: NavHostController) {
                     text = stringResource(id = R.string.txt_treinos_extras),
                     style = TextStyle(
                         fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
                         color = Color.White
                     )
                 )

@@ -1,5 +1,6 @@
 package spectrum.fittech
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -8,6 +9,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -48,7 +50,6 @@ class TelaPerfil : ComponentActivity() {
             FittechTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     TelaPer(
-                        name = "Dalva Anjos",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -58,7 +59,10 @@ class TelaPerfil : ComponentActivity() {
 }
 
 @Composable
-fun TelaPer(name: String, modifier: Modifier = Modifier) {
+fun TelaPer(modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -80,7 +84,10 @@ fun TelaPer(name: String, modifier: Modifier = Modifier) {
                     .background(Color(0xFF2C2C2E), shape = CircleShape),
                 contentAlignment = Alignment.Center
             ) {
-                IconButton(onClick = { }) {
+                IconButton(onClick = {
+                    val home = Intent(context, Home::class.java)
+                    context.startActivity(home)
+                }) {
                     Icon(
                         painter = rememberAsyncImagePainter(
                             model = ImageRequest.Builder(LocalContext.current)
@@ -121,7 +128,7 @@ fun TelaPer(name: String, modifier: Modifier = Modifier) {
             }
 
             Text(
-                text = "$name",
+                text = "Dalva",
                 style = TextStyle(
                     fontSize = 32.sp,
                     color = Color.White
@@ -292,7 +299,11 @@ fun TelaPer(name: String, modifier: Modifier = Modifier) {
                         fontSize = 16.sp,
                         color = Color(0xFFFF2424),
                         fontWeight = FontWeight.Bold
-                    )
+                    ),
+                    modifier = Modifier.clickable {
+                        val telaLogin = Intent(context, TelaLogin::class.java)
+                        context.startActivity(telaLogin)
+                    }
                 )
             }
 
@@ -313,6 +324,6 @@ fun TelaPer(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun Perfil() {
     FittechTheme {
-        TelaPer("Dalva Anjos")
+        TelaPer()
     }
 }
