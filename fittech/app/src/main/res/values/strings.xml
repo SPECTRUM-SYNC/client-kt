@@ -78,6 +78,9 @@
     <string name="txt_tentar_outra_maneira">Tentar de outra maneira</string>
     <!-- Text for buttons -->
     <string name="btn_entrar">Entrar</string>
+    <string name="title_activity_tela_configuracao">TelaConfiguracao</string>
+    <string name="title_activity_tela_notificacao">TelaNotificacao</string>
+    <string name="title_activity_tela_politica_privacidade">TelaPoliticaPrivacidade</string>
     <string name="title_activity_tela_graficos">TelaGraficos</string>
 
     <!-- Tela de graficos-->
