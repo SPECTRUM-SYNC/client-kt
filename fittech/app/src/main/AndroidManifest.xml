@@ -13,6 +13,16 @@
         android:theme="@style/Theme.Fittech"
         tools:targetApi="31">
         <activity
+            android:name=".TelaNotificacao"
+            android:exported="true"
+            android:label="@string/title_activity_tela_notificacao"
+            android:theme="@style/Theme.Fittech" />
+        <activity
+            android:name=".TelaConfiguracao"
+            android:exported="true"
+            android:label="@string/title_activity_tela_configuracao"
+            android:theme="@style/Theme.Fittech" />
+        <activity
             android:name=".TelaIdioma"
             android:exported="true"
             android:label="@string/title_activity_tela_idioma"
