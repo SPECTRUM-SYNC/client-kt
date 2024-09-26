@@ -59,7 +59,7 @@ fun BottomNavigationBar(navController: NavHostController, modifier: Modifier, te
                     )
                 }
 
-                IconButton(onClick = { navController.navigate("Home") }) {
+                IconButton(onClick = { navController.navigate("Ranking") }) {
                     Icon(
                         painter = rememberAsyncImagePainter(
                             model = ImageRequest.Builder(LocalContext.current)

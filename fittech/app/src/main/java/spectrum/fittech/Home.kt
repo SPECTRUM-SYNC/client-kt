@@ -71,6 +71,7 @@ class Home : ComponentActivity() {
                         )
                     }
                     composable("TelaGraficos") { TelaGraficosRun(navController = navController) }
+                    composable("Ranking") { RankingRun(navController = navController) }
                     composable("TelaPerfil") { TelaPer() }
 
                 }
