@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Fittech"
         tools:targetApi="31">
+
         <activity
             android:name=".Ranking"
             android:exported="false"

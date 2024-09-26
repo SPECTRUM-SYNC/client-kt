@@ -147,7 +147,10 @@ fun TelaInicialTres(name: String, modifier: Modifier = Modifier) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    Text(text = stringResource(id = R.string.btn_init))
+                    Text(text = stringResource(id = R.string.btn_init)
+                        ,style = TextStyle(
+                            color = Color.White
+                        ))
                     Spacer(modifier = Modifier.width(0.dp)) // Espaçamento entre o texto e a imagem
                     Image(
                         painter = painterResource(id = R.mipmap.setadireita),

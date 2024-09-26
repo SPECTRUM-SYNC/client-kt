@@ -25,6 +25,8 @@ import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import spectrum.fittech.R
 
+
+// Barra de navegação
 @Composable
 fun BottomNavigationBar(navController: NavHostController, modifier: Modifier, telaAtual: String) {
     Column {

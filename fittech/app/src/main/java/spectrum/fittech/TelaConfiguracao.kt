@@ -1,10 +1,12 @@
 package spectrum.fittech
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,7 +30,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import spectrum.fittech.componentes.BotaoTelaPerfil
 import spectrum.fittech.ui.theme.FittechTheme
 
 class TelaConfiguracao : ComponentActivity() {
@@ -59,7 +61,7 @@ class TelaConfiguracao : ComponentActivity() {
 
 @Composable
 fun TelaConfiguracao(name: String, modifier: Modifier = Modifier) {
-
+    val context = LocalContext.current
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
 
     Column (
@@ -79,30 +81,11 @@ fun TelaConfiguracao(name: String, modifier: Modifier = Modifier) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             // Botão voltar
-            Box(
-                modifier = Modifier
-                    .size(56.dp)
-                    .background(Color(0xFF2C2C2E), shape = CircleShape),
-                contentAlignment = Alignment.Center
-            ) {
-                IconButton(onClick = { }) {
-                    Icon(
-                        painter = rememberAsyncImagePainter(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("android.resource://spectrum.fittech/raw/setaesquerda")
-                                .decoderFactory(SvgDecoder.Factory())
-                                .build()
-                        ),
-                        contentDescription = "Home",
-                        modifier = Modifier.size(24.dp),
-                        tint = Color.White
-                    )
-                }
-            }
+            BotaoTelaPerfil()
 
             Text(
                 text = "Configurações",
-                style = androidx.compose.ui.text.TextStyle(
+                style = TextStyle(
                     fontSize = 24.sp,
                     color = Color.White,
                     fontWeight = FontWeight.Bold
@@ -130,7 +113,11 @@ fun TelaConfiguracao(name: String, modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp)
-                    .padding(vertical = 8.dp),
+                    .padding(vertical = 8.dp)
+                    .clickable {
+                        val notificacao = Intent(context, TelaNotificacao::class.java)
+                        context.startActivity(notificacao)
+                    },
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -170,7 +157,11 @@ fun TelaConfiguracao(name: String, modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp)
-                    .padding(vertical = 8.dp),
+                    .padding(vertical = 8.dp).
+                clickable {
+                    val idioma = Intent(context, TelaIdioma::class.java)
+                    context.startActivity(idioma)
+                },
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {

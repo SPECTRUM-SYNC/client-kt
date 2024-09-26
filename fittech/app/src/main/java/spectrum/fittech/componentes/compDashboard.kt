@@ -51,6 +51,8 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+
+// Modal para atualização de peso do usuario
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ModalPeso(isDialogOpen: MutableState<Boolean>) {
@@ -191,6 +193,7 @@ fun ModalPeso(isDialogOpen: MutableState<Boolean>) {
 }
 
 
+// componente criado para mostrar o que o usuario fará no dia
 @Composable
 fun DayItem(
     dayName: Int,

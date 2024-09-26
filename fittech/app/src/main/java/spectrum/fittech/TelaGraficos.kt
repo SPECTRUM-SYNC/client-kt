@@ -14,15 +14,14 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -47,14 +46,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
-import spectrum.fittech.ui.theme.FittechTheme
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import spectrum.fittech.componentes.BottomNavigationBar
 import spectrum.fittech.componentes.DayItem
 import spectrum.fittech.componentes.ModalPeso
+import spectrum.fittech.componentes.TelaRankingPerfil
 import spectrum.fittech.componentes.charts.BarChart
 import spectrum.fittech.componentes.charts.LineGraph
+import spectrum.fittech.ui.theme.FittechTheme
 
 class TelaGraficos : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,6 +72,12 @@ class TelaGraficos : ComponentActivity() {
                     }
                     composable("Home") { HomeRun(navController = navController) }
                     composable("TelaPerfil") { TelaPer() }
+                    composable("TelaRankingPerfil/{userId}") { backStackEntry ->
+                        TelaRankingPerfil(
+                            navController = navController,
+                            userId = backStackEntry.arguments?.getString("userId")
+                        )
+                    }
                 }
 
             }

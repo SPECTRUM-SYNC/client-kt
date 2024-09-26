@@ -13,35 +13,27 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Icon
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -49,11 +41,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import coil.compose.rememberAsyncImagePainter
-import coil.decode.SvgDecoder
-import coil.request.ImageRequest
 import spectrum.fittech.componentes.BottomNavigationBar
 import spectrum.fittech.componentes.RankingUser
+import spectrum.fittech.componentes.TelaRankingPerfil
 import spectrum.fittech.componentes.UserLevelProgressBar
 import spectrum.fittech.ui.theme.FittechTheme
 
@@ -74,10 +64,16 @@ class Ranking : ComponentActivity() {
                     composable("Home") { HomeRun(navController = navController) }
                     composable("TelaGraficos") { TelaGraficosRun(navController = navController) }
                     composable("TelaPerfil") { TelaPer() }
+                    composable("TelaRankingPerfil/{userId}") { backStackEntry ->
+                        TelaRankingPerfil(
+                            navController = navController,
+                            userId = backStackEntry.arguments?.getString("userId")
+                        )
+                    }
                 }
-
             }
         }
+
     }
 }
 
@@ -100,7 +96,6 @@ fun RankingRun(modifier: Modifier = Modifier, navController: NavHostController) 
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -125,7 +120,6 @@ fun RankingRun(modifier: Modifier = Modifier, navController: NavHostController) 
                             .clip(CircleShape)
                     )
                 }
-
                 Text(
                     text = "Dalva Anjos",
                     style = TextStyle(
@@ -136,9 +130,7 @@ fun RankingRun(modifier: Modifier = Modifier, navController: NavHostController) 
                         .padding(start = 25.dp)
                 )
             }
-
             Spacer(modifier = Modifier.height(12.dp))
-
             Row(
                 modifier = Modifier
                     .fillMaxWidth(),
@@ -153,7 +145,6 @@ fun RankingRun(modifier: Modifier = Modifier, navController: NavHostController) 
                         fontWeight = FontWeight.SemiBold
                     ),
                 )
-
                 Text(
                     text = "5",
                     style = TextStyle(
@@ -162,9 +153,7 @@ fun RankingRun(modifier: Modifier = Modifier, navController: NavHostController) 
                     ),
                 )
             }
-
             Spacer(modifier = Modifier.height(12.dp))
-
             Row(
                 modifier = Modifier
                     .fillMaxWidth(),
@@ -179,7 +168,6 @@ fun RankingRun(modifier: Modifier = Modifier, navController: NavHostController) 
                         fontWeight = FontWeight.SemiBold
                     ),
                 )
-
                 Text(
                     text = "575",
                     style = TextStyle(
@@ -188,13 +176,9 @@ fun RankingRun(modifier: Modifier = Modifier, navController: NavHostController) 
                     ),
                 )
             }
-
             Spacer(modifier = Modifier.height(12.dp))
-
             UserLevelProgressBar(level = 3, maxLevel = 100)
-
             Spacer(modifier = Modifier.height(12.dp))
-
             Row(
                 modifier = Modifier
                     .fillMaxWidth(),
@@ -214,50 +198,60 @@ fun RankingRun(modifier: Modifier = Modifier, navController: NavHostController) 
             //Ranking
 
             RankingUser(
+                navController = navController,
                 nome = "Dalva Anjos",
                 posicao = 1,
                 level = 3,
                 maxLevel = 100,
                 foto = 0,
-                color = colorResource(id = R.color.gold)
+                color = colorResource(id = R.color.gold),
+                userId = "1"
             )
 
 
             RankingUser(
+                navController = navController,
                 nome = "Catia damasceno",
                 posicao = 2,
                 level = 7,
                 maxLevel = 100,
                 foto = 0,
-                color = colorResource(id = R.color.silver)
+                color = colorResource(id = R.color.silver),
+                userId = "2"
             )
 
 
             RankingUser(
+                navController = navController,
                 nome = "Chupa caua",
                 posicao = 3,
                 level = 3,
                 maxLevel = 100,
                 foto = 0,
-                color = colorResource(id = R.color.bronze)
+                color = colorResource(id = R.color.bronze),
+                userId = "3"
             )
 
             RankingUser(
+                navController = navController,
                 nome = "Gabriel me mama",
                 posicao = 4,
                 level = 3,
                 maxLevel = 100,
                 foto = 0,
-                color = colorResource(id = R.color.platinum)
+                color = colorResource(id = R.color.platinum),
+                userId = "4"
             )
 
             RankingUser(
+                navController = navController,
                 nome = "AAAAAiiiiiinnn Diogoooo",
                 posicao = 4,
                 level = 3,
                 maxLevel = 100,
                 foto = 0,
-                color = colorResource(id = R.color.platinum)
+                color = colorResource(id = R.color.platinum),
+                userId = "5"
             )
         }
     }

@@ -9,32 +9,22 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults.indicatorLine
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -46,15 +36,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import coil.compose.rememberAsyncImagePainter
+import spectrum.fittech.componentes.BottomNavigationBar
+import spectrum.fittech.componentes.TelaRankingPerfil
 import spectrum.fittech.ui.theme.FittechTheme
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
-import coil.compose.rememberImagePainter
-import coil.decode.SvgDecoder
-import coil.request.ImageRequest
-import spectrum.fittech.componentes.BottomNavigationBar
 
 class Home : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +60,12 @@ class Home : ComponentActivity() {
                     composable("TelaGraficos") { TelaGraficosRun(navController = navController) }
                     composable("Ranking") { RankingRun(navController = navController) }
                     composable("TelaPerfil") { TelaPer() }
-
+                    composable("TelaRankingPerfil/{userId}") { backStackEntry ->
+                        TelaRankingPerfil(
+                            navController = navController,
+                            userId = backStackEntry.arguments?.getString("userId")
+                        )
+                    }
                 }
             }
         }

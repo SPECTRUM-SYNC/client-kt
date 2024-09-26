@@ -1,5 +1,6 @@
 package spectrum.fittech
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -68,6 +69,8 @@ class TelaNotificacao : ComponentActivity() {
 @Composable
 fun TelaNotificacao(name: String, modifier: Modifier = Modifier) {
 
+    val context = LocalContext.current
+
     var isCheckedLembreteTreino by remember { mutableStateOf(false) }
     var isCheckedProgramarNotificacao by remember { mutableStateOf(false) }
     var isCheckedTreinosNovos by remember { mutableStateOf(false) }
@@ -97,7 +100,10 @@ fun TelaNotificacao(name: String, modifier: Modifier = Modifier) {
                     .background(Color(0xFF2C2C2E), shape = CircleShape),
                 contentAlignment = Alignment.Center
             ) {
-                IconButton(onClick = { }) {
+                IconButton(onClick = {
+                    val conf = Intent(context, TelaConfiguracao::class.java)
+                    context.startActivity(conf)
+                }) {
                     Icon(
                         painter = rememberAsyncImagePainter(
                             model = ImageRequest.Builder(LocalContext.current)

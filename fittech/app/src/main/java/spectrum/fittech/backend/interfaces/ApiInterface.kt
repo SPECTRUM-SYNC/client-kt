@@ -9,7 +9,18 @@ import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
-import spectrum.fittech.backend.dtos.*
+import spectrum.fittech.backend.dtos.AtualizarUsuario
+import spectrum.fittech.backend.dtos.AtualizarUsuarioPerfil
+import spectrum.fittech.backend.dtos.EnvioEmailUsuario
+import spectrum.fittech.backend.dtos.RespostaCadastro
+import spectrum.fittech.backend.dtos.RespostaEnvioEmail
+import spectrum.fittech.backend.dtos.RespostaLogin
+import spectrum.fittech.backend.dtos.RespostaRank
+import spectrum.fittech.backend.dtos.RespostaRequisicao
+import spectrum.fittech.backend.dtos.Usuario
+import spectrum.fittech.backend.dtos.UsuarioGet
+import spectrum.fittech.backend.dtos.UsuarioLogin
+import spectrum.fittech.backend.dtos.UsuarioLoginGoogle
 
 interface ApiInterface {
     @POST("usuarios")

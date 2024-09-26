@@ -123,7 +123,11 @@
     <string name="texto_ranking_h1">Ranking Geral</string>
     <string name="texto_ranking_posicao">#\n%d</string>
     <string name="texto_ranking_posicao_ponto">%d\n%d</string>
-
+    <string name="texto_ranking_idade">Idade: </string>
+    <string name="texto_ranking_objetivo">Objetivo: </string>
+    <string name="texto_ranking_meta">Meta: </string>
+    <string name="texto_ranking_treino">Treino preferido: </string>
+    <string name="title_activity_tela_ranking_perfil">TelaRankingPerfil</string>
 
 
 </resources>
