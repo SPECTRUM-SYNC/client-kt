@@ -107,20 +107,128 @@ fun main() {
     //cadastrarUsuario(usuario);
     //loginUsuarioGoogle(usuarioLoginGoogle);
     //envioEmail(usuarioEnvioEmail);
-    loginUsuario(usuarioLogin) { success ->
-        if (success) {
-            println("TOKEN :  ${TokenManager.token.toString()}")
-            println("Id User : ${IdUserManager.userId}")
-
+    //loginUsuario(usuarioLogin) { success ->
+      //  if (success) {
             //adicionarRanking(usuario = userTopRank, token = "Bearer ${TokenManager.token.toString()}")
             //ativarUsuario(id = IdUserManager.userId, usuario = usuarioAtivar, token = "Bearer ${TokenManager.token.toString()}" )
             //atualizarImagem(id = IdUserManager.userId, token = "Bearer ${TokenManager.token.toString()}", atualizarImagemUsuario)
             //atualizarUsuario(id = IdUserManager.userId, token = "Bearer ${TokenManager.token.toString()}", usuarioAtualizar)
-            atualizarUsuarioPerfil(id = IdUserManager.userId, token = "Bearer ${TokenManager.token.toString()}", usuarioAtualizarPerfil)
-        } else {
-            println("Login falhou")
-        }
+            //atualizarUsuarioPerfil(id = IdUserManager.userId, token = "Bearer ${TokenManager.token.toString()}", usuarioAtualizarPerfil)
+            //atualizarUsuarioPontuacao(id = IdUserManager.userId, token = "Bearer ${TokenManager.token.toString()}")
+            //obterUsuario(id = IdUserManager.userId, token = "Bearer ${TokenManager.token.toString()}")
+    //    } else {
+      //      println("Login falhou")
+       // }
+    //}
+
+    obterTodosUsuarios() { resultado ->
+        println(resultado)  // Resultado será impresso aqui
     }
+}
+
+// GETs
+
+fun obterUsuario(id: Int?, token: String?) {
+    val interfaceUsuario = gerarAmbiente();
+
+    val call = interfaceUsuario.obterUsuario(id =  id, token = token)
+
+    call.enqueue(object : Callback<UsuarioGet> {
+        override fun onResponse(
+            call: Call<UsuarioGet>,
+            response: Response<UsuarioGet>
+        ) {
+            if(response.isSuccessful){
+                println("status : ${response.code()}")
+                //println("Corpo : ${response.body()}")
+                val usuario: UsuarioGet? = response.body()
+                println("usuario no obj = " + usuario);
+            } else {
+                println("Erro ao realizar consulta Usuario: ${response.body()}")
+            }
+        }
+
+        override fun onFailure(call: Call<UsuarioGet>, t: Throwable) {
+            println("Falha na obtenção Usuário. Código de resposta: ${t.message}")
+            return
+        }
+
+    })
+
+}
+
+fun obterTodosUsuarios(callback: (String) -> Unit) {
+    val interfaceUsuario = gerarAmbiente()
+
+    // Chamada para obter todos os usuários
+    val call = interfaceUsuario.obterTodosUsuarios()
+
+    call.enqueue(object : Callback<List<UsuarioGet>> {
+        override fun onResponse(
+            call: Call<List<UsuarioGet>>,
+            response: Response<List<UsuarioGet>>
+        ) {
+            if (response.isSuccessful) {
+                // Obtém o corpo da resposta como uma lista de UsuarioGet
+                val usuarios: List<UsuarioGet>? = response.body()
+
+                // Cria uma StringBuilder para acumular as informações dos usuários
+                val resultado = StringBuilder()
+
+                if (usuarios != null && usuarios.isNotEmpty()) {
+                    resultado.append("Lista de usuários obtida com sucesso:\n")
+                    // Itera sobre a lista e acumula os detalhes de cada usuário na StringBuilder
+                    for (usuario in usuarios) {
+                        resultado.append("ID: ${usuario.id}, Nome: ${usuario.nome}, Email: ${usuario.email}\n")
+                    }
+                } else {
+                    resultado.append("A lista de usuários está vazia ou é nula.\n")
+                }
+
+                // Retorna a String via callback
+                callback(resultado.toString())
+            } else {
+                // Em caso de erro, retorna a mensagem de erro via callback
+                val erro = "Erro ao realizar consulta de Usuários: Código ${response.code()} - ${response.message()}\n"
+                callback(erro)
+            }
+        }
+
+        override fun onFailure(call: Call<List<UsuarioGet>>, t: Throwable) {
+            // Em caso de falha na requisição, retorna a mensagem de falha via callback
+            val falha = "Falha na obtenção da lista de Usuários: ${t.message}\n"
+            callback(falha)
+        }
+    })
+}
+
+private fun <T> Call<T>.enqueue(callback: Callback<List<T>>) {}
+
+// PUTs
+
+fun atualizarUsuarioPontuacao(id: Int?, token: String?) {
+    val interfaceUsuario = gerarAmbiente();
+
+    val call = interfaceUsuario.atualizarUsuarioPontuacao(id =  id, token = token)
+
+    call.enqueue(object : Callback<RespostaRequisicao> {
+        override fun onResponse(
+            call: Call<RespostaRequisicao>,
+            response: Response<RespostaRequisicao>
+        ) {
+            if(response.isSuccessful){
+                println("Corpo : ${response.code()}")
+            } else {
+                println("Erro ao realizar atualização Perfil: ${response.body()}")
+            }
+        }
+
+        override fun onFailure(call: Call<RespostaRequisicao>, t: Throwable) {
+            println("Falha na requisição. Código de resposta: ${t.message}")
+            return
+        }
+
+    })
 }
 
 fun atualizarUsuario(id: Int?, token: String?, usuario: AtualizarUsuario) {
@@ -149,7 +257,6 @@ fun atualizarUsuario(id: Int?, token: String?, usuario: AtualizarUsuario) {
 
 }
 
-
 fun atualizarUsuarioPerfil(id: Int?, token: String?, usuario: AtualizarUsuarioPerfil) {
     val interfaceUsuario = gerarAmbiente();
 
@@ -161,9 +268,9 @@ fun atualizarUsuarioPerfil(id: Int?, token: String?, usuario: AtualizarUsuarioPe
             response: Response<RespostaRequisicao>
         ) {
             if(response.isSuccessful){
-                println("Corpo : ${response.body()}")
+                println("Deu bom");
             } else {
-                println("Erro ao relaizar atualização : ${response.body()}")
+                println("Erro ao realizar atualização : ${response.body()}")
             }
         }
 
@@ -257,7 +364,7 @@ fun envioEmail(usuario:EnvioEmailUsuario) {
     val interfaceUsuario = gerarAmbiente();
 
     val call = interfaceUsuario.envioEmailRedefinicao(usuario)
-    
+
     call.enqueue(object : Callback<RespostaEnvioEmail>  {
         override fun onResponse(call: Call<RespostaEnvioEmail>, response: Response<RespostaEnvioEmail>){
             if(response.isSuccessful) {

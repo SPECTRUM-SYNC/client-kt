@@ -47,6 +47,7 @@ data class AtualizarUsuarioPerfil(
     val nivelCondicao : String
 )
 
+
 data class AtivarUsuario(
     val nome: String,
     val email: String,
@@ -71,6 +72,11 @@ data class RespostaRequisicao (
 )
 
 data class Objetivo (
+    val objetivo : String
+)
+
+data class ObjetivoUsuario (
+    val id : Int,
     val objetivo : String
 )
 
@@ -106,4 +112,21 @@ data class UsuarioLoginGoogle(
 data class RespostaLogin(
     val token: String,
     val userId: Int
+)
+
+
+data class UsuarioGet(
+    val id: Int,
+    val nome: String,
+    val email: String,
+    val img: String?,
+    val dataNascimento: String, // Usar String para lidar diretamente com o formato da API
+    val genero: String,
+    val peso: Double,
+    val altura: Int, // Mudança de Double para Int
+    val nivelCondicao: String,
+    val meta: String,
+    val contaAtiva: Boolean,
+    val pontuacao: Double,
+    val objetivo: ObjetivoUsuario
 )
