@@ -113,6 +113,7 @@
     <string name="ipt_peso_data">Dia atual:\n</string>
     <string name="txt_cancel">Cancelar</string>
     <string name="txt_h1_modal_peso">Atualização de Peso</string>
+    <string name="title_activity_tela_editar_perfil">TelaEditarPerfil</string>
 
 
 </resources>
