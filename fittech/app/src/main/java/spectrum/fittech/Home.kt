@@ -54,6 +54,7 @@ import java.util.Locale
 import coil.compose.rememberImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import spectrum.fittech.componentes.BottomNavigationBar
 
 class Home : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,11 +64,15 @@ class Home : ComponentActivity() {
             FittechTheme {
                 val navController = rememberNavController()
                 NavHost(navController = navController, startDestination = "Home") {
-                    composable("Home") { HomeRun(
-                        name = "Dalva",
-                        modifier = Modifier.fillMaxSize(),
-                        navController = navController
-                    ) }
+                    composable("Home") {
+                        HomeRun(
+                            modifier = Modifier.fillMaxSize(),
+                            navController = navController
+                        )
+                    }
+                    composable("TelaGraficos") { TelaGraficosRun(navController = navController) }
+                    composable("TelaPerfil") { TelaPer() }
+
                 }
             }
         }
@@ -85,9 +90,9 @@ fun saudacaoAtual(): String {
 }
 
 @Composable
-fun HomeRun(name: String, modifier: Modifier = Modifier, navController: NavHostController) {
+fun HomeRun(modifier: Modifier = Modifier, navController: NavHostController) {
     Scaffold(
-        bottomBar = { BottomNavigationBar(navController = navController) },
+        bottomBar = { BottomNavigationBar(navController = navController, modifier, "Home") },
         modifier = modifier.navigationBarsPadding()
     ) { innerPadding ->
         val dataAtual = Calendar.getInstance().time
@@ -109,11 +114,12 @@ fun HomeRun(name: String, modifier: Modifier = Modifier, navController: NavHostC
             Column(
                 verticalArrangement = Arrangement.spacedBy(4.dp),
                 horizontalAlignment = Alignment.Start,
-                modifier = Modifier.padding(top = 48.dp, bottom = 48.dp)
+                modifier = Modifier
+                    .padding(top = 48.dp, bottom = 48.dp)
                     .fillMaxSize()
             ) {
                 Text(
-                    text = "Olá $name,",
+                    text = "Olá Dalva,",
                     style = TextStyle(
                         fontSize = 32.sp,
                         color = Color.White
@@ -139,6 +145,7 @@ fun HomeRun(name: String, modifier: Modifier = Modifier, navController: NavHostC
                         text = stringResource(id = R.string.txt_plano_treino),
                         style = TextStyle(
                             fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold,
                             color = Color.White
                         )
                     )
@@ -160,7 +167,8 @@ fun HomeRun(name: String, modifier: Modifier = Modifier, navController: NavHostC
                     Image(
                         painter = painterResource(id = R.mipmap.esteira),
                         contentDescription = "Esteira",
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier
+                            .fillMaxSize()
                             .alpha(0.6f)
                     )
 
@@ -195,6 +203,7 @@ fun HomeRun(name: String, modifier: Modifier = Modifier, navController: NavHostC
                     text = stringResource(id = R.string.txt_categorias_treino),
                     style = TextStyle(
                         fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
                         color = Color.White
                     )
                 )
@@ -251,6 +260,7 @@ fun HomeRun(name: String, modifier: Modifier = Modifier, navController: NavHostC
                     text = stringResource(id = R.string.txt_treinos_extras),
                     style = TextStyle(
                         fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
                         color = Color.White
                     )
                 )
@@ -308,100 +318,11 @@ fun HomeRun(name: String, modifier: Modifier = Modifier, navController: NavHostC
 }
 
 
-@Composable
-fun BottomNavigationBar(navController: NavHostController) {
-    Column {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(2.dp)
-                .background(Color(0xFF2C2C2E))
-        )
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color(0xFF1C1C1E))
-                .padding(vertical = 8.dp)
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                IconButton(onClick = { navController.navigate("Home") }) {
-                    Icon(
-                        painter = rememberAsyncImagePainter(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("android.resource://spectrum.fittech/raw/home")
-                                .decoderFactory(SvgDecoder.Factory())
-                                .build()
-                        ),
-                        contentDescription = "Home",
-                        modifier = Modifier.size(24.dp),
-                        tint = Color.Unspecified
-                    )
-                }
-
-                IconButton(onClick = { navController.navigate("Home") }) {
-                    Icon(
-                        painter = rememberAsyncImagePainter(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("android.resource://spectrum.fittech/raw/ranking")
-                                .decoderFactory(SvgDecoder.Factory())
-                                .build()
-                        ),
-                        contentDescription = "Ranking",
-                        modifier = Modifier.size(24.dp),
-                        tint = Color.Unspecified
-                    )
-                }
-
-                IconButton(onClick = { navController.navigate("Home") }) {
-                    Icon(
-                        painter = rememberAsyncImagePainter(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("android.resource://spectrum.fittech/raw/dashboards")
-                                .decoderFactory(SvgDecoder.Factory())
-                                .build()
-                        ),
-                        contentDescription = "Dashboards",
-                        modifier = Modifier.size(24.dp),
-                        tint = Color.Unspecified
-                    )
-                }
-
-                IconButton(onClick = { navController.navigate("Home") }) {
-                    Icon(
-                        painter = rememberAsyncImagePainter(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("android.resource://spectrum.fittech/raw/nutri")
-                                .decoderFactory(SvgDecoder.Factory())
-                                .build()
-                        ),
-                        contentDescription = "Nutri",
-                        modifier = Modifier.size(24.dp),
-                        tint = Color.Unspecified
-                    )
-                }
-
-                IconButton(onClick = { navController.navigate("Home") }) {
-                    Image(
-                        painter = painterResource(id = R.mipmap.dalva),
-                        contentDescription = "Profile",
-                        modifier = Modifier.size(24.dp)
-                    )
-                }
-            }
-        }
-    }
-}
-
 @Preview(showBackground = true)
 @Composable
-fun PreviewHome() {
+fun PreviewGraficos() {
     FittechTheme {
         HomeRun(
-            name = "Dalva",
             navController = rememberNavController()
         )
     }

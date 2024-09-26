@@ -4,13 +4,18 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
+        <DropdownSelection timestamp="2024-09-25T03:48:29.730258400Z">
+          <Target type="DEFAULT_BOOT">
+            <handle>
+              <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\User\.android\avd\Medium_Phone_API_35.avd" />
+            </handle>
+          </Target>
+        </DropdownSelection>
+        <DialogSelection />
       </SelectionState>
-<<<<<<< HEAD
-=======
-      <SelectionState runConfigName="TelaIdioma">
+      <SelectionState runConfigName="TelaPoliticaPrivacidade">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
->>>>>>> cea387793826dda583ce802e054344214274eda4
     </selectionStates>
   </component>
 </project>

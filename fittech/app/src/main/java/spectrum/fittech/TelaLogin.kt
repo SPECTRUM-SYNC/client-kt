@@ -70,7 +70,7 @@ class TelaLogin : ComponentActivity() {
                     modifier = Modifier
                         .fillMaxSize()
                 ) { innerPadding ->
-                    TelaLog (
+                    TelaLog(
                         name = "Dalva",
                         modifier = Modifier.padding(innerPadding)
                     )
@@ -88,7 +88,8 @@ fun TelaLog(name: String, modifier: Modifier = Modifier) {
     var senha by remember { mutableStateOf("") }
     var senhaInvalida by remember { mutableStateOf(false) }
     var textWidth by remember { mutableStateOf(0f) }
-    val senhaValidaRegex = Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@\$!%*?&])[A-Za-z\\d@\$!%*?&]{8,}\$")
+    val senhaValidaRegex =
+        Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@\$!%*?&])[A-Za-z\\d@\$!%*?&]{8,}\$")
 
     val context = LocalContext.current
 
@@ -100,123 +101,124 @@ fun TelaLog(name: String, modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(with(LocalConfiguration.current) { screenHeightDp.dp * 0.5f })
-                        .clip(
-                            GenericShape { size, _ ->
-                                moveTo(0f, 0f)
-                                lineTo(size.width, 0f)
-                                lineTo(size.width, size.height * 0.8f)
-                                lineTo(0f, size.height)
-                                close()
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(with(LocalConfiguration.current) { screenHeightDp.dp * 0.5f })
+                .clip(
+                    GenericShape { size, _ ->
+                        moveTo(0f, 0f)
+                        lineTo(size.width, 0f)
+                        lineTo(size.width, size.height * 0.8f)
+                        lineTo(0f, size.height)
+                        close()
+                    }
+                )
+
+        ) {
+            Image(
+                painter = painterResource(id = R.mipmap.backgroundlogin),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .alpha(0.5f),
+                contentScale = ContentScale.Crop
+            )
+
+            // Conteúdo da tela (Rows e Columns)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 48.dp)
+                    .padding(horizontal = 32.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                // Primeiro Row contendo Login e Cadastrar
+                Row(
+                    modifier = Modifier,
+                    horizontalArrangement = Arrangement.spacedBy(24.dp)
+                ) {
+                    Column {
+                        Text(
+                            text = stringResource(id = R.string.txt_login),
+                            style = TextStyle(
+                                fontSize = 16.sp,
+                                color = Color.White
+                            ),
+                            modifier = Modifier.onGloballyPositioned { coordinates: LayoutCoordinates ->
+                                textWidth = coordinates.size.width.toFloat()
                             }
                         )
 
-                ) {
-                    Image(
-                        painter = painterResource(id = R.mipmap.backgroundlogin),
-                        contentDescription = null,
-                        modifier = Modifier.fillMaxSize()
-                            .alpha(0.5f),
-                        contentScale = ContentScale.Crop
-                    )
+                        Spacer(modifier = Modifier.height(8.dp))
 
-                    // Conteúdo da tela (Rows e Columns)
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 48.dp)
-                            .padding(horizontal = 32.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        // Primeiro Row contendo Login e Cadastrar
-                        Row(
-                            modifier = Modifier,
-                            horizontalArrangement = Arrangement.spacedBy(24.dp)
-                        ) {
-                            Column {
-                                Text(
-                                    text = stringResource(id = R.string.txt_login),
-                                    style = TextStyle(
-                                        fontSize = 16.sp,
-                                        color = Color.White
-                                    ),
-                                    modifier = Modifier.onGloballyPositioned { coordinates: LayoutCoordinates ->
-                                        textWidth = coordinates.size.width.toFloat()
-                                    }
-                                )
-
-                                Spacer(modifier = Modifier.height(8.dp))
-
-                                Box(
-                                    modifier = Modifier
-                                        .width(with(LocalDensity.current) { textWidth.toDp() })
-                                        .height(4.dp)
-                                        .background(Color(0xFFFF3B47), shape = RectangleShape)
-                                )
-                            }
-
-                            Text(
-                                text = stringResource(id = R.string.txt_cadastrar),
-                                modifier = Modifier.clickable {
-                                    val telaCadastro = Intent(context, TelaCadastro::class.java)
-                                    context.startActivity(telaCadastro)
-                                },
-                                style = TextStyle(
-                                    fontSize = 16.sp,
-                                    color = Color.White
-                                )
-                            )
-                        }
-
-                        // Imagem com borda circular
                         Box(
                             modifier = Modifier
-                                .size(56.dp)
-                                .border(
-                                    BorderStroke(1.dp, Color.White),
-                                    shape = CircleShape
-                                ),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.mipmap.dalva),
-                                contentDescription = "Dalva",
-                                modifier = Modifier
-                                    .size(50.dp)
-                                    .clip(CircleShape)
-                            )
-                        }
+                                .width(with(LocalDensity.current) { textWidth.toDp() })
+                                .height(4.dp)
+                                .background(Color(0xFFFF3B47), shape = RectangleShape)
+                        )
                     }
 
-                    // Coluna contendo textos
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(4.dp),
-                        horizontalAlignment = Alignment.Start,
-                        modifier = Modifier
-                            .padding(top = with(LocalConfiguration.current) { screenHeightDp.dp * 0.33f })
-                            .padding(horizontal = 32.dp)
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.txt_bem_vinda_login),
-                            style = TextStyle(
-                                fontSize = 32.sp,
-                                color = Color.White
-                            )
+                    Text(
+                        text = stringResource(id = R.string.txt_cadastrar),
+                        modifier = Modifier.clickable {
+                            val telaCadastro = Intent(context, TelaCadastro::class.java)
+                            context.startActivity(telaCadastro)
+                        },
+                        style = TextStyle(
+                            fontSize = 16.sp,
+                            color = Color.White
                         )
-                        Text(
-                            text = "$name",
-                            style = TextStyle(
-                                fontSize = 32.sp,
-                                color = Color.White,
-                                fontWeight = FontWeight.Bold
-                            )
-                        )
-                    }
+                    )
                 }
+
+                // Imagem com borda circular
+                Box(
+                    modifier = Modifier
+                        .size(56.dp)
+                        .border(
+                            BorderStroke(1.dp, Color.White),
+                            shape = CircleShape
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        painter = painterResource(id = R.mipmap.dalva),
+                        contentDescription = "Dalva",
+                        modifier = Modifier
+                            .size(50.dp)
+                            .clip(CircleShape)
+                    )
+                }
+            }
+
+            // Coluna contendo textos
+            Column(
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+                horizontalAlignment = Alignment.Start,
+                modifier = Modifier
+                    .padding(top = with(LocalConfiguration.current) { screenHeightDp.dp * 0.33f })
+                    .padding(horizontal = 32.dp)
+            ) {
+                Text(
+                    text = stringResource(id = R.string.txt_bem_vinda_login),
+                    style = TextStyle(
+                        fontSize = 32.sp,
+                        color = Color.White
+                    )
+                )
+                Text(
+                    text = "$name",
+                    style = TextStyle(
+                        fontSize = 32.sp,
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+            }
+        }
 
 
         Column(
@@ -247,7 +249,7 @@ fun TelaLog(name: String, modifier: Modifier = Modifier) {
                     containerColor = Color.Transparent,
                     errorContainerColor = Color.Transparent,
                     errorTextColor = Color.White,
-                    focusedIndicatorColor =Color(0xFFFF3B47)
+                    focusedIndicatorColor = Color(0xFFFF3B47)
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -334,7 +336,11 @@ fun TelaLog(name: String, modifier: Modifier = Modifier) {
             }
 
             Button(
-                onClick = { /* Ação ao clicar */ },
+                onClick = {
+                    val home = Intent(context, Home::class.java)
+
+                    context.startActivity(home)
+                },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFFF3B47)
                 ),

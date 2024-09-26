@@ -1,24 +1,22 @@
 package spectrum.fittech
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -27,10 +25,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -42,14 +39,16 @@ import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import spectrum.fittech.ui.theme.FittechTheme
 
-class TelaPerfil : ComponentActivity() {
+class TelaConfiguracao : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             FittechTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    TelaPer(
+                Scaffold(modifier = Modifier.fillMaxSize()
+                    .windowInsetsPadding(WindowInsets.safeDrawing)) { innerPadding ->
+                    TelaConfiguracao(
+                        name = "Android",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -59,23 +58,25 @@ class TelaPerfil : ComponentActivity() {
 }
 
 @Composable
-fun TelaPer(modifier: Modifier = Modifier) {
-    val context = LocalContext.current
+fun TelaConfiguracao(name: String, modifier: Modifier = Modifier) {
 
+    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
 
-    Column(
+    Column (
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFF1C1C1E))
             .padding(horizontal = 16.dp)
             .padding(bottom = 16.dp),
-        verticalArrangement = Arrangement.SpaceAround
+        verticalArrangement = Arrangement.Top
     ) {
 
         Row(
             modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.Start
+                .fillMaxWidth()
+                .padding(top = 48.dp, bottom = 48.dp),
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             // Botão voltar
             Box(
@@ -84,10 +85,7 @@ fun TelaPer(modifier: Modifier = Modifier) {
                     .background(Color(0xFF2C2C2E), shape = CircleShape),
                 contentAlignment = Alignment.Center
             ) {
-                IconButton(onClick = {
-                    val home = Intent(context, Home::class.java)
-                    context.startActivity(home)
-                }) {
+                IconButton(onClick = { }) {
                     Icon(
                         painter = rememberAsyncImagePainter(
                             model = ImageRequest.Builder(LocalContext.current)
@@ -101,43 +99,20 @@ fun TelaPer(modifier: Modifier = Modifier) {
                     )
                 }
             }
-        }
-
-        // Outras colunas de conteúdo
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            // Imagem com borda circular
-            Box(
-                modifier = Modifier
-                    .size(120.dp)
-                    .border(
-                        BorderStroke(1.dp, Color.Unspecified),
-                        shape = CircleShape
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Image(
-                    painter = painterResource(id = R.mipmap.dalva),
-                    contentDescription = "user",
-                    modifier = Modifier
-                        .size(120.dp)
-                        .clip(CircleShape)
-                )
-            }
 
             Text(
-                text = "Dalva",
-                style = TextStyle(
-                    fontSize = 32.sp,
-                    color = Color.White
+                text = "Configurações",
+                style = androidx.compose.ui.text.TextStyle(
+                    fontSize = 24.sp,
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold
                 ),
                 modifier = Modifier
-                    .padding(top = 16.dp)
+                    .padding(horizontal = screenWidth * 0.14f)
             )
 
         }
+
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -160,7 +135,7 @@ fun TelaPer(modifier: Modifier = Modifier) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = stringResource(id = R.string.txt_editar_perfil),
+                    text = "Notificações",
                     style = TextStyle(
                         fontSize = 16.sp,
                         color = Color.White,
@@ -175,7 +150,7 @@ fun TelaPer(modifier: Modifier = Modifier) {
                                 .decoderFactory(SvgDecoder.Factory())
                                 .build()
                         ),
-                        contentDescription = "Editar Perfil",
+                        contentDescription = "Notificações",
                         modifier = Modifier.size(16.dp),
                         tint = Color.White
                     )
@@ -200,7 +175,7 @@ fun TelaPer(modifier: Modifier = Modifier) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = stringResource(id = R.string.txt_politica_privacidade),
+                    text = "Idioma",
                     style = TextStyle(
                         fontSize = 16.sp,
                         color = Color.White,
@@ -215,7 +190,7 @@ fun TelaPer(modifier: Modifier = Modifier) {
                                 .decoderFactory(SvgDecoder.Factory())
                                 .build()
                         ),
-                        contentDescription = "Politica de Privacidade",
+                        contentDescription = "Idioma",
                         modifier = Modifier.size(16.dp),
                         tint = Color.White
                     )
@@ -240,7 +215,7 @@ fun TelaPer(modifier: Modifier = Modifier) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = stringResource(id = R.string.txt_configuracoes),
+                    text = "Contate-nos",
                     style = TextStyle(
                         fontSize = 16.sp,
                         color = Color.White,
@@ -255,7 +230,7 @@ fun TelaPer(modifier: Modifier = Modifier) {
                                 .decoderFactory(SvgDecoder.Factory())
                                 .build()
                         ),
-                        contentDescription = "Configuracoes",
+                        contentDescription = "Contate-nos",
                         modifier = Modifier.size(16.dp),
                         tint = Color.White
                     )
@@ -272,58 +247,13 @@ fun TelaPer(modifier: Modifier = Modifier) {
         }
 
 
-        Column(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-
-            // Primeira linha
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(1.dp)
-                    .background(Color(0xFF2C2C2E))
-            )
-
-            // Row Sair
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp)
-                    .padding(vertical = 20.dp),
-                horizontalArrangement = Arrangement.Start,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = stringResource(id = R.string.txt_sair),
-                    style = TextStyle(
-                        fontSize = 16.sp,
-                        color = Color(0xFFFF2424),
-                        fontWeight = FontWeight.Bold
-                    ),
-                    modifier = Modifier.clickable {
-                        val telaLogin = Intent(context, TelaLogin::class.java)
-                        context.startActivity(telaLogin)
-                    }
-                )
-            }
-
-            // Segunda linha
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(1.dp)
-                    .background(Color(0xFF2C2C2E))
-            )
-        }
-
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
-fun Perfil() {
+fun TelaConfiguracaoPreview() {
     FittechTheme {
-        TelaPer()
+        TelaConfiguracao("Android")
     }
 }
