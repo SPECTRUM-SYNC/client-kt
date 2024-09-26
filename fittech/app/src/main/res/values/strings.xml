@@ -81,5 +81,38 @@
     <string name="title_activity_tela_configuracao">TelaConfiguracao</string>
     <string name="title_activity_tela_notificacao">TelaNotificacao</string>
     <string name="title_activity_tela_politica_privacidade">TelaPoliticaPrivacidade</string>
+    <string name="title_activity_tela_graficos">TelaGraficos</string>
+
+    <!-- Tela de graficos-->
+    <string name="saudacao_grafico">Olá, <b>%1$s</b>,\nAqui está seu relatório</string>
+    <string name="txt_historico_treino"><b>Histórico de treino</b></string>
+    <string name="txt_desenvolvimento_geral"><b>Desenvolvimento geral</b></string>
+    <string name="txt_treinos_feitos"><b>Treinos feitos na semana</b></string>
+    <string name="txt_historico_peso">Histórico do peso</string>
+    <string name="txt_treino">Treinos</string>
+    <string name="txt_refeicao">Refeição</string>
+    <string name="txt_caloria">Kcal</string>
+    <string name="txt_peso">Peso</string>
+    <string name="txt_peso_ideal">Meta</string>
+    <string name="txt_dias">Dias treinados</string>
+    <string name="txt_segunda">Seg</string>
+    <string name="txt_terca">Ter</string>
+    <string name="txt_quarta">Qua</string>
+    <string name="txt_quinta">Qui</string>
+    <string name="txt_feito">Treino executado</string>
+    <string name="txt_dia_treino">Dia de treino</string>
+    <string name="txt_descanso">Dia de descanso</string>
+    <string name="txt_nao_feito">Treino não exeutado</string>
+    <string name="txt_domingo">Dom</string>
+    <string name="sabado">Sab</string>
+    <string name="txt_sexta">Sex</string>
+    <string name="txt_button_peso">Atualizar Peso</string>
+    <string name="ipt_meta_peso">Sua meta de peso:</string>
+    <string name="ipt_meta_invalido">Valor informado inválido</string>
+    <string name="ipt_peso">Peso atual:</string>
+    <string name="ipt_peso_data">Dia atual:\n</string>
+    <string name="txt_cancel">Cancelar</string>
+    <string name="txt_h1_modal_peso">Atualização de Peso</string>
+
 
 </resources>

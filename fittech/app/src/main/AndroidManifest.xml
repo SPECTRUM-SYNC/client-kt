@@ -28,6 +28,11 @@
             android:label="@string/title_activity_tela_configuracao"
             android:theme="@style/Theme.Fittech" />
         <activity
+            android:name=".TelaGraficos"
+            android:exported="false"
+            android:label="@string/title_activity_tela_graficos"
+            android:theme="@style/Theme.Fittech" />
+        <activity
             android:name=".TelaIdioma"
             android:exported="true"
             android:label="@string/title_activity_tela_idioma"
