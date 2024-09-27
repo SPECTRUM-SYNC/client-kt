@@ -269,7 +269,7 @@ fun VideoRun(
                                     .fillMaxWidth()
                                     .shadow(8.dp, shape = RoundedCornerShape(4.dp))
                             ) {
-                                Text(stringResource(id = R.string.txt_button_finalizar_treino))
+                                Text(stringResource(id = R.string.txt_button_finalizar_treino), color = Color.White)
                             }
                         } else {
                             Button(
@@ -282,7 +282,7 @@ fun VideoRun(
                                     .fillMaxWidth()
                                     .shadow(8.dp, shape = RoundedCornerShape(4.dp))
                             ) {
-                                Text(stringResource(id = R.string.txt_button_exercicio_concluido))
+                                Text(stringResource(id = R.string.txt_button_exercicio_concluido), color = Color.White)
                             }
                         }
                     }

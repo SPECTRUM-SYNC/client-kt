@@ -371,7 +371,7 @@ fun PreviaTreino(
                             .fillMaxWidth()
                             .shadow(8.dp, shape = RoundedCornerShape(4.dp))
                     ) {
-                        Text(stringResource(id = R.string.txt_button_iniciar_treino))
+                        Text(stringResource(id = R.string.txt_button_iniciar_treino), color = Color.White)
                     }
                     Spacer(modifier = Modifier.height(16.dp))
 
@@ -496,7 +496,7 @@ fun ModalInfoExercicio(isDialogOpen: MutableState<Boolean>, exercicio: Treino) {
                             .fillMaxWidth()
                             .shadow(8.dp, shape = RoundedCornerShape(4.dp))
                     ) {
-                        Text(stringResource(id = R.string.txt_button_fechar))
+                        Text(stringResource(id = R.string.txt_button_fechar), color = Color.White)
                     }
                 }
             }
