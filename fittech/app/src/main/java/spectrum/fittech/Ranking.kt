@@ -61,15 +61,6 @@ class Ranking : ComponentActivity() {
                             navController = navController
                         )
                     }
-                    composable("Home") { HomeRun(navController = navController) }
-                    composable("TelaGraficos") { TelaGraficosRun(navController = navController) }
-                    composable("TelaPerfil") { TelaPer() }
-                    composable("TelaRankingPerfil/{userId}") { backStackEntry ->
-                        TelaRankingPerfil(
-                            navController = navController,
-                            userId = backStackEntry.arguments?.getString("userId")
-                        )
-                    }
                 }
             }
         }

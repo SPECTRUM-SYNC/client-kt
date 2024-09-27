@@ -51,7 +51,6 @@ import coil.request.ImageRequest
 import spectrum.fittech.componentes.BottomNavigationBar
 import spectrum.fittech.componentes.DayItem
 import spectrum.fittech.componentes.ModalPeso
-import spectrum.fittech.componentes.TelaRankingPerfil
 import spectrum.fittech.componentes.charts.BarChart
 import spectrum.fittech.componentes.charts.LineGraph
 import spectrum.fittech.ui.theme.FittechTheme
@@ -68,14 +67,6 @@ class TelaGraficos : ComponentActivity() {
                         TelaGraficosRun(
                             modifier = Modifier.fillMaxSize(),
                             navController = navController
-                        )
-                    }
-                    composable("Home") { HomeRun(navController = navController) }
-                    composable("TelaPerfil") { TelaPer() }
-                    composable("TelaRankingPerfil/{userId}") { backStackEntry ->
-                        TelaRankingPerfil(
-                            navController = navController,
-                            userId = backStackEntry.arguments?.getString("userId")
                         )
                     }
                 }

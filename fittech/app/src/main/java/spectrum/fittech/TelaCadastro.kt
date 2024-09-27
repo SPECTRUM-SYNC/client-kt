@@ -327,7 +327,10 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    Text(text = stringResource(id = R.string.btn_cadastrar))
+                    Text(text = stringResource(id = R.string.btn_cadastrar),
+                        style = TextStyle(
+                            color = Color.White,
+                        ))
                     Spacer(modifier = Modifier.width(0.dp))
                     Image(
                         painter = painterResource(id = R.mipmap.setadireita),

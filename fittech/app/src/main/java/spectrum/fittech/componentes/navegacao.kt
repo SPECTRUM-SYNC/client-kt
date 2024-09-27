@@ -89,7 +89,7 @@ fun BottomNavigationBar(navController: NavHostController, modifier: Modifier, te
                     )
                 }
 
-                IconButton(onClick = { navController.navigate("Home") }) {
+                IconButton(onClick = { navController.navigate("Receita") }) {
                     Icon(
                         painter = rememberAsyncImagePainter(
                             model = ImageRequest.Builder(LocalContext.current)
@@ -97,9 +97,9 @@ fun BottomNavigationBar(navController: NavHostController, modifier: Modifier, te
                                 .decoderFactory(SvgDecoder.Factory())
                                 .build()
                         ),
-                        contentDescription = "Nutri",
+                        contentDescription = "Receita",
                         modifier = Modifier.size(24.dp),
-                        tint = if (telaAtual == "Nutri") Color.White else Color.DarkGray
+                        tint = if (telaAtual == "Receita") Color.White else Color.DarkGray
                     )
                 }
 

@@ -128,6 +128,7 @@
     <string name="texto_ranking_meta">Meta: </string>
     <string name="texto_ranking_treino">Treino preferido: </string>
     <string name="title_activity_tela_ranking_perfil">TelaRankingPerfil</string>
+    <string name="title_activity_tela_receita">TelaReceita</string>
 
 
 </resources>

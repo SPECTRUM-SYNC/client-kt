@@ -12,7 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Fittech"
         tools:targetApi="31">
-
+        <activity
+            android:name=".TelaReceita"
+            android:exported="false"
+            android:label="@string/title_activity_tela_receita"
+            android:theme="@style/Theme.Fittech" />
         <activity
             android:name=".Ranking"
             android:exported="false"

@@ -60,6 +60,7 @@ class Home : ComponentActivity() {
                     composable("TelaGraficos") { TelaGraficosRun(navController = navController) }
                     composable("Ranking") { RankingRun(navController = navController) }
                     composable("TelaPerfil") { TelaPer() }
+                    composable("Receita") { ReceitaRun(navController = navController)  }
                     composable("TelaRankingPerfil/{userId}") { backStackEntry ->
                         TelaRankingPerfil(
                             navController = navController,
