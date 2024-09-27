@@ -43,7 +43,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import spectrum.fittech.componentes.BottomNavigationBar
 import spectrum.fittech.componentes.RankingUser
-import spectrum.fittech.componentes.TelaRankingPerfil
 import spectrum.fittech.componentes.UserLevelProgressBar
 import spectrum.fittech.ui.theme.FittechTheme
 

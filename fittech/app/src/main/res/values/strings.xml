@@ -59,7 +59,7 @@
     <string name="txt_boa_noite">Boa noite.</string>
     <string name="txt_boa_tarde">Boa tarde.</string>
     <string name="txt_saudacao">Olá %1$s,</string>
-    <string name="txt_plano_treino">Plano de Treino</string>
+    <string name="txt_plano_treino">Seleção de Treino</string>
     <string name="txt_categorias_treino">Categorias de Treino</string>
     <string name="txt_treinos_extras">Treinos Extras</string>
 
@@ -128,7 +128,33 @@
     <string name="texto_ranking_meta">Meta: </string>
     <string name="texto_ranking_treino">Treino preferido: </string>
     <string name="title_activity_tela_ranking_perfil">TelaRankingPerfil</string>
+
+    <!-- Receitas -->
     <string name="title_activity_tela_receita">TelaReceita</string>
+
+
+    <!-- Treinos -->
+    <string name="txt_home_treino">0%d Exercícios para Iniciantes</string>
+    <string name="txt_treino_diario">Treino Diário</string>
+    <string name="txt_tipo_treino_diario">Este treino abrange todos os grupos musculares, combinando força, resistência e flexibilidade. Personalizado de acordo com seus objetivos, ele utiliza GIFs para garantir a forma correta, ajudando você a se sentir energizado e fortalecido a cada sessão.</string>
+    <string name="txt_tipo_musculacao">Este programa de musculação foca em todos os grupos musculares, mesclando exercícios de força e resistência. Adaptado aos seus objetivos, inclui GIFs que mostram a execução adequada, auxiliando você a se tonificar e obter resultados significativos em cada treino.</string>
+    <string name="txt_tipo_alongamento">Este programa de alongamento é projetado para trabalhar todas as áreas do corpo, promovendo flexibilidade e relaxamento muscular. Personalizado para atender às suas necessidades, inclui GIFs que ilustram as posturas corretas, ajudando você a aumentar a mobilidade e a prevenir lesões a cada sessão.</string>
+    <string name="txt_tipo_geral">Este programa de treino abrange musculação, alongamento e exercícios cardiovasculares, promovendo força, flexibilidade e resistência. Com GIFs demonstrando a execução correta, ele é ideal para qualquer objetivo, melhorando seu condicionamento físico e bem-estar.</string>
+    <string name="txt_button_iniciar_treino">Começar Treino</string>
+    <string name="txt_lista_treino">Lista de Exercícios</string>
+    <string name="txt_sobre_treino">Sobre esse Treino</string>
+    <string name="txt_button_finalizar_treino">Finalizar Treino</string>
+    <string name="txt_button_proximo_treino">Próximo Exercício</string>
+    <string name="txt_treino_info_serie">REPETIÇÕES</string>
+    <string name="txt_treino_info_instrucao">INSTRUÇÕES</string>
+    <string name="txt_treino_info_beneficio">BENEFÍCIOS:</string>
+    <string name="txt_button_fechar">Fechar</string>
+    <string name="txt_button_descanso">Mais Tempo</string>
+    <string name="txt_button_exercicio_concluido">Próximo Exercício</string>
+    <string name="txt_treino_descanso">Descanse um Pouco</string>
+    <string name="txt_proximo_treino">Próximo treino:</string>
+    <string name="txt_parabens">Parabéns, contiue assim!</string>
+    <string name="title_activity_tela_video">TelaVideo</string>
 
 
 </resources>

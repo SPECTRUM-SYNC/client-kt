@@ -17,7 +17,6 @@ import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import spectrum.fittech.TelaLogin
-import spectrum.fittech.TelaPer
 import spectrum.fittech.TelaPerfil
 
 
