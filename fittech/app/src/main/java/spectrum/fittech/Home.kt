@@ -1,60 +1,86 @@
 package spectrum.fittech
 
+import ReceitaRun
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults.indicatorLine
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import coil.compose.rememberAsyncImagePainter
+import coil.compose.AsyncImage
+import com.google.gson.Gson
+import spectrum.fittech.backend.builder.gson
+import spectrum.fittech.componentes.BottomNavigationBar
+import spectrum.fittech.componentes.ModalDescanso
+import spectrum.fittech.componentes.ModalFinal
+import spectrum.fittech.componentes.ModalPeso
+import spectrum.fittech.componentes.PreviaTreino
+import spectrum.fittech.componentes.TelaRankingPerfil
+import spectrum.fittech.componentes.UserLevelProgressBar
 import spectrum.fittech.ui.theme.FittechTheme
+import spectrum.fittech.utils.treinos.Treino
+import spectrum.fittech.utils.treinos.ganharMassa
+import spectrum.fittech.utils.treinos.opcoesTreinos
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
-import coil.compose.rememberImagePainter
-import coil.decode.SvgDecoder
-import coil.request.ImageRequest
-import spectrum.fittech.componentes.BottomNavigationBar
 
 class Home : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,8 +97,43 @@ class Home : ComponentActivity() {
                         )
                     }
                     composable("TelaGraficos") { TelaGraficosRun(navController = navController) }
+                    composable("Ranking") { RankingRun(navController = navController) }
                     composable("TelaPerfil") { TelaPer() }
+                    composable("Receita") { ReceitaRun(navController = navController) }
 
+                    composable("PreviaTreino/{nomeTreino}/{listaTreino}") { backStackEntry ->
+                        val nomeTreino = backStackEntry.arguments?.getString("nomeTreino")
+                        val jsonListaTreino = backStackEntry.arguments?.getString("listaTreino")
+
+                        val listaTreino = jsonListaTreino?.let {
+                            gson.fromJson(it, Array<Treino>::class.java).toList()
+                        } ?: emptyList()
+
+                        PreviaTreino(
+                            navController = navController,
+                            nomeTreino = nomeTreino,
+                            listaTreino = listaTreino
+                        )
+                    }
+
+                    composable("ExercicioEmExecucao/{listaTreino}") { backStackEntry ->
+                        val jsonListaTreino = backStackEntry.arguments?.getString("listaTreino")
+
+                        val listaTreino = jsonListaTreino?.let {
+                            gson.fromJson(it, Array<Treino>::class.java).toList()
+                        } ?: emptyList()
+
+                        VideoRun(
+                            navController = navController,
+                            listaTreino = listaTreino
+                        )
+                    }
+                    composable("TelaRankingPerfil/{userId}") { backStackEntry ->
+                        TelaRankingPerfil(
+                            navController = navController,
+                            userId = backStackEntry.arguments?.getString("userId")
+                        )
+                    }
                 }
             }
         }
@@ -91,6 +152,9 @@ fun saudacaoAtual(): String {
 
 @Composable
 fun HomeRun(modifier: Modifier = Modifier, navController: NavHostController) {
+    val gson = Gson()
+
+
     Scaffold(
         bottomBar = { BottomNavigationBar(navController = navController, modifier, "Home") },
         modifier = modifier.navigationBarsPadding()
@@ -143,6 +207,7 @@ fun HomeRun(modifier: Modifier = Modifier, navController: NavHostController) {
                 ) {
                     Text(
                         text = stringResource(id = R.string.txt_plano_treino),
+
                         style = TextStyle(
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
@@ -163,6 +228,13 @@ fun HomeRun(modifier: Modifier = Modifier, navController: NavHostController) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(200.dp)
+                        .clickable {
+                            val jsonListaTreino = gson.toJson(ganharMassa)
+                            val encodedNomeTreino = Uri.encode("Treino Diário")
+                            val encodedJson = Uri.encode(jsonListaTreino)
+                            navController.navigate("PreviaTreino/$encodedNomeTreino/$encodedJson")
+                        }
+
                 ) {
                     Image(
                         painter = painterResource(id = R.mipmap.esteira),
@@ -179,7 +251,7 @@ fun HomeRun(modifier: Modifier = Modifier, navController: NavHostController) {
                             .padding(8.dp)
                     ) {
                         Text(
-                            text = "Dia 01 - Cárdio",
+                            text = stringResource(id = R.string.txt_treino_diario),
                             style = TextStyle(
                                 fontSize = 16.sp,
                                 color = Color.White,
@@ -187,12 +259,32 @@ fun HomeRun(modifier: Modifier = Modifier, navController: NavHostController) {
                             )
                         )
                         Text(
-                            text = "07:00 - 08:00 AM",
+                            text = "30 MINUTOS",
                             style = TextStyle(
                                 fontSize = 14.sp,
                                 color = Color(0xFFFF6E77)
                             )
                         )
+
+                        Row {
+                            Text(
+                                text = "STATUS:",
+                                style = TextStyle(
+                                    fontSize = 14.sp,
+                                    color = Color.White
+                                )
+                            )
+
+                            Spacer(modifier = Modifier.width(4.dp))
+
+                            Text(
+                                text = "EM ANDAMENTO",
+                                style = TextStyle(
+                                    fontSize = 14.sp,
+                                    color = Color.Yellow
+                                )
+                            )
+                        }
                     }
                 }
             }
@@ -264,25 +356,40 @@ fun HomeRun(modifier: Modifier = Modifier, navController: NavHostController) {
                         color = Color.White
                     )
                 )
-
+                Spacer(modifier = Modifier.height(16.dp))
                 LazyRow(
                     modifier = Modifier
                         .navigationBarsPadding()
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    items(5) { index ->
+                    items(opcoesTreinos.size) { index ->
+                        val treino = opcoesTreinos[index]
+
                         Box(
                             modifier = Modifier
                                 .fillParentMaxSize()
                                 .height(200.dp)
+                                .clickable {
+                                    val jsonListaTreino = gson.toJson(treino.treinos)
+                                    val encodedNomeTreino = Uri.encode(treino.nome)
+                                    val encodedJson = Uri.encode(jsonListaTreino)
+                                    navController.navigate("PreviaTreino/$encodedNomeTreino/$encodedJson")
+                                }
                         ) {
-                            Image(
-                                painter = painterResource(id = R.mipmap.alongamento),
-                                contentDescription = "Alongamento",
+                            AsyncImage(
+                                model = treino.image,
+                                contentDescription = treino.nome,
                                 modifier = Modifier
-                                    .fillMaxSize()
+                                    .fillMaxWidth()
+                                    .fillMaxHeight(0.9f)
                                     .alpha(0.5f)
+                                    .clip(RoundedCornerShape(18.dp))
+                                    .shadow(
+                                        8.dp,
+                                        shape = RoundedCornerShape(18.dp)
+                                    ), contentScale = ContentScale.Crop
+
                             )
                             Column(
                                 modifier = Modifier
@@ -291,7 +398,7 @@ fun HomeRun(modifier: Modifier = Modifier, navController: NavHostController) {
                                     .padding(8.dp)
                             ) {
                                 Text(
-                                    text = "Alongamento ${index + 1}",
+                                    text = treino.nome,
                                     style = TextStyle(
                                         fontSize = 16.sp,
                                         color = Color.White,
@@ -305,18 +412,35 @@ fun HomeRun(modifier: Modifier = Modifier, navController: NavHostController) {
                                         color = Color(0xFFFF6E77)
                                     )
                                 )
+
+                                Row {
+                                    Text(
+                                        text = "STATUS:",
+                                        style = TextStyle(
+                                            fontSize = 14.sp,
+                                            color = Color.White
+                                        )
+                                    )
+
+                                    Spacer(modifier = Modifier.width(4.dp))
+
+                                    Text(
+                                        text = "CONCLUIDO",
+                                        style = TextStyle(
+                                            fontSize = 14.sp,
+                                            color = Color.Green
+                                        )
+                                    )
+                                }
                             }
                         }
                     }
                 }
+                Spacer(modifier = Modifier.height(16.dp))
             }
-
-
         }
-
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable

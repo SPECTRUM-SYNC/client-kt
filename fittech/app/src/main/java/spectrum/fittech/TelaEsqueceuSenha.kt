@@ -22,8 +22,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -44,9 +42,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberAsyncImagePainter
-import coil.decode.SvgDecoder
-import coil.request.ImageRequest
 import spectrum.fittech.componentes.BotaoVoltarTelaLogin
 import spectrum.fittech.ui.theme.FittechTheme
 
@@ -74,7 +69,7 @@ fun EsqueceuSenha(name: String, modifier: Modifier = Modifier) {
     var emailInvalido by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
-    Column (
+    Column(
         modifier = modifier
             .fillMaxSize()
             .background(Color(0xFF1C1C1E)),
@@ -82,7 +77,7 @@ fun EsqueceuSenha(name: String, modifier: Modifier = Modifier) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Row (
+        Row(
             modifier = Modifier
                 .padding(horizontal = 32.dp)
                 .fillMaxWidth(),
@@ -95,12 +90,12 @@ fun EsqueceuSenha(name: String, modifier: Modifier = Modifier) {
                     .background(Color(0xFF2C2C2E), shape = CircleShape),
                 contentAlignment = Alignment.Center
             ) {
-               BotaoVoltarTelaLogin()
+                BotaoVoltarTelaLogin()
             }
 
         }
 
-        Column (
+        Column(
             modifier = Modifier
                 .padding(horizontal = 32.dp)
                 .fillMaxWidth(),
@@ -151,7 +146,7 @@ fun EsqueceuSenha(name: String, modifier: Modifier = Modifier) {
                     containerColor = Color.Transparent,
                     errorContainerColor = Color.Transparent,
                     errorTextColor = Color.White,
-                    focusedIndicatorColor =Color(0xFFFF3B47)
+                    focusedIndicatorColor = Color(0xFFFF3B47)
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -160,7 +155,7 @@ fun EsqueceuSenha(name: String, modifier: Modifier = Modifier) {
 
         }
 
-        Column (
+        Column(
             modifier = Modifier
                 .padding(horizontal = 32.dp)
                 .fillMaxWidth(),
@@ -168,7 +163,7 @@ fun EsqueceuSenha(name: String, modifier: Modifier = Modifier) {
             verticalArrangement = Arrangement.Center
         ) {
 
-            Row (
+            Row(
                 modifier = Modifier
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center
@@ -202,8 +197,11 @@ fun EsqueceuSenha(name: String, modifier: Modifier = Modifier) {
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    Text(text = stringResource(id = R.string.btn_entrar))
-                    Spacer(modifier = Modifier.width(0.dp)) // Espaçamento entre o texto e a imagem
+                    Text(
+                        text = stringResource(id = R.string.btn_entrar),
+                        style = TextStyle(color = Color.White)
+                    )
+                    Spacer(modifier = Modifier.width(0.dp))
                     Image(
                         painter = painterResource(id = R.mipmap.setadireita),
                         contentDescription = "Seta Direita",

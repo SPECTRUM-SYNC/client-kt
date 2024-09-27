@@ -1,7 +1,6 @@
 package spectrum.fittech.backend.dtos
 
 import java.time.LocalDateTime
-import java.util.Date
 
 data class Usuario(
     val email: String,

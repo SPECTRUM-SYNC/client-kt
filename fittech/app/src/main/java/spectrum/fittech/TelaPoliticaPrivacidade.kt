@@ -6,7 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -14,13 +13,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,9 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberAsyncImagePainter
-import coil.decode.SvgDecoder
-import coil.request.ImageRequest
+import spectrum.fittech.componentes.BotaoTelaPerfil
 import spectrum.fittech.ui.theme.FittechTheme
 
 class TelaPoliticaPrivacidade : ComponentActivity() {
@@ -61,6 +54,8 @@ class TelaPoliticaPrivacidade : ComponentActivity() {
 fun TelaPoliticaPrivacidade(name: String, modifier: Modifier = Modifier) {
 
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+    val context = LocalContext.current
+
 
     Column (
         modifier = Modifier
@@ -79,26 +74,7 @@ fun TelaPoliticaPrivacidade(name: String, modifier: Modifier = Modifier) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             // Botão voltar
-            Box(
-                modifier = Modifier
-                    .size(56.dp)
-                    .background(Color(0xFF2C2C2E), shape = CircleShape),
-                contentAlignment = Alignment.Center
-            ) {
-                IconButton(onClick = { }) {
-                    Icon(
-                        painter = rememberAsyncImagePainter(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("android.resource://spectrum.fittech/raw/setaesquerda")
-                                .decoderFactory(SvgDecoder.Factory())
-                                .build()
-                        ),
-                        contentDescription = "Home",
-                        modifier = Modifier.size(24.dp),
-                        tint = Color.White
-                    )
-                }
-            }
+            BotaoTelaPerfil()
 
             Text(
                 text = "Política de Privacidade",

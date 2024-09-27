@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,6 +14,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Fittech"
         tools:targetApi="31">
+        <activity
+            android:name=".TelaVideo"
+            android:exported="false"
+            android:label="@string/title_activity_tela_video"
+            android:theme="@style/Theme.Fittech" />
+        <activity
+            android:name=".TelaReceita"
+            android:exported="true"
+            android:label="@string/title_activity_tela_receita"
+            android:theme="@style/Theme.Fittech" />
+        <activity
+            android:name=".Ranking"
+            android:exported="false"
+            android:label="@string/title_activity_ranking"
+            android:theme="@style/Theme.Fittech" />
+        <activity
+            android:name=".TelaEditarPerfil"
+            android:exported="true"
+            android:label="@string/title_activity_tela_editar_perfil"
+            android:theme="@style/Theme.Fittech" />
         <activity
             android:name=".TelaPoliticaPrivacidade"
             android:exported="true"

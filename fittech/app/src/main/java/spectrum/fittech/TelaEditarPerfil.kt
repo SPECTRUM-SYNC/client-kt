@@ -1,62 +1,54 @@
 package spectrum.fittech
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import spectrum.fittech.componentes.BotaoTelaPerfil
 import spectrum.fittech.ui.theme.FittechTheme
 
-
-class TelaNotificacao : ComponentActivity() {
+class TelaEditarPerfil : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             FittechTheme {
-                Scaffold(modifier = Modifier
-                    .fillMaxSize()
-                    .windowInsetsPadding(WindowInsets.safeDrawing)) { innerPadding ->
-                    TelaNotificacao(
+                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                    TelaEditarPerfil(
                         name = "Android",
                         modifier = Modifier.padding(innerPadding)
                     )
@@ -67,69 +59,73 @@ class TelaNotificacao : ComponentActivity() {
 }
 
 @Composable
-fun TelaNotificacao(name: String, modifier: Modifier = Modifier) {
-
+fun TelaEditarPerfil(name: String, modifier: Modifier = Modifier) {
     val context = LocalContext.current
 
-    var isCheckedLembreteTreino by remember { mutableStateOf(false) }
-    var isCheckedProgramarNotificacao by remember { mutableStateOf(false) }
-    var isCheckedTreinosNovos by remember { mutableStateOf(false) }
 
-    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
-
-    Column (
+    Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFF1C1C1E))
             .padding(horizontal = 16.dp)
             .padding(bottom = 16.dp),
-        verticalArrangement = Arrangement.Top
+        verticalArrangement = Arrangement.SpaceAround
     ) {
 
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 48.dp, bottom = 48.dp),
-            horizontalArrangement = Arrangement.Start,
-            verticalAlignment = Alignment.CenterVertically
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Start
         ) {
             // Botão voltar
+            BotaoTelaPerfil()
+        }
+
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            // Imagem com borda circular
             Box(
                 modifier = Modifier
-                    .size(56.dp)
-                    .background(Color(0xFF2C2C2E), shape = CircleShape),
+                    .size(120.dp)
+                    .border(
+                        BorderStroke(1.dp, Color.Unspecified),
+                        shape = CircleShape
+                    ),
                 contentAlignment = Alignment.Center
             ) {
-                IconButton(onClick = {
-                    val conf = Intent(context, TelaConfiguracao::class.java)
-                    context.startActivity(conf)
-                }) {
+                Image(
+                    painter = painterResource(id = R.mipmap.dalva),
+                    contentDescription = "user",
+                    modifier = Modifier
+                        .size(120.dp)
+                        .clip(CircleShape)
+                )
+
+                // Ícone de câmera no canto inferior direito
+                Box(
+                    modifier = Modifier
+                        .size(35.dp)
+                        .align(Alignment.BottomEnd) // Alinhamento no canto inferior direito
+                        .background(Color(0xFF2C2C2E), CircleShape), // Fundo cinza circular para o ícone
+                    contentAlignment = Alignment.Center
+                ) {
                     Icon(
                         painter = rememberAsyncImagePainter(
                             model = ImageRequest.Builder(LocalContext.current)
-                                .data("android.resource://spectrum.fittech/raw/setaesquerda")
+                                .data("android.resource://spectrum.fittech/raw/nutri")
                                 .decoderFactory(SvgDecoder.Factory())
                                 .build()
                         ),
-                        contentDescription = "Home",
-                        modifier = Modifier.size(24.dp),
-                        tint = Color.White
+                        contentDescription = "Nutri",
+                        modifier = Modifier.size(24.dp)
                     )
                 }
             }
-
-            Text(
-                text = "Notificações",
-                style = TextStyle(
-                    fontSize = 24.sp,
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold
-                ),
-                modifier = Modifier
-                    .padding(horizontal = screenWidth * 0.16f)
-            )
-
         }
+
+
 
         Column(
             modifier = Modifier.fillMaxWidth()
@@ -153,23 +149,26 @@ fun TelaNotificacao(name: String, modifier: Modifier = Modifier) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Lembretes de Treino",
+                    text = stringResource(id = R.string.txt_editar_perfil),
                     style = TextStyle(
                         fontSize = 16.sp,
                         color = Color.White,
                         fontWeight = FontWeight.Bold
                     )
                 )
-                Switch(
-                    checked = isCheckedLembreteTreino,
-                    onCheckedChange = { isCheckedLembreteTreino = it },
-                    colors = SwitchDefaults.colors(
-                        checkedThumbColor = Color.Black,
-                        checkedTrackColor = Color(0xFFFF3B47),
-                        uncheckedThumbColor = Color.White,
-                        uncheckedTrackColor = Color(0xFF1C1C1E)
+                IconButton(onClick = { }) {
+                    Icon(
+                        painter = rememberAsyncImagePainter(
+                            model = ImageRequest.Builder(LocalContext.current)
+                                .data("android.resource://spectrum.fittech/raw/setadireita")
+                                .decoderFactory(SvgDecoder.Factory())
+                                .build()
+                        ),
+                        contentDescription = "Editar Perfil",
+                        modifier = Modifier.size(16.dp),
+                        tint = Color.White
                     )
-                )
+                }
             }
 
             // Segunda linha
@@ -190,23 +189,26 @@ fun TelaNotificacao(name: String, modifier: Modifier = Modifier) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Programar Notificações",
+                    text = stringResource(id = R.string.txt_politica_privacidade),
                     style = TextStyle(
                         fontSize = 16.sp,
                         color = Color.White,
                         fontWeight = FontWeight.Bold
                     )
                 )
-                Switch(
-                    checked = isCheckedProgramarNotificacao,
-                    onCheckedChange = { isCheckedProgramarNotificacao = it },
-                    colors = SwitchDefaults.colors(
-                        checkedThumbColor = Color.Black,
-                        checkedTrackColor = Color(0xFFFF3B47),
-                        uncheckedThumbColor = Color.White,
-                        uncheckedTrackColor = Color(0xFF1C1C1E)
+                IconButton(onClick = { }) {
+                    Icon(
+                        painter = rememberAsyncImagePainter(
+                            model = ImageRequest.Builder(LocalContext.current)
+                                .data("android.resource://spectrum.fittech/raw/setadireita")
+                                .decoderFactory(SvgDecoder.Factory())
+                                .build()
+                        ),
+                        contentDescription = "Politica de Privacidade",
+                        modifier = Modifier.size(16.dp),
+                        tint = Color.White
                     )
-                )
+                }
             }
 
             // Terceira linha
@@ -227,23 +229,26 @@ fun TelaNotificacao(name: String, modifier: Modifier = Modifier) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Notificar Treinos Novos",
+                    text = stringResource(id = R.string.txt_configuracoes),
                     style = TextStyle(
                         fontSize = 16.sp,
                         color = Color.White,
                         fontWeight = FontWeight.Bold
                     )
                 )
-                Switch(
-                    checked = isCheckedTreinosNovos,
-                    onCheckedChange = { isCheckedTreinosNovos = it },
-                    colors = SwitchDefaults.colors(
-                        checkedThumbColor = Color.Black,
-                        checkedTrackColor = Color(0xFFFF3B47),
-                        uncheckedThumbColor = Color.White,
-                        uncheckedTrackColor = Color(0xFF1C1C1E)
+                IconButton(onClick = { }) {
+                    Icon(
+                        painter = rememberAsyncImagePainter(
+                            model = ImageRequest.Builder(LocalContext.current)
+                                .data("android.resource://spectrum.fittech/raw/setadireita")
+                                .decoderFactory(SvgDecoder.Factory())
+                                .build()
+                        ),
+                        contentDescription = "Configuracoes",
+                        modifier = Modifier.size(16.dp),
+                        tint = Color.White
                     )
-                )
+                }
             }
 
             // Quarta linha
@@ -255,24 +260,46 @@ fun TelaNotificacao(name: String, modifier: Modifier = Modifier) {
             )
         }
 
-        Column (
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(bottom = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Bottom
+
+        Column(
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Text(
-                text = "Você pode gerenciar a permissão de notificação do aplicativo nas configurações do",
-                color = Color.White,
-                textAlign = TextAlign.Center
+
+            // Primeira linha
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(1.dp)
+                    .background(Color(0xFF2C2C2E))
             )
-            Text(
-                text = "Configurações do Telefone",
-                color = Color(0xFFFF3B47)
+
+            // Row Sair
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp)
+                    .padding(vertical = 20.dp),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = stringResource(id = R.string.txt_sair),
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        color = Color(0xFFFF2424),
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+            }
+
+            // Segunda linha
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(1.dp)
+                    .background(Color(0xFF2C2C2E))
             )
         }
-
 
     }
 
@@ -280,8 +307,8 @@ fun TelaNotificacao(name: String, modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun TelaNotificacaoPreview() {
+fun TelaEditarPerfilPreview() {
     FittechTheme {
-        TelaNotificacao("Android")
+        TelaEditarPerfil("Android")
     }
 }
