@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import spectrum.fittech.componentes.BotaoTelaPerfil
 import spectrum.fittech.ui.theme.FittechTheme
 
 class TelaPoliticaPrivacidade : ComponentActivity() {
@@ -61,6 +62,8 @@ class TelaPoliticaPrivacidade : ComponentActivity() {
 fun TelaPoliticaPrivacidade(name: String, modifier: Modifier = Modifier) {
 
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+    val context = LocalContext.current
+
 
     Column (
         modifier = Modifier
@@ -79,26 +82,7 @@ fun TelaPoliticaPrivacidade(name: String, modifier: Modifier = Modifier) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             // Botão voltar
-            Box(
-                modifier = Modifier
-                    .size(56.dp)
-                    .background(Color(0xFF2C2C2E), shape = CircleShape),
-                contentAlignment = Alignment.Center
-            ) {
-                IconButton(onClick = { }) {
-                    Icon(
-                        painter = rememberAsyncImagePainter(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("android.resource://spectrum.fittech/raw/setaesquerda")
-                                .decoderFactory(SvgDecoder.Factory())
-                                .build()
-                        ),
-                        contentDescription = "Home",
-                        modifier = Modifier.size(24.dp),
-                        tint = Color.White
-                    )
-                }
-            }
+            BotaoTelaPerfil()
 
             Text(
                 text = "Política de Privacidade",

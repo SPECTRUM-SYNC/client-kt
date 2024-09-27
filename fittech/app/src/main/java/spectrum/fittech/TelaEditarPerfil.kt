@@ -1,5 +1,6 @@
 package spectrum.fittech
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -38,6 +39,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import spectrum.fittech.componentes.BotaoTelaPerfil
 import spectrum.fittech.ui.theme.FittechTheme
 
 class TelaEditarPerfil : ComponentActivity() {
@@ -59,6 +61,8 @@ class TelaEditarPerfil : ComponentActivity() {
 
 @Composable
 fun TelaEditarPerfil(name: String, modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+
 
     Column(
         modifier = Modifier
@@ -75,26 +79,7 @@ fun TelaEditarPerfil(name: String, modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.Start
         ) {
             // Botão voltar
-            Box(
-                modifier = Modifier
-                    .size(56.dp)
-                    .background(Color(0xFF2C2C2E), shape = CircleShape),
-                contentAlignment = Alignment.Center
-            ) {
-                IconButton(onClick = { }) {
-                    Icon(
-                        painter = rememberAsyncImagePainter(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("android.resource://spectrum.fittech/raw/setaesquerda")
-                                .decoderFactory(SvgDecoder.Factory())
-                                .build()
-                        ),
-                        contentDescription = "Home",
-                        modifier = Modifier.size(24.dp),
-                        tint = Color.White
-                    )
-                }
-            }
+            BotaoTelaPerfil()
         }
 
         Column(

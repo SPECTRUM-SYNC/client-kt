@@ -1,20 +1,37 @@
 package spectrum.fittech
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,7 +45,6 @@ import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import spectrum.fittech.ui.theme.FittechTheme
-import java.time.format.TextStyle
 
 class TelaIdioma : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,6 +72,7 @@ fun Idioma(modifier: Modifier = Modifier) {
     val textState = remember { mutableStateOf("") }
     val selectedLanguage = remember { mutableStateOf<String?>("Português") }
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+    val context = LocalContext.current
 
     // Filtrar idiomas conforme a pesquisa
     val filteredLanguages = idiomas.filter {
@@ -84,7 +101,10 @@ fun Idioma(modifier: Modifier = Modifier) {
                     .background(Color(0xFF2C2C2E), shape = CircleShape),
                 contentAlignment = Alignment.Center
             ) {
-                IconButton(onClick = { }) {
+                IconButton(onClick = {
+                    val conf = Intent(context, TelaConfiguracao::class.java)
+                    context.startActivity(conf)
+                }) {
                     Icon(
                         painter = rememberAsyncImagePainter(
                             model = ImageRequest.Builder(LocalContext.current)

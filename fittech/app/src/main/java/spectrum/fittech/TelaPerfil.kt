@@ -155,7 +155,11 @@ fun TelaPer(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp)
-                    .padding(vertical = 8.dp),
+                    .padding(vertical = 8.dp)
+                    .clickable {
+                        val editarPerfil = Intent(context, TelaEditarPerfil::class.java)
+                        context.startActivity(editarPerfil)
+                    },
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -167,7 +171,8 @@ fun TelaPer(modifier: Modifier = Modifier) {
                         fontWeight = FontWeight.Bold
                     )
                 )
-                IconButton(onClick = { }) {
+                IconButton(onClick = {
+                }) {
                     Icon(
                         painter = rememberAsyncImagePainter(
                             model = ImageRequest.Builder(LocalContext.current)
@@ -195,7 +200,11 @@ fun TelaPer(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp)
-                    .padding(vertical = 8.dp),
+                    .padding(vertical = 8.dp)
+                    .clickable {
+                        val politica = Intent(context, TelaPoliticaPrivacidade::class.java)
+                        context.startActivity(politica)
+                    },
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -207,7 +216,8 @@ fun TelaPer(modifier: Modifier = Modifier) {
                         fontWeight = FontWeight.Bold
                     )
                 )
-                IconButton(onClick = { }) {
+                IconButton(onClick = {
+                }) {
                     Icon(
                         painter = rememberAsyncImagePainter(
                             model = ImageRequest.Builder(LocalContext.current)
@@ -235,7 +245,11 @@ fun TelaPer(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp)
-                    .padding(vertical = 8.dp),
+                    .padding(vertical = 8.dp)
+                    .clickable {
+                        val conf = Intent(context, TelaConfiguracao::class.java)
+                        context.startActivity(conf)
+                    },
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -247,7 +261,8 @@ fun TelaPer(modifier: Modifier = Modifier) {
                         fontWeight = FontWeight.Bold
                     )
                 )
-                IconButton(onClick = { }) {
+                IconButton(onClick = {
+                }) {
                     Icon(
                         painter = rememberAsyncImagePainter(
                             model = ImageRequest.Builder(LocalContext.current)

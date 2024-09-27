@@ -17,4 +17,11 @@
     <color name="rest">#90EE90</color>
     <color name="failed">#FF6347</color>
     <color name="success">#32CD32</color>
+
+    <!--Colors Ranking -->
+    <color name="gold">#FFD700</color>
+    <color name="silver">#C0C0C0</color>
+    <color name="bronze">#CD7F32</color>
+    <color name="platinum">#363677</color>
+
 </resources>

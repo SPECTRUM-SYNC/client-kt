@@ -110,10 +110,25 @@
     <string name="ipt_meta_peso">Sua meta de peso:</string>
     <string name="ipt_meta_invalido">Valor informado inválido</string>
     <string name="ipt_peso">Peso atual:</string>
-    <string name="ipt_peso_data">Dia atual:\n</string>
+    <string name="ipt_peso_data">Dia atual:</string>
     <string name="txt_cancel">Cancelar</string>
     <string name="txt_h1_modal_peso">Atualização de Peso</string>
     <string name="title_activity_tela_editar_perfil">TelaEditarPerfil</string>
+
+
+    <!-- Ranking -->
+    <string name="title_activity_ranking">Ranking</string>
+    <string name="texto_ranking"><b>Nível Atual:</b></string>
+    <string name="texto_ranking_ponto"><b>Total de pontos:</b></string>
+    <string name="texto_ranking_h1">Ranking Geral</string>
+    <string name="texto_ranking_posicao">#\n%d</string>
+    <string name="texto_ranking_posicao_ponto">%d\n%d</string>
+    <string name="texto_ranking_idade">Idade: </string>
+    <string name="texto_ranking_objetivo">Objetivo: </string>
+    <string name="texto_ranking_meta">Meta: </string>
+    <string name="texto_ranking_treino">Treino preferido: </string>
+    <string name="title_activity_tela_ranking_perfil">TelaRankingPerfil</string>
+    <string name="title_activity_tela_receita">TelaReceita</string>
 
 
 </resources>
