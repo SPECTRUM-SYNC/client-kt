@@ -156,6 +156,7 @@
     <string name="txt_parabens">Parabéns, contiue assim!</string>
     <string name="title_activity_tela_video">TelaVideo</string>
     <string name="txt_h1_receita">Suas refeições de hoje</string>
+    <string name="title_activity_tela_contato">TelaContato</string>
 
 
 </resources>

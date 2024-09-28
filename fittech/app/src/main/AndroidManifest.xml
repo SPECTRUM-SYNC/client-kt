@@ -15,12 +15,17 @@
         android:theme="@style/Theme.Fittech"
         tools:targetApi="31">
         <activity
+            android:name=".TelaContato"
+            android:exported="true"
+            android:label="@string/title_activity_tela_contato"
+            android:theme="@style/Theme.Fittech" />
+        <activity
             android:name=".TelaVideo"
             android:exported="false"
             android:label="@string/title_activity_tela_video"
             android:theme="@style/Theme.Fittech" />
         <activity
-            android:name=".TelaReceita"
+            android:name="TelaReceita"
             android:exported="true"
             android:label="@string/title_activity_tela_receita"
             android:theme="@style/Theme.Fittech" />

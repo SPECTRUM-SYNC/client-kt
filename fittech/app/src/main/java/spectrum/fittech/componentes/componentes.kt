@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import spectrum.fittech.TelaConfiguracao
 import spectrum.fittech.TelaLogin
 import spectrum.fittech.TelaPerfil
 
@@ -56,6 +57,35 @@ fun BotaoTelaPerfil(){
     ) {
         IconButton(onClick = {
             val telaPerfil = Intent(context, TelaPerfil()::class.java)
+            context.startActivity(telaPerfil)
+        }) {
+            Icon(
+                painter = rememberAsyncImagePainter(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data("android.resource://spectrum.fittech/raw/setaesquerda")
+                        .decoderFactory(SvgDecoder.Factory())
+                        .build()
+                ),
+                contentDescription = "Home",
+                modifier = Modifier.size(24.dp),
+                tint = Color.White
+            )
+        }
+    }
+}
+
+@Composable
+fun BotaoTelaContato(){
+    val context = LocalContext.current
+
+    Box(
+        modifier = Modifier
+            .size(56.dp)
+            .background(Color(0xFF2C2C2E), shape = CircleShape),
+        contentAlignment = Alignment.Center
+    ) {
+        IconButton(onClick = {
+            val telaPerfil = Intent(context, TelaConfiguracao()::class.java)
             context.startActivity(telaPerfil)
         }) {
             Icon(

@@ -9,6 +9,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -130,6 +131,7 @@ fun TelaEditarPerfil(name: String, modifier: Modifier = Modifier) {
                 Box(
                     modifier = Modifier
                         .size(35.dp)
+                        .clickable {  }
                         .align(Alignment.BottomEnd) // Alinhamento no canto inferior direito
                         .background(Color(0xFF2C2C2E), CircleShape), // Fundo cinza circular para o ícone
                     contentAlignment = Alignment.Center
@@ -142,7 +144,7 @@ fun TelaEditarPerfil(name: String, modifier: Modifier = Modifier) {
                                 .build()
                         ),
                         contentDescription = "Camera",
-                        modifier = Modifier.size(24.dp),
+                        modifier = Modifier.size(20.dp),
                         Color.White
                     )
                 }
@@ -288,9 +290,9 @@ fun TelaEditarPerfil(name: String, modifier: Modifier = Modifier) {
         ) {
             Button(
                 onClick = {
-                    val telaLogin = Intent(context, TelaLogin::class.java)
+                    val telaHome = Intent(context, Home::class.java)
 
-                    context.startActivity(telaLogin)
+                    context.startActivity(telaHome)
                 },
                 modifier = Modifier
                     .height(50.dp)
