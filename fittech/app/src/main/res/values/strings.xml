@@ -157,6 +157,13 @@
     <string name="title_activity_tela_video">TelaVideo</string>
     <string name="txt_h1_receita">Suas refeições de hoje</string>
     <string name="title_activity_tela_contato">TelaContato</string>
+    <string name="title_activity_tela_questionario_data">TelaQuestionarioData</string>
+    <string name="title_activity_tela_questionario_peso">TelaQuestionarioPeso</string>
+    <string name="title_activity_tela_questionario_meta">TelaQuestionarioMeta</string>
+    <string name="title_activity_tela_questionario_atividade">TelaQuestionarioAtividade</string>
+    <string name="title_activity_tela_questionario_descanso">TelaQuestionarioDescanso</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="title_activity_tela_questionario_altura">TelaQuestionarioAltura</string>
 
 
 </resources>

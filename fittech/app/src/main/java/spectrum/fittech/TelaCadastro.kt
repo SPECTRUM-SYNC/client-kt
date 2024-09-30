@@ -317,7 +317,8 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
 
             Button(
                 onClick = {
-
+                    val telaQuestionario = Intent(context, Questionario()::class.java)
+                    context.startActivity(telaQuestionario)
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFFF3B47)

@@ -1,5 +1,6 @@
 package spectrum.fittech
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,10 +10,13 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -25,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -43,6 +48,7 @@ class Questionario : ComponentActivity() {
                     modifier = Modifier
                         .fillMaxSize()
                         .background(Color.Black)
+                        .windowInsetsPadding(WindowInsets.safeDrawing)
                 ) { innerPadding ->
                     Tela(
                         nome = "Android",
@@ -59,13 +65,15 @@ fun Tela(nome: String, modifier: Modifier = Modifier) {
     // Estados para rastrear a seleção de gênero
     val masculinoSelecionado = remember { mutableStateOf(false) }
     val femininoSelecionado = remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     Column(
         modifier = modifier
             .fillMaxSize()
             .background(Color(0xFF1C1C1E))
+            .padding(vertical = 32.dp)
             .padding(horizontal = 32.dp),
-        verticalArrangement = Arrangement.SpaceAround,
+        verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Título e descrições
@@ -175,7 +183,10 @@ fun Tela(nome: String, modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.End
         ) {
             Button(
-                onClick = { },
+                onClick = {
+                    val telaQuestionarioData = Intent(context, TelaQuestionarioData()::class.java)
+                    context.startActivity(telaQuestionarioData)
+                },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFFF3B47)
                 )

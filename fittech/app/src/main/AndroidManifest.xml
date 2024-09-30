@@ -15,6 +15,36 @@
         android:theme="@style/Theme.Fittech"
         tools:targetApi="31">
         <activity
+            android:name=".TelaQuestionarioAltura"
+            android:exported="true"
+            android:label="@string/title_activity_tela_questionario_altura"
+            android:theme="@style/Theme.Fittech" />
+        <activity
+            android:name=".TelaQuestionarioDescanso"
+            android:exported="true"
+            android:label="@string/title_activity_tela_questionario_descanso"
+            android:theme="@style/Theme.Fittech" />
+        <activity
+            android:name=".TelaQuestionarioAtividade"
+            android:exported="true"
+            android:label="@string/title_activity_tela_questionario_atividade"
+            android:theme="@style/Theme.Fittech" />
+        <activity
+            android:name=".TelaQuestionarioMeta"
+            android:exported="true"
+            android:label="@string/title_activity_tela_questionario_meta"
+            android:theme="@style/Theme.Fittech" />
+        <activity
+            android:name=".TelaQuestionarioPeso"
+            android:exported="true"
+            android:label="@string/title_activity_tela_questionario_peso"
+            android:theme="@style/Theme.Fittech" />
+        <activity
+            android:name=".TelaQuestionarioData"
+            android:exported="true"
+            android:label="@string/title_activity_tela_questionario_data"
+            android:theme="@style/Theme.Fittech" />
+        <activity
             android:name=".TelaContato"
             android:exported="true"
             android:label="@string/title_activity_tela_contato"
@@ -25,7 +55,7 @@
             android:label="@string/title_activity_tela_video"
             android:theme="@style/Theme.Fittech" />
         <activity
-            android:name="TelaReceita"
+            android:name=".TelaReceita"
             android:exported="true"
             android:label="@string/title_activity_tela_receita"
             android:theme="@style/Theme.Fittech" />
