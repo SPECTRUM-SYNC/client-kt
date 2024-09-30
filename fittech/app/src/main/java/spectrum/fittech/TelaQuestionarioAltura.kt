@@ -157,9 +157,15 @@ fun QuestionarioAltura(name: String, modifier: Modifier = Modifier) {
             ) {
                 val index = listState.firstVisibleItemIndex
                 altura = (index + 140).toFloat()
+
+                // Verifica se já rolamos para o item inicial
+                if (!hasScrolledToInitial) {
+                    // Centraliza o item selecionado na área visível
+                    listState.scrollToItem((index + 3).coerceAtMost(76)) // Mantém dentro dos limites
+                    hasScrolledToInitial = true
+                }
             }
         }
-
 
         // Botão "Próximo"
         Row(
@@ -191,6 +197,7 @@ fun QuestionarioAltura(name: String, modifier: Modifier = Modifier) {
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable
