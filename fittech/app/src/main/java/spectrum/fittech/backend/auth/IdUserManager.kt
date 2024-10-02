@@ -1,4 +1,4 @@
-package spectrum.fittech.backend.Object
+package spectrum.fittech.backend.auth
 
 object IdUserManager {
         var userId : Int? = null

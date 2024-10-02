@@ -1,4 +1,4 @@
-package spectrum.fittech.backend.Object
+package spectrum.fittech.backend.auth
 
 object TokenManager {
     var token: String? = null

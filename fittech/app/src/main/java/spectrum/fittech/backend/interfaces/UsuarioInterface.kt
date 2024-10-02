@@ -24,7 +24,7 @@ import spectrum.fittech.backend.dtos.UsuarioGet
 import spectrum.fittech.backend.dtos.UsuarioLogin
 import spectrum.fittech.backend.dtos.UsuarioLoginGoogle
 
-interface ApiInterface {
+interface UsuarioInterface {
     @POST("usuarios")
     @Headers(
         "Content-Type: application/json",

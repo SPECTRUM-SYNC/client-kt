@@ -128,4 +128,6 @@ data class UsuarioGet(
     val contaAtiva: Boolean,
     val pontuacao: Double,
     val objetivo: ObjetivoUsuario
-)
+) {
+    constructor() : this(0, "", "", null, "", "", 0.0, 0, "", "", false, 0.0, ObjetivoUsuario(0, ""))
+}
