@@ -78,8 +78,11 @@ class TelaGraficos : ComponentActivity() {
 
 @Composable
 fun TelaGraficosRun(modifier: Modifier = Modifier, navController: NavHostController) {
+    val context = LocalContext.current
+
+
     Scaffold(
-        bottomBar = { BottomNavigationBar(navController = navController, modifier, "Dashboards") },
+        bottomBar = { BottomNavigationBar(navController = navController, modifier, "Dashboards", context) },
         modifier = modifier.navigationBarsPadding()
     ) { innerPadding ->
 

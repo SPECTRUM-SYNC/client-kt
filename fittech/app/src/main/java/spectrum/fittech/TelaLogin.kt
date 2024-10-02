@@ -2,16 +2,18 @@ package spectrum.fittech
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -50,12 +52,18 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetError
+import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetInfo
+import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetSuccess
+import spectrum.fittech.backend.Object.IdUserManager
+import spectrum.fittech.backend.dtos.UsuarioLogin
+import spectrum.fittech.backend.viewModel.UsuarioService.UsuarioViewModel
 import spectrum.fittech.ui.theme.FittechTheme
 
 class TelaLogin : ComponentActivity() {
@@ -68,7 +76,6 @@ class TelaLogin : ComponentActivity() {
                         .fillMaxSize()
                 ) { innerPadding ->
                     TelaLog(
-                        name = "Dalva",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -79,16 +86,27 @@ class TelaLogin : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TelaLog(name: String, modifier: Modifier = Modifier) {
+fun TelaLog(viewModel: UsuarioViewModel = viewModel(), modifier: Modifier = Modifier) {
+
+
     var email by remember { mutableStateOf("") }
     var emailInvalido by remember { mutableStateOf(false) }
     var senha by remember { mutableStateOf("") }
     var senhaInvalida by remember { mutableStateOf(false) }
     var textWidth by remember { mutableStateOf(0f) }
     val senhaValidaRegex =
-        Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@\$!%*?&])[A-Za-z\\d@\$!%*?&]{8,}\$")
+        Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@\$!%*?&#])[A-Za-z\\d@\$!%*?&#]{8,}")
 
     val context = LocalContext.current
+
+
+    var openDialogSuccess by remember { mutableStateOf(false) }
+    var openDialogError by remember { mutableStateOf(false) }
+    var openDialogInfo by remember { mutableStateOf(false) }
+
+    var messageResponse by remember { mutableStateOf("") }
+
+
 
     Column(
         modifier = modifier
@@ -170,25 +188,6 @@ fun TelaLog(name: String, modifier: Modifier = Modifier) {
                         )
                     )
                 }
-
-                // Imagem com borda circular
-                Box(
-                    modifier = Modifier
-                        .size(56.dp)
-                        .border(
-                            BorderStroke(1.dp, Color.White),
-                            shape = CircleShape
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Image(
-                        painter = painterResource(id = R.mipmap.dalva),
-                        contentDescription = "Dalva",
-                        modifier = Modifier
-                            .size(50.dp)
-                            .clip(CircleShape)
-                    )
-                }
             }
 
             // Coluna contendo textos
@@ -200,18 +199,10 @@ fun TelaLog(name: String, modifier: Modifier = Modifier) {
                     .padding(horizontal = 32.dp)
             ) {
                 Text(
-                    text = stringResource(id = R.string.txt_bem_vinda_login),
+                    text = stringResource(id = R.string.txt_bem_vindo_login),
                     style = TextStyle(
                         fontSize = 32.sp,
                         color = Color.White
-                    )
-                )
-                Text(
-                    text = "$name",
-                    style = TextStyle(
-                        fontSize = 32.sp,
-                        color = Color.White,
-                        fontWeight = FontWeight.Bold
                     )
                 )
             }
@@ -332,34 +323,83 @@ fun TelaLog(name: String, modifier: Modifier = Modifier) {
                 )
             }
 
-            Button(
-                onClick = {
-                    val home = Intent(context, Home::class.java)
-
-                    context.startActivity(home)
-                },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFFF3B47)
-                ),
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
+            if (email.isNotEmpty() && senhaValidaRegex.matches(senha)) {
+                Button(
+                    onClick = {
+                        openDialogInfo = true
+                        viewModel.loginUsuario(
+                            UsuarioLogin(email, senha),
+                            context
+                        ) { success, message ->
+                            if (success) {
+                                openDialogSuccess = true
+                                messageResponse = message
+                            } else {
+                                openDialogError = true
+                                messageResponse = message
+                            }
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFFF3B47)
+                    ),
                 ) {
-                    Text(text = stringResource(id = R.string.btn_login)
-                    , style = TextStyle(
-                        color = Color.White
-                    ))
-                    Spacer(modifier = Modifier.width(0.dp))
-                    Image(
-                        painter = painterResource(id = R.mipmap.setadireita),
-                        contentDescription = "Seta Direita",
-                        modifier = Modifier.size(24.dp)
-                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.btn_login), style = TextStyle(
+                                color = Color.White
+                            )
+                        )
+                        Spacer(modifier = Modifier.width(0.dp))
+                        Image(
+                            painter = painterResource(id = R.mipmap.setadireita),
+                            contentDescription = "Seta Direita",
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
                 }
             }
-
         }
+    }
+
+    if (openDialogSuccess) {
+        SweetSuccess(
+            message = messageResponse,
+            duration = Toast.LENGTH_SHORT,
+            padding = PaddingValues(top = 16.dp),
+            contentAlignment = Alignment.TopCenter
+        )
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            val home = Intent(context, Home::class.java)
+            context.startActivity(home)
+        }, 2000)
+
+        openDialogSuccess = false
+    }
+
+// Toast de erro
+    if (openDialogError) {
+        openDialogError = false
+        SweetError(
+            message = messageResponse,
+            duration = Toast.LENGTH_SHORT,
+            padding = PaddingValues(top = 16.dp),
+            contentAlignment = Alignment.TopCenter
+        )
+    }
+
+    if (openDialogInfo) {
+        openDialogInfo = false
+        SweetInfo(
+            message = "Analisando dados. Por favor, aguarde...",
+            duration = Toast.LENGTH_SHORT,
+            padding = PaddingValues(top = 16.dp),
+            contentAlignment = Alignment.TopCenter
+        )
     }
 }
 
@@ -367,6 +407,6 @@ fun TelaLog(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun Login() {
     FittechTheme {
-        TelaLog("Dalva")
+        TelaLog()
     }
 }

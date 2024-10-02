@@ -30,8 +30,8 @@
     <string name="txt_login">Login</string>
 
     <!-- Tela de Login -->
-    <string name="txt_bem_vindo_login">Bem-vindo de volta,</string>
-    <string name="txt_bem_vinda_login">Bem-vinda de volta,</string>
+    <string name="txt_bem_vindo_login">Bem-vindo(a) de volta</string>
+    <string name="txt_bem_vinda_login">Bem-vinda de volta</string>
     <string name="txt_esqueci_senha">Esqueci a Senha</string>
     <!-- Texts for inputs -->
     <string name="ipt_senha_invalida_login">A senha inserida está inválida.</string>

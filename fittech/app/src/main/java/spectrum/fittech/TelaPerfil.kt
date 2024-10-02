@@ -25,6 +25,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -37,9 +38,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import spectrum.fittech.backend.Object.IdUserManager
+import spectrum.fittech.backend.auth.TokenManager
+import spectrum.fittech.backend.viewModel.UsuarioService.UsuarioViewModel
 import spectrum.fittech.ui.theme.FittechTheme
 
 class TelaPerfil : ComponentActivity() {
@@ -59,10 +65,14 @@ class TelaPerfil : ComponentActivity() {
 }
 
 @Composable
-fun TelaPer(modifier: Modifier = Modifier) {
+fun TelaPer(viewModel: UsuarioViewModel = viewModel(), modifier: Modifier = Modifier) {
     val context = LocalContext.current
 
 
+    // LaunchedEffect para executar a função apenas uma vez
+    LaunchedEffect(Unit) {
+        viewModel.obterUsuario(IdUserManager.getId(context), token = TokenManager.getToken(context))
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -118,24 +128,26 @@ fun TelaPer(modifier: Modifier = Modifier) {
                     ),
                 contentAlignment = Alignment.Center
             ) {
-                Image(
-                    painter = painterResource(id = R.mipmap.dalva),
+                AsyncImage(
+                    model = viewModel.getUsuarioGet().value?.img ?: R.mipmap.user,
                     contentDescription = "user",
                     modifier = Modifier
-                        .size(120.dp)
+                        .size(240.dp)
                         .clip(CircleShape)
                 )
             }
 
-            Text(
-                text = "Dalva",
-                style = TextStyle(
-                    fontSize = 32.sp,
-                    color = Color.White
-                ),
-                modifier = Modifier
-                    .padding(top = 16.dp)
-            )
+            viewModel.getUsuarioGet().value?.nome?.let {
+                Text(
+                    text = it,
+                    style = TextStyle(
+                        fontSize = 32.sp,
+                        color = Color.White
+                    ),
+                    modifier = Modifier
+                        .padding(top = 16.dp)
+                )
+            }
 
         }
         Column(
@@ -316,6 +328,9 @@ fun TelaPer(modifier: Modifier = Modifier) {
                         fontWeight = FontWeight.Bold
                     ),
                     modifier = Modifier.clickable {
+                        //   Limpa o token e nome do usuário
+                        IdUserManager.clearAll(context = context)
+
                         val telaLogin = Intent(context, TelaLogin::class.java)
                         context.startActivity(telaLogin)
                     }

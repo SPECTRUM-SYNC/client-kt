@@ -35,6 +35,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -48,6 +49,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -59,13 +61,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.google.gson.Gson
+import spectrum.fittech.backend.Object.IdUserManager
+import spectrum.fittech.backend.auth.TokenManager
 import spectrum.fittech.backend.builder.gson
+import spectrum.fittech.backend.viewModel.UsuarioService.UsuarioViewModel
 import spectrum.fittech.componentes.BottomNavigationBar
 import spectrum.fittech.componentes.ModalDescanso
 import spectrum.fittech.componentes.ModalFinal
@@ -151,12 +157,18 @@ fun saudacaoAtual(): String {
 }
 
 @Composable
-fun HomeRun(modifier: Modifier = Modifier, navController: NavHostController) {
+fun HomeRun(viewModel: UsuarioViewModel = viewModel(), modifier: Modifier = Modifier, navController: NavHostController) {
     val gson = Gson()
+    val context = LocalContext.current
 
+    // LaunchedEffect para executar a função apenas uma vez
+    LaunchedEffect(Unit) {
+        viewModel.obterUsuario(IdUserManager.getId(context), token = TokenManager.getToken(context))
+        IdUserManager.saveUserPic(context, viewModel.getUsuarioGet().value?.img)
+    }
 
     Scaffold(
-        bottomBar = { BottomNavigationBar(navController = navController, modifier, "Home") },
+        bottomBar = { BottomNavigationBar(navController = navController, modifier, "Home", context) },
         modifier = modifier.navigationBarsPadding()
     ) { innerPadding ->
         val dataAtual = Calendar.getInstance().time
@@ -183,7 +195,7 @@ fun HomeRun(modifier: Modifier = Modifier, navController: NavHostController) {
                     .fillMaxSize()
             ) {
                 Text(
-                    text = "Olá Dalva,",
+                    text = "Olá ${IdUserManager.getUserName(LocalContext.current)},",
                     style = TextStyle(
                         fontSize = 32.sp,
                         color = Color.White

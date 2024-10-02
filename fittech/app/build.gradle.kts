@@ -51,6 +51,7 @@ android {
 
 dependencies {
 
+    implementation("com.github.tfaki:ComposableSweetToast:1.0.1")
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)

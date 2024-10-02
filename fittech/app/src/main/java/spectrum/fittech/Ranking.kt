@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -69,9 +70,11 @@ class Ranking : ComponentActivity() {
 
 @Composable
 fun RankingRun(modifier: Modifier = Modifier, navController: NavHostController) {
+    val context = LocalContext.current
+
 
     Scaffold(
-        bottomBar = { BottomNavigationBar(navController = navController, modifier, "Ranking") },
+        bottomBar = { BottomNavigationBar(navController = navController, modifier, "Ranking", context ) },
         modifier = modifier.navigationBarsPadding()
     ) { innerPadding ->
 

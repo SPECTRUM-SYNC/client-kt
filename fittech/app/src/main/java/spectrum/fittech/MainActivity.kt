@@ -2,6 +2,10 @@ package spectrum.fittech
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -11,6 +15,7 @@ import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -40,6 +45,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityOptionsCompat
+import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetSuccess
+import spectrum.fittech.backend.Object.IdUserManager
+import spectrum.fittech.backend.auth.TokenManager
 import spectrum.fittech.ui.theme.FittechTheme
 
 class MainActivity : ComponentActivity() {
@@ -62,6 +70,24 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun TelaInicial(name: String, modifier: Modifier = Modifier) {
     val context = LocalContext.current
+
+    TokenManager.getToken(LocalContext.current)?.let {
+        if (it.isNotBlank()) {
+            SweetSuccess(
+                message = "Seja bem-vindo, ${IdUserManager.getUserName(LocalContext.current)}",
+                duration = Toast.LENGTH_SHORT,
+                padding = PaddingValues(top = 16.dp),
+                contentAlignment = Alignment.TopCenter
+            )
+
+            Handler(Looper.getMainLooper()).postDelayed({
+                val home = Intent(context, Home::class.java)
+                context.startActivity(home)
+            }, 2000)
+        }
+    }
+
+
 
     Column(
         modifier = modifier

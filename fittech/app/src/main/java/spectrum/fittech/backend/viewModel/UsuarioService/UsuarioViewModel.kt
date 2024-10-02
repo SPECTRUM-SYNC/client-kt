@@ -1,6 +1,8 @@
 package spectrum.fittech.backend.viewModel.UsuarioService
 
+import android.content.Context
 import android.util.Log
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -10,7 +12,7 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import spectrum.fittech.backend.auth.IdUserManager
+import spectrum.fittech.backend.Object.IdUserManager
 import spectrum.fittech.backend.auth.TokenManager
 import spectrum.fittech.backend.dtos.AtualizarUsuario
 import spectrum.fittech.backend.dtos.AtualizarUsuarioPerfil
@@ -24,20 +26,26 @@ import spectrum.fittech.backend.dtos.Usuario
 import spectrum.fittech.backend.dtos.UsuarioGet
 import spectrum.fittech.backend.dtos.UsuarioLogin
 import spectrum.fittech.backend.dtos.UsuarioLoginGoogle
+import spectrum.fittech.backend.dtos.parseErrorMessage
 import spectrum.fittech.backend.interfaces.UsuarioInterface
 import spectrum.fittech.retroFit.RetroFitService
 
 class UsuarioViewModel : ViewModel() {
 
-    private var usuarioGet = UsuarioGet();
+    private var usuarioGet = mutableStateOf<UsuarioGet?>(null)
+    fun getUsuarioGet() = usuarioGet
+
+
     private val usuarioListGet = mutableListOf<UsuarioGet>();
+    fun getUsuarioListGet() = usuarioListGet.toList()
 
     private val usuarioApi: UsuarioInterface = RetroFitService.usuarioApi()
+
 
     // GET
     // Função para obter usuários em ordem alfabética
     fun obterUsuarioOrdemAlfabetica(token: String?) {
-        val call = usuarioApi.obterUsuarioOrdemAlfabetica(token = token)
+        val call = usuarioApi.obterUsuarioOrdemAlfabetica(token = "Bearer $token")
 
         CoroutineScope(Dispatchers.IO).launch {
             call.enqueue(object : Callback<List<UsuarioGet>> {
@@ -69,7 +77,7 @@ class UsuarioViewModel : ViewModel() {
 
     // Função para obter rank de usuários Top 3
     fun obterRankUsuariosTop3(token: String?) {
-        val call = usuarioApi.obterUsuarioPontuacaoTop3(token = token)
+        val call = usuarioApi.obterUsuarioPontuacaoTop3(token = "Bearer $token")
 
         CoroutineScope(Dispatchers.IO).launch {
             call.enqueue(object : Callback<List<UsuarioGet>> {
@@ -101,7 +109,7 @@ class UsuarioViewModel : ViewModel() {
 
     // Função para obter usuários com status ativo
     fun obterUsuarioStatusAtivo(contaAtiva: Boolean?, token: String?) {
-        val call = usuarioApi.obterStatusUsuario(contaAtiva = contaAtiva, token = token)
+        val call = usuarioApi.obterStatusUsuario(contaAtiva = contaAtiva, token = "Bearer $token")
 
         CoroutineScope(Dispatchers.IO).launch {
             call.enqueue(object : Callback<List<UsuarioGet>> {
@@ -133,7 +141,7 @@ class UsuarioViewModel : ViewModel() {
 
     // Função para obter um usuário específico
     fun obterUsuario(id: Int?, token: String?) {
-        val call = usuarioApi.obterUsuario(id = id, token = token)
+        val call = usuarioApi.obterUsuario(id, token = "Bearer $token")
 
         CoroutineScope(Dispatchers.IO).launch {
             call.enqueue(object : Callback<UsuarioGet> {
@@ -142,14 +150,13 @@ class UsuarioViewModel : ViewModel() {
                     response: Response<UsuarioGet>
                 ) {
                     if (response.isSuccessful) {
-                        Log.i("api_info", "status : ${response.code()}")
 
-                        usuarioGet = UsuarioGet();
-                        usuarioGet = response.body() ?: UsuarioGet();
+                        usuarioGet.value = UsuarioGet();
+                        usuarioGet.value = response.body() ?: UsuarioGet();
 
                         Log.i("api_info", "usuario  = $usuarioGet")
                     } else {
-                        Log.e("api_error", "Erro ao realizar consulta Usuario: ${response.body()}")
+                        Log.e("api_error", "Erro ao realizar consulta Usuario: ${response.message()}")
                     }
                 }
 
@@ -167,11 +174,14 @@ class UsuarioViewModel : ViewModel() {
 
     // POST: Função para adicionar ranking
     fun adicionarRanking(usuario: String, token: String) {
-        val call = usuarioApi.adicionarUsuarioRank(usuario, token)
+        val call = usuarioApi.adicionarUsuarioRank(usuario, "Bearer $token")
 
         CoroutineScope(Dispatchers.IO).launch {
             call.enqueue(object : Callback<RespostaRank> {
-                override fun onResponse(call: Call<RespostaRank>, response: Response<RespostaRank>) {
+                override fun onResponse(
+                    call: Call<RespostaRank>,
+                    response: Response<RespostaRank>
+                ) {
                     if (response.isSuccessful) {
                         Log.i("api_info", "Resposta: ${response.body()}")
                         // quando for usar, criar primeiro o atributo RespostaRank e depois atribui-lo aqui
@@ -193,7 +203,10 @@ class UsuarioViewModel : ViewModel() {
 
         CoroutineScope(Dispatchers.IO).launch {
             call.enqueue(object : Callback<RespostaEnvioEmail> {
-                override fun onResponse(call: Call<RespostaEnvioEmail>, response: Response<RespostaEnvioEmail>) {
+                override fun onResponse(
+                    call: Call<RespostaEnvioEmail>,
+                    response: Response<RespostaEnvioEmail>
+                ) {
                     if (response.isSuccessful) {
                         Log.i("api_info", "Resposta: ${response.body()}")
                     } else {
@@ -209,110 +222,153 @@ class UsuarioViewModel : ViewModel() {
     }
 
     // POST: Função para login de usuário
-    fun loginUsuario(usuario: UsuarioLogin, callback: (Boolean) -> Unit) {
+    // Quando for chamado em uma activity chamar pelo contexto "this"
+    fun loginUsuario(usuario: UsuarioLogin, context: Context, callback: (Boolean, String) -> Unit) {
+        IdUserManager.clearAll(context = context)
         val call = usuarioApi.loginUsuario(usuario)
 
         CoroutineScope(Dispatchers.IO).launch {
             call.enqueue(object : Callback<RespostaLogin> {
-                override fun onResponse(call: Call<RespostaLogin>, response: Response<RespostaLogin>) {
+                override fun onResponse(
+                    call: Call<RespostaLogin>,
+                    response: Response<RespostaLogin>
+                ) {
                     if (response.isSuccessful) {
-                        Log.i("api_info", "Login realizado com sucesso: ${response.code()}")
 
                         val token = response.body()?.token
                         val idUsuario = response.body()?.userId
+                        val nome = response.body()?.nome
 
-                        IdUserManager.saveId(idUsuario) // Armazena o id globalmente
-                        TokenManager.saveToken(token) // Armazena o token globalmente
+                        IdUserManager.saveId(context, idUsuario)
+                        IdUserManager.saveUserName(context, nome)
+                        TokenManager.saveToken(context, token)
 
-                        callback(true)
+                        callback(true, "Login realizado com sucesso!")
                     } else {
-                        Log.e("api_error", "Login não realizado com sucesso: ${response.code()}")
-                        callback(false)
+                        val errorResponse = response.errorBody()?.string()
+                        val errorMessage = parseErrorMessage(errorResponse)
+                        val mensagemFinal = if (errorMessage == "Bad credentials") {
+                            "Email ou senha inválidos"
+                        } else {
+                            errorMessage
+                        }
+
+                        callback(false, mensagemFinal)
                     }
                 }
 
                 override fun onFailure(call: Call<RespostaLogin>, t: Throwable) {
                     Log.e("api_error", "Falha na requisição. Erro: ${t.message}")
-                    callback(false)
+                    callback(false, "Erro na requisição: ${t.message}")
                 }
             })
         }
     }
 
+
     // POST: Função para login de usuário Google
-    fun loginUsuarioGoogle(usuario: UsuarioLoginGoogle, callback: (Boolean) -> Unit) {
+    // Quando for chamado em uma activity chamar pelo contexto "this"
+    fun loginUsuarioGoogle(
+        usuario: UsuarioLoginGoogle,
+        context: Context,
+        callback: (Boolean, String) -> Unit
+    ) {
         val call = usuarioApi.loginUsuarioGoogle(usuario)
 
         CoroutineScope(Dispatchers.IO).launch {
             call.enqueue(object : Callback<RespostaLogin> {
-                override fun onResponse(call: Call<RespostaLogin>, response: Response<RespostaLogin>) {
+                override fun onResponse(
+                    call: Call<RespostaLogin>,
+                    response: Response<RespostaLogin>
+                ) {
                     if (response.isSuccessful) {
-                        Log.i("api_info", "Login realizado com sucesso: ${response.code()}")
 
                         val token = response.body()?.token
                         val idUsuario = response.body()?.userId
 
-                        IdUserManager.saveId(idUsuario)
-                        TokenManager.saveToken(token) // Armazena o token globalmente
+                        IdUserManager.saveId(context, idUsuario)
+                        TokenManager.saveToken(context, token)
 
-                        Log.i("api_info", "Token armazenado: ${TokenManager.token}")
-                        callback(true)
+                        callback(true, "Login realizado com sucesso!")
                     } else {
-                        Log.e("api_error", "Login não realizado com sucesso: ${response.code()}")
-                        callback(false)
+                        val errorResponse = response.errorBody()?.string()
+                        val errorMessage = parseErrorMessage(errorResponse)
+                        val mensagemFinal = if (errorMessage == "Bad credentials") {
+                            "Email ou senha inválidos"
+                        } else {
+                            errorMessage
+                        }
+
+                        callback(false, mensagemFinal)
                     }
                 }
 
                 override fun onFailure(call: Call<RespostaLogin>, t: Throwable) {
                     Log.e("api_error", "Falha na requisição. Erro: ${t.message}")
-                    callback(false)
+                    callback(false, "Erro na requisição: ${t.message}")
                 }
             })
         }
     }
 
     // POST: Função para cadastrar usuário
-    fun cadastrarUsuario(usuario: Usuario) {
+    fun cadastrarUsuario(
+        usuario: Usuario,
+        callback: (Boolean, String) -> Unit
+    ) {
         val call = usuarioApi.cadastrarUsuario(usuario)
 
         CoroutineScope(Dispatchers.IO).launch {
             call.enqueue(object : Callback<RespostaCadastro> {
-                override fun onResponse(call: Call<RespostaCadastro>, response: Response<RespostaCadastro>) {
+                override fun onResponse(
+                    call: Call<RespostaCadastro>,
+                    response: Response<RespostaCadastro>
+                ) {
                     if (response.isSuccessful) {
-                        if (response.code() == 201) {
-                            Log.i("api_info", "Cadastro realizado com sucesso: ${response.code()}")
-                        } else {
-                            Log.e("api_error", "Cadastro não realizado com sucesso: ${response.code()}")
-                        }
+                        callback(true, "Cadastro realizado com sucesso!")
+
                     } else {
-                        Log.e("api_error", "Falha na requisição. Código de resposta: ${response.code()}")
+                        val errorResponse = response.errorBody()?.string()
+                        val errorMessage = parseErrorMessage(errorResponse)
+                        callback(false, errorMessage)
                     }
                 }
 
                 override fun onFailure(call: Call<RespostaCadastro>, t: Throwable) {
                     Log.e("api_error", "Erro na comunicação: ${t.message}")
+                    callback(false, "Erro na requisição: ${t.message}")
                 }
             })
         }
     }
 
+
     // PATCH
     // PATCH: Função para trocar a foto do usuário
-    fun atualizarImagem(id: Int?, token: String?, imagem: String) {
-        val call = usuarioApi.atualizarImagem(id = id, token = token, imagem = imagem)
+    fun atualizarImagem(
+        id: Int?, token: String?, imagem: String, callback: (Boolean, String) -> Unit
+    ) {
+        val call = usuarioApi.atualizarImagem(id = id, token = "Bearer $token", imagem = imagem)
 
         CoroutineScope(Dispatchers.IO).launch {
             call.enqueue(object : Callback<RespostaRequisicao> {
-                override fun onResponse(call: Call<RespostaRequisicao>, response: Response<RespostaRequisicao>) {
+                override fun onResponse(
+                    call: Call<RespostaRequisicao>,
+                    response: Response<RespostaRequisicao>
+                ) {
                     if (response.isSuccessful) {
-                        Log.i("api_info", "Imagem atualizada com sucesso: ${response.body()}")
+                        callback(true, "Imagem atualizada com sucesso!")
                     } else {
-                        Log.e("api_error", "Erro ao atualizar imagem. Código: ${response.code()} | Corpo: ${response.body()}")
+                        val errorResponse = response.errorBody()?.string()
+                        val errorMessage = parseErrorMessage(errorResponse)
+                        callback(false, errorMessage)
                     }
                 }
 
                 override fun onFailure(call: Call<RespostaRequisicao>, t: Throwable) {
                     Log.e("api_error", "Falha na requisição. Erro: ${t.message}")
+                    callback(false, "Erro na requisição: ${t.message}")
+
                 }
             })
         }
@@ -320,63 +376,110 @@ class UsuarioViewModel : ViewModel() {
 
     // PUT
     // PUT: Função para atualizar pontuação do usuário
-    fun atualizarUsuarioPontuacao(id: Int?, token: String?) {
-        val call = usuarioApi.atualizarUsuarioPontuacao(id = id, token = token)
+    fun atualizarUsuarioPontuacao(
+        id: Int?, token: String?, callback: (Boolean, String) -> Unit
+    ) {
+        val call = usuarioApi.atualizarUsuarioPontuacao(id = id, token = "Bearer $token")
 
         CoroutineScope(Dispatchers.IO).launch {
             call.enqueue(object : Callback<RespostaRequisicao> {
-                override fun onResponse(call: Call<RespostaRequisicao>, response: Response<RespostaRequisicao>) {
+                override fun onResponse(
+                    call: Call<RespostaRequisicao>,
+                    response: Response<RespostaRequisicao>
+                ) {
                     if (response.isSuccessful) {
-                        Log.i("api_info", "Pontuação do usuário atualizada com sucesso: ${response.code()}")
+                        callback(true, "Pontuação atualizada com sucesso!")
+
                     } else {
-                        Log.e("api_error", "Erro ao atualizar pontuação do usuário. Código: ${response.code()} | Corpo: ${response.body()}")
+                        val errorResponse = response.errorBody()?.string()
+                        val errorMessage = parseErrorMessage(errorResponse)
+                        callback(false, errorMessage)
                     }
                 }
 
                 override fun onFailure(call: Call<RespostaRequisicao>, t: Throwable) {
-                    Log.e("api_error", "Falha na requisição ao atualizar pontuação. Erro: ${t.message}")
+                    Log.e(
+                        "api_error",
+                        "Falha na requisição ao atualizar pontuação. Erro: ${t.message}"
+                    )
+                    callback(false, "Erro na requisição: ${t.message}")
+
                 }
             })
         }
     }
 
     // PUT: Função para atualizar usuário
-    fun atualizarUsuario(id: Int?, token: String?, usuario: AtualizarUsuario) {
-        val call = usuarioApi.atualizarUsuario(id = id, token = token, usuario = usuario)
+    fun atualizarUsuario(
+        id: Int?,
+        token: String?,
+        usuario: AtualizarUsuario,
+        callback: (Boolean, String) -> Unit
+    ) {
+        val call = usuarioApi.atualizarUsuario(id = id, token = "Bearer $token", usuario = usuario)
 
         CoroutineScope(Dispatchers.IO).launch {
             call.enqueue(object : Callback<RespostaRequisicao> {
-                override fun onResponse(call: Call<RespostaRequisicao>, response: Response<RespostaRequisicao>) {
+                override fun onResponse(
+                    call: Call<RespostaRequisicao>,
+                    response: Response<RespostaRequisicao>
+                ) {
                     if (response.isSuccessful) {
-                        Log.i("api_info", "Usuário atualizado com sucesso: ${response.body()}")
+                        callback(true, "Usuário atualizado com sucesso!")
+
                     } else {
-                        Log.e("api_error", "Erro ao atualizar usuário. Código: ${response.code()} | Corpo: ${response.body()}")
+                        val errorResponse = response.errorBody()?.string()
+                        val errorMessage = parseErrorMessage(errorResponse)
+                        callback(false, errorMessage)
                     }
                 }
 
                 override fun onFailure(call: Call<RespostaRequisicao>, t: Throwable) {
-                    Log.e("api_error", "Falha na requisição ao atualizar usuário. Erro: ${t.message}")
+                    Log.e(
+                        "api_error",
+                        "Falha na requisição ao atualizar usuário. Erro: ${t.message}"
+                    )
+                    callback(false, "Erro na requisição: ${t.message}")
+
                 }
             })
         }
     }
 
     // PUT: Função para atualizar perfil de usuário
-    fun atualizarUsuarioPerfil(id: Int?, token: String?, usuarioAtualizarPerfil: AtualizarUsuarioPerfil) {
-        val call = usuarioApi.atualizarUsuarioPerfil(id = id, token = token, usuario = usuarioAtualizarPerfil)
+    fun atualizarUsuarioPerfil(
+        id: Int?,
+        token: String?,
+        usuarioAtualizarPerfil: AtualizarUsuarioPerfil,
+        callback: (Boolean, String) -> Unit
+    ) {
+        val call = usuarioApi.atualizarUsuarioPerfil(
+            id = id,
+            token = "Bearer $token",
+            usuario = usuarioAtualizarPerfil
+        )
 
         CoroutineScope(Dispatchers.IO).launch {
             call.enqueue(object : Callback<RespostaRequisicao> {
-                override fun onResponse(call: Call<RespostaRequisicao>, response: Response<RespostaRequisicao>) {
+                override fun onResponse(
+                    call: Call<RespostaRequisicao>,
+                    response: Response<RespostaRequisicao>
+                ) {
                     if (response.isSuccessful) {
-                        Log.i("api_info", "Perfil do usuário atualizado com sucesso")
+                        callback(true, "Perfil do usuário atualizado com sucesso!")
                     } else {
-                        Log.e("api_error", "Erro ao atualizar perfil. Código: ${response.code()} | Corpo: ${response.body()}")
+                        val errorResponse = response.errorBody()?.string()
+                        val errorMessage = parseErrorMessage(errorResponse)
+                        callback(false, errorMessage)
                     }
                 }
 
                 override fun onFailure(call: Call<RespostaRequisicao>, t: Throwable) {
-                    Log.e("api_error", "Falha na requisição ao atualizar perfil. Erro: ${t.message}")
+                    Log.e(
+                        "api_error",
+                        "Falha na requisição ao atualizar perfil. Erro: ${t.message}"
+                    )
+                    callback(false, "Erro na requisição: ${t.message}")
                 }
             })
         }
@@ -384,34 +487,50 @@ class UsuarioViewModel : ViewModel() {
 
 
     // PATCH: Função para ativar usuário
-    fun ativarUsuario(id: Int?, usuario: String, token: String?) {
-        val call = usuarioApi.ativarUsuario(id, usuario, token)
+    fun ativarUsuario(
+        id: Int?,
+        usuario: String,
+        token: String?,
+        callback: (Boolean, String) -> Unit
+    ) {
+        val call = usuarioApi.ativarUsuario(id, usuario, token = "Bearer $token")
 
         CoroutineScope(Dispatchers.IO).launch {
             call.enqueue(object : Callback<RespostaRequisicao> {
-                override fun onResponse(call: Call<RespostaRequisicao>, response: Response<RespostaRequisicao>) {
+                override fun onResponse(
+                    call: Call<RespostaRequisicao>,
+                    response: Response<RespostaRequisicao>
+                ) {
                     if (response.isSuccessful) {
                         Log.i("api_info", "Usuário ativado com sucesso: ${response.body()}")
+                        callback(true, "Usuário ativado com sucesso")
+
                     } else {
-                        Log.e("api_error", "Erro ao ativar usuário. Código: ${response.code()} | Corpo: ${response.body()}")
+                        val errorResponse = response.errorBody()?.string()
+                        val errorMessage = parseErrorMessage(errorResponse)
+                        callback(false, errorMessage)
                     }
                 }
 
                 override fun onFailure(call: Call<RespostaRequisicao>, t: Throwable) {
                     Log.e("api_error", "Falha na requisição. Erro: ${t.message}")
+                    callback(false, "Erro na requisição: ${t.message}")
+
                 }
             })
         }
     }
 
     // DELETE
-    fun inativarUsuario(id: Int?, token: String?) {
+    fun inativarUsuario(
+        id: Int?, token: String?, callback: (Boolean, String) -> Unit
+    ) {
         if (id == null || token.isNullOrEmpty()) {
             Log.e("api_error", "ID ou Token inválidos.")
             return
         }
 
-        val call = usuarioApi.inativarUsuario(id = id, token = token)
+        val call = usuarioApi.inativarUsuario(id = id, token = "Bearer $token")
 
         CoroutineScope(Dispatchers.IO).launch {
             call.enqueue(object : Callback<RespostaRequisicao> {
@@ -421,26 +540,31 @@ class UsuarioViewModel : ViewModel() {
                 ) {
                     if (response.isSuccessful) {
                         Log.i("api_info", "status : ${response.code()}")
+                        callback(true, "Conta inativada com sucesso!")
+
                     } else {
-                        val errorBody = response.errorBody()?.string() ?: "Erro desconhecido"
-                        Log.e("api_error", "Erro ao inativar usuário: $errorBody")
+                        val errorResponse = response.errorBody()?.string()
+                        val errorMessage = parseErrorMessage(errorResponse)
+                        callback(false, errorMessage)
                     }
                 }
 
                 override fun onFailure(call: Call<RespostaRequisicao>, t: Throwable) {
                     Log.e("api_error", "Falha na requisição: ${t.message}")
+                    callback(false, "Erro na requisição: ${t.message}")
+
                 }
             })
         }
     }
 
-    fun excluirUsuario(id: Int?, token: String?) {
+    fun excluirUsuario(id: Int?, token: String?, callback: (Boolean, String) -> Unit) {
         if (id == null || token.isNullOrEmpty()) {
             Log.e("api_error", "ID ou Token inválidos.")
             return
         }
 
-        val call = usuarioApi.excluirUsuario(id = id, token = token)
+        val call = usuarioApi.excluirUsuario(id = id, token = "Bearer $token")
 
         CoroutineScope(Dispatchers.IO).launch {
             call.enqueue(object : Callback<RespostaRequisicao> {
@@ -450,16 +574,18 @@ class UsuarioViewModel : ViewModel() {
                 ) {
                     if (response.isSuccessful) {
                         Log.i("api_info", "status : ${response.code()}")
+                        callback(true, "Conta excluida com sucesso!")
 
                     } else {
-                        val errorBody = response.errorBody()?.string() ?: "Erro desconhecido"
-                        Log.e("api_error", "Erro ao inativar usuário: $errorBody")
+                        val errorResponse = response.errorBody()?.string()
+                        val errorMessage = parseErrorMessage(errorResponse)
+                        callback(false, errorMessage)
                     }
                 }
 
                 override fun onFailure(call: Call<RespostaRequisicao>, t: Throwable) {
                     Log.e("api_error", "Falha na requisição: ${t.message}")
-                    return
+                    callback(false, "Erro na requisição: ${t.message}")
                 }
             })
         }

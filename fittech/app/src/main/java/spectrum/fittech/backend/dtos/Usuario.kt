@@ -110,7 +110,8 @@ data class UsuarioLoginGoogle(
 
 data class RespostaLogin(
     val token: String,
-    val userId: Int
+    val userId: Int,
+    val nome: String
 )
 
 
@@ -118,7 +119,7 @@ data class UsuarioGet(
     val id: Int,
     val nome: String,
     val email: String,
-    val img: String?,
+    val img: String? = null,
     val dataNascimento: String, // Usar String para lidar diretamente com o formato da API
     val genero: String,
     val peso: Double,

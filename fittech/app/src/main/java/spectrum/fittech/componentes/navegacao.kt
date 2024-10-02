@@ -1,5 +1,6 @@
 package spectrum.fittech.componentes
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,15 +22,25 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import spectrum.fittech.R
+import spectrum.fittech.backend.Object.IdUserManager
+import spectrum.fittech.backend.auth.TokenManager
 
 
 // Barra de navegação
 @Composable
-fun BottomNavigationBar(navController: NavHostController, modifier: Modifier, telaAtual: String) {
+fun BottomNavigationBar(
+    navController: NavHostController,
+    modifier: Modifier,
+    telaAtual: String,
+    context: Context
+) {
+
+
     Column {
         Box(
             modifier = Modifier
@@ -104,8 +116,8 @@ fun BottomNavigationBar(navController: NavHostController, modifier: Modifier, te
                 }
 
                 IconButton(onClick = { navController.navigate("TelaPerfil") }) {
-                    Image(
-                        painter = painterResource(id = R.mipmap.dalva),
+                    AsyncImage(
+                        model = IdUserManager.getUserPic(context) ?: R.mipmap.user,
                         contentDescription = "Profile",
                         modifier = Modifier.size(24.dp)
                     )

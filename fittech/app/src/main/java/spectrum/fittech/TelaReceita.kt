@@ -94,8 +94,11 @@ class TelaReceita : ComponentActivity() {
 fun ReceitaRun(modifier: Modifier = Modifier, navController: NavHostController) {
     var showPopup by remember { mutableStateOf(false) }
 
+    val context = LocalContext.current
+
+
     Scaffold(
-        bottomBar = { BottomNavigationBar(navController = navController, modifier, "Receita") },
+        bottomBar = { BottomNavigationBar(navController = navController, modifier, "Receita", context) },
         modifier = modifier.navigationBarsPadding()
     ) { innerPadding ->
 
