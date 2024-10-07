@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,12 +28,12 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,15 +44,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
-import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import spectrum.fittech.backend.Object.IdUserManager
+import spectrum.fittech.backend.auth.TokenManager
+import spectrum.fittech.backend.dtos.AtualizarUsuarioPerfil
+import spectrum.fittech.backend.dtos.UsuarioGet
+import spectrum.fittech.backend.viewModel.UsuarioService.UsuarioViewModel
 import spectrum.fittech.componentes.BotaoTelaPerfil
 import spectrum.fittech.ui.theme.FittechTheme
 
@@ -63,12 +64,8 @@ class TelaEditarPerfil : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FittechTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()
-                    .windowInsetsPadding(WindowInsets.safeDrawing)) { innerPadding ->
-                    TelaEditarPerfil(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                Scaffold(modifier = Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing)) { innerPadding ->
+                    TelaEditarPerfilContent(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
@@ -77,28 +74,46 @@ class TelaEditarPerfil : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TelaEditarPerfil(name: String, modifier: Modifier = Modifier) {
+fun TelaEditarPerfilContent(modifier: Modifier = Modifier) {
     val context = LocalContext.current
-    var nome by remember { mutableStateOf("Dalva dos Anjos") }
-    var email by remember { mutableStateOf("Dalva145@mail.com") }
-    var emailInvalido by remember { mutableStateOf(false) }
-    var peso by remember { mutableStateOf("50 KG") }
-    var motivacao by remember { mutableStateOf("Ficar forte para ginástica") }
-    var meta by remember { mutableStateOf("Ficar definida") }
+    val model: UsuarioViewModel = viewModel() // Obter uma instância do ViewModel
 
+    // State para armazenar o usuário
+    var usuarioGet by remember { mutableStateOf<UsuarioGet?>(null) }
+    var isLoading by remember { mutableStateOf(true) } // Estado de carregamento
+
+    // Chama a função suspensa dentro de LaunchedEffect
+    LaunchedEffect(Unit) {
+        // Obter os dados do usuário ao iniciar a tela
+        usuarioGet = model.obterUsuario(IdUserManager.getId(context), TokenManager.getToken(context))
+        isLoading = false // Atualiza o estado de carregamento
+    }
+
+    // Define os campos de texto com valores padrão
+    var nome by remember { mutableStateOf("") }
+    var altura by remember { mutableStateOf("") }
+    var dataNascimento by remember { mutableStateOf("") }
+    var meta by remember { mutableStateOf("") }
+    var nivelCondicao by remember { mutableStateOf("") }
+
+    if (!isLoading && usuarioGet != null) {
+        nome = usuarioGet?.nome ?: "Dalva dos Anjos"
+        altura = usuarioGet?.altura?.toString() ?: "170"
+        dataNascimento = usuarioGet?.dataNascimento ?: "10/05/1990"
+        meta = usuarioGet?.meta ?: "Ficar definida"
+        nivelCondicao = usuarioGet?.nivelCondicao ?: "Avançado"
+    }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(Color(0xFF1C1C1E))
             .padding(horizontal = 16.dp)
             .padding(bottom = 16.dp),
         verticalArrangement = Arrangement.SpaceAround
     ) {
-
         Row(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Start
         ) {
             // Botão voltar
@@ -113,10 +128,7 @@ fun TelaEditarPerfil(name: String, modifier: Modifier = Modifier) {
             Box(
                 modifier = Modifier
                     .size(120.dp)
-                    .border(
-                        BorderStroke(1.dp, Color.Unspecified),
-                        shape = CircleShape
-                    ),
+                    .border(BorderStroke(1.dp, Color.Unspecified), shape = CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 Image(
@@ -131,39 +143,33 @@ fun TelaEditarPerfil(name: String, modifier: Modifier = Modifier) {
                 Box(
                     modifier = Modifier
                         .size(35.dp)
-                        .clickable {  }
+                        .clickable { /* Ação para abrir a câmera ou galeria */ }
                         .align(Alignment.BottomEnd) // Alinhamento no canto inferior direito
                         .background(Color(0xFF2C2C2E), CircleShape), // Fundo cinza circular para o ícone
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         painter = rememberAsyncImagePainter(
-                            model = ImageRequest.Builder(LocalContext.current)
+                            model = ImageRequest.Builder(context)
                                 .data("android.resource://spectrum.fittech/raw/camera")
-                                .decoderFactory(SvgDecoder.Factory())
                                 .build()
                         ),
                         contentDescription = "Camera",
                         modifier = Modifier.size(20.dp),
-                        Color.White
+                        tint = Color.White
                     )
                 }
             }
         }
 
-
-
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
-
             // Campo de nome
             TextField(
                 label = { Text(text = "Nome") },
                 value = nome,
-                onValueChange = { digitadoNome ->
-                    nome = digitadoNome
-                },
+                onValueChange = { digitadoNome -> nome = digitadoNome },
                 colors = TextFieldDefaults.textFieldColors(
                     unfocusedLabelColor = Color(0xFFFF3B47),
                     cursorColor = Color(0xFFFF3B47),
@@ -171,29 +177,16 @@ fun TelaEditarPerfil(name: String, modifier: Modifier = Modifier) {
                     focusedTextColor = Color.White,
                     unfocusedTextColor = Color.White,
                     containerColor = Color.Transparent,
-                    errorContainerColor = Color.Transparent,
-                    errorTextColor = Color.White,
                     focusedIndicatorColor = Color(0xFFFF3B47)
                 ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp)
+                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
             )
 
-            // Campo de email
+            // Campo de altura
             TextField(
-                label = { Text(stringResource(id = R.string.ipt_email)) },
-                value = email,
-                onValueChange = { digitadoEmail ->
-                    email = digitadoEmail
-                    emailInvalido = !digitadoEmail.contains("@")
-                },
-                isError = emailInvalido,
-                supportingText = {
-                    if (emailInvalido) {
-                        Text(text = stringResource(id = R.string.ipt_email_invalido))
-                    }
-                },
+                label = { Text(text = "Altura (cm)") },
+                value = altura,
+                onValueChange = { digitadoAltura -> altura = digitadoAltura },
                 colors = TextFieldDefaults.textFieldColors(
                     unfocusedLabelColor = Color(0xFFFF3B47),
                     cursorColor = Color(0xFFFF3B47),
@@ -201,21 +194,16 @@ fun TelaEditarPerfil(name: String, modifier: Modifier = Modifier) {
                     focusedTextColor = Color.White,
                     unfocusedTextColor = Color.White,
                     containerColor = Color.Transparent,
-                    errorContainerColor = Color.Transparent,
-                    errorTextColor = Color.White,
                     focusedIndicatorColor = Color(0xFFFF3B47)
                 ),
-                modifier = Modifier
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
             )
 
-            // Campo de peso
+            // Campo de data de nascimento
             TextField(
-                label = { Text(text = "Peso") },
-                value = peso,
-                onValueChange = { digitadoPeso ->
-                    peso = digitadoPeso
-                },
+                label = { Text(text = "Data de Nascimento") },
+                value = dataNascimento,
+                onValueChange = { digitadoData -> dataNascimento = digitadoData },
                 colors = TextFieldDefaults.textFieldColors(
                     unfocusedLabelColor = Color(0xFFFF3B47),
                     cursorColor = Color(0xFFFF3B47),
@@ -223,45 +211,16 @@ fun TelaEditarPerfil(name: String, modifier: Modifier = Modifier) {
                     focusedTextColor = Color.White,
                     unfocusedTextColor = Color.White,
                     containerColor = Color.Transparent,
-                    errorContainerColor = Color.Transparent,
-                    errorTextColor = Color.White,
                     focusedIndicatorColor = Color(0xFFFF3B47)
                 ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp)
-            )
-
-            // Campo de motivação
-            TextField(
-                label = { Text(text = "Motivação") },
-                value = motivacao,
-                onValueChange = { digitadoMotivacao ->
-                    motivacao = digitadoMotivacao
-                },
-                colors = TextFieldDefaults.textFieldColors(
-                    unfocusedLabelColor = Color(0xFFFF3B47),
-                    cursorColor = Color(0xFFFF3B47),
-                    focusedLabelColor = Color(0xFFFF3B47),
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White,
-                    containerColor = Color.Transparent,
-                    errorContainerColor = Color.Transparent,
-                    errorTextColor = Color.White,
-                    focusedIndicatorColor = Color(0xFFFF3B47)
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp)
+                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
             )
 
             // Campo de meta
             TextField(
                 label = { Text(text = "Meta") },
                 value = meta,
-                onValueChange = { digitadoMeta ->
-                    meta = digitadoMeta
-                },
+                onValueChange = { digitadoMeta -> meta = digitadoMeta },
                 colors = TextFieldDefaults.textFieldColors(
                     unfocusedLabelColor = Color(0xFFFF3B47),
                     cursorColor = Color(0xFFFF3B47),
@@ -269,58 +228,59 @@ fun TelaEditarPerfil(name: String, modifier: Modifier = Modifier) {
                     focusedTextColor = Color.White,
                     unfocusedTextColor = Color.White,
                     containerColor = Color.Transparent,
-                    errorContainerColor = Color.Transparent,
-                    errorTextColor = Color.White,
                     focusedIndicatorColor = Color(0xFFFF3B47)
                 ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp)
+                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
             )
 
-
+            // Campo de nível de condição física
+            TextField(
+                label = { Text(text = "Nível de Condição") },
+                value = nivelCondicao,
+                onValueChange = { digitadoNivelCondicao -> nivelCondicao = digitadoNivelCondicao },
+                colors = TextFieldDefaults.textFieldColors(
+                    unfocusedLabelColor = Color(0xFFFF3B47),
+                    cursorColor = Color(0xFFFF3B47),
+                    focusedLabelColor = Color(0xFFFF3B47),
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    containerColor = Color.Transparent,
+                    focusedIndicatorColor = Color(0xFFFF3B47)
+                ),
+                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+            )
         }
 
-
         Row(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
             Button(
                 onClick = {
-                    val telaHome = Intent(context, Home::class.java)
-
-                    context.startActivity(telaHome)
+                    val user = AtualizarUsuarioPerfil(
+                        nome = nome,
+                        altura = altura.toIntOrNull() ?: 0,
+                        dataNascimento = dataNascimento,
+                        meta = meta,
+                        nivelCondicao = nivelCondicao
+                    )
+                    // Aqui você pode chamar a função de atualização do perfil, se necessário
+                    context.startActivity(Intent(context, Home::class.java))
                 },
-                modifier = Modifier
-                    .height(50.dp)
-                    .width(185.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFFF3B47)
-                ),
+                modifier = Modifier.height(50.dp).width(185.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF3B47))
             ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    Text(text = "Salvar"
-                        ,style = TextStyle(
-                            color = Color.White
-                        ))
-                }
+                Text(text = "Salvar", style = TextStyle(color = Color.White))
             }
         }
-
     }
-
 }
 
 @Preview(showBackground = true)
 @Composable
 fun TelaEditarPerfilPreview() {
     FittechTheme {
-        TelaEditarPerfil("Android")
+        TelaEditarPerfilContent()
     }
 }

@@ -9,6 +9,7 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -139,37 +140,22 @@ class UsuarioViewModel : ViewModel() {
         }
     }
 
-    // Função para obter um usuário específico
-    fun obterUsuario(id: Int?, token: String?) {
-        val call = usuarioApi.obterUsuario(id, token = "Bearer $token")
-
-        CoroutineScope(Dispatchers.IO).launch {
-            call.enqueue(object : Callback<UsuarioGet> {
-                override fun onResponse(
-                    call: Call<UsuarioGet>,
-                    response: Response<UsuarioGet>
-                ) {
-                    if (response.isSuccessful) {
-
-                        usuarioGet.value = UsuarioGet();
-                        usuarioGet.value = response.body() ?: UsuarioGet();
-
-                        Log.i("api_info", "usuario  = $usuarioGet")
-                    } else {
-                        Log.e("api_error", "Erro ao realizar consulta Usuario: ${response.message()}")
-                    }
+    suspend fun obterUsuario(id: Int?, token: String?): UsuarioGet? {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = usuarioApi.obterUsuario(id, token = "Bearer $token")
+                if (response.isSuccessful) {
+                    response.body()
+                } else {
+                    Log.e("api_error", "Erro ao realizar consulta Usuario: ${response.message()}")
+                    null
                 }
-
-                override fun onFailure(call: Call<UsuarioGet>, t: Throwable) {
-                    Log.e(
-                        "api_error",
-                        "Falha na obtenção Usuário. Código de resposta: ${t.message}"
-                    )
-                }
-            })
+            } catch (e: Exception) {
+                Log.e("api_error", "Falha na obtenção Usuário: ${e.message}")
+                null
+            }
         }
     }
-
     // POST
 
     // POST: Função para adicionar ranking

@@ -1,6 +1,7 @@
 package spectrum.fittech.backend.interfaces
 
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -155,10 +156,10 @@ interface UsuarioInterface {
         "Connection: keep-alive",
         "Cache-Control: no-cache"
     )
-    fun obterUsuario(
+    suspend fun obterUsuario(
         @Path("id") id: Int?,
         @Header("Authorization") token: String?
-    ): Call<UsuarioGet>
+    ): Response<UsuarioGet>
 
     @GET("usuarios/statusUsuario")
     @Headers(
