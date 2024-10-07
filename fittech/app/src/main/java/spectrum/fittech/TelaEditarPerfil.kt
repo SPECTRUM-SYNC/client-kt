@@ -2,6 +2,7 @@ package spectrum.fittech
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -89,19 +90,22 @@ fun TelaEditarPerfilContent(modifier: Modifier = Modifier) {
         isLoading = false // Atualiza o estado de carregamento
     }
 
-    // Define os campos de texto com valores padrão
+    // Define os campos de texto inicialmente como vazios
     var nome by remember { mutableStateOf("") }
     var altura by remember { mutableStateOf("") }
     var dataNascimento by remember { mutableStateOf("") }
     var meta by remember { mutableStateOf("") }
     var nivelCondicao by remember { mutableStateOf("") }
 
-    if (!isLoading && usuarioGet != null) {
-        nome = usuarioGet?.nome ?: "Dalva dos Anjos"
-        altura = usuarioGet?.altura?.toString() ?: "170"
-        dataNascimento = usuarioGet?.dataNascimento ?: "10/05/1990"
-        meta = usuarioGet?.meta ?: "Ficar definida"
-        nivelCondicao = usuarioGet?.nivelCondicao ?: "Avançado"
+    // Preenche os campos apenas se o usuário estiver carregado e se os campos estiverem vazios
+    LaunchedEffect(usuarioGet) {
+        usuarioGet?.let {
+            if (nome.isEmpty()) nome = it.nome
+            if (altura.isEmpty()) altura = it.altura?.toString() ?: ""
+            if (dataNascimento.isEmpty()) dataNascimento = it.dataNascimento
+            if (meta.isEmpty()) meta = it.meta
+            if (nivelCondicao.isEmpty()) nivelCondicao = it.nivelCondicao
+        }
     }
 
     Column(
@@ -265,8 +269,23 @@ fun TelaEditarPerfilContent(modifier: Modifier = Modifier) {
                         meta = meta,
                         nivelCondicao = nivelCondicao
                     )
-                    // Aqui você pode chamar a função de atualização do perfil, se necessário
-                    context.startActivity(Intent(context, Home::class.java))
+
+                    // Chamar a função de atualização do perfil
+                    model.atualizarUsuarioPerfil(
+                        id = IdUserManager.getId(context),  // Assumindo que você está pegando o ID do usuário assim
+                        token = TokenManager.getToken(context),  // Obtenha o token do usuário
+                        usuarioAtualizarPerfil = user,
+                        callback = { success, message ->
+                            if (success) {
+                                // Atualização bem-sucedida
+                                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                                context.startActivity(Intent(context, Home::class.java))
+                            } else {
+                                // Falha na atualização
+                                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    )
                 },
                 modifier = Modifier.height(50.dp).width(185.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF3B47))
@@ -279,7 +298,7 @@ fun TelaEditarPerfilContent(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun TelaEditarPerfilPreview() {
+fun PreviewTelaEditarPerfil() {
     FittechTheme {
         TelaEditarPerfilContent()
     }
