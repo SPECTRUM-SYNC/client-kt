@@ -61,9 +61,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetError
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetInfo
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetSuccess
-import spectrum.fittech.backend.Object.IdUserManager
 import spectrum.fittech.backend.dtos.UsuarioLogin
 import spectrum.fittech.backend.viewModel.UsuarioService.UsuarioViewModel
+import spectrum.fittech.componentes.GoogleSignInScreen
 import spectrum.fittech.ui.theme.FittechTheme
 
 class TelaLogin : ComponentActivity() {
@@ -316,11 +316,7 @@ fun TelaLog(viewModel: UsuarioViewModel = viewModel(), modifier: Modifier = Modi
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Image(
-                    painter = painterResource(id = R.mipmap.google),
-                    contentDescription = "Google",
-                    modifier = Modifier.size(24.dp)
-                )
+                GoogleSignInScreen()
             }
 
             if (email.isNotEmpty() && senhaValidaRegex.matches(senha)) {

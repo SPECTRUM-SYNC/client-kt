@@ -44,13 +44,16 @@ android {
     }
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "/META-INF/{AL2.0,LGPL2.1,DEPENDENCIES}"
         }
     }
 }
 
 dependencies {
 
+    implementation("com.google.android.gms:play-services-auth:20.6.0")
+    implementation("com.google.api-client:google-api-client-android:2.7.0")
+    implementation("com.google.apis:google-api-services-people:v1-rev20240313-2.0.0")
     implementation("com.github.tfaki:ComposableSweetToast:1.0.1")
     implementation(libs.lifecycle.viewmodel.compose)
     implementation(libs.kotlinx.coroutines.core)

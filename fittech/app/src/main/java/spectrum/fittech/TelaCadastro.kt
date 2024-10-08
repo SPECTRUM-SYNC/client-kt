@@ -54,9 +54,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import spectrum.fittech.backend.dtos.UsuarioLogin
-import spectrum.fittech.backend.mock.usuario
-import spectrum.fittech.backend.viewModel.UsuarioService.UsuarioViewModel
 import spectrum.fittech.ui.theme.FittechTheme
 
 class TelaCadastro : ComponentActivity() {

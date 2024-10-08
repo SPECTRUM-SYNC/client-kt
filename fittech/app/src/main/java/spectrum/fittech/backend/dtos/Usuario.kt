@@ -104,8 +104,8 @@ data class UsuarioLogin(
 )
 
 data class UsuarioLoginGoogle(
-    val email: String,
-    val nome: String
+    val email: String? = null,
+    val nome: String? = null,
 )
 
 data class RespostaLogin(

@@ -1,9 +1,7 @@
-import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -18,9 +16,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -45,7 +41,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -63,11 +58,8 @@ import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import spectrum.fittech.R
 import spectrum.fittech.componentes.BottomNavigationBar
-import spectrum.fittech.saudacaoAtual
 import spectrum.fittech.ui.theme.FittechTheme
 import spectrum.fittech.utils.receita.receitas
-import spectrum.fittech.utils.treinos.ganharMassa
-import spectrum.fittech.utils.treinos.opcoesTreinos
 
 class TelaReceita : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

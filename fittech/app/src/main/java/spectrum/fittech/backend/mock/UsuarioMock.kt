@@ -1,7 +1,16 @@
 package spectrum.fittech.backend.mock
 
 import spectrum.fittech.backend.builder.gson
-import spectrum.fittech.backend.dtos.*
+import spectrum.fittech.backend.dtos.AdicionarTopRank
+import spectrum.fittech.backend.dtos.AtivarUsuario
+import spectrum.fittech.backend.dtos.AtualizarImagem
+import spectrum.fittech.backend.dtos.AtualizarUsuario
+import spectrum.fittech.backend.dtos.AtualizarUsuarioPerfil
+import spectrum.fittech.backend.dtos.EnvioEmailUsuario
+import spectrum.fittech.backend.dtos.Objetivo
+import spectrum.fittech.backend.dtos.Usuario
+import spectrum.fittech.backend.dtos.UsuarioLogin
+import spectrum.fittech.backend.dtos.UsuarioLoginGoogle
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.util.Date

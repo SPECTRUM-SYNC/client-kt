@@ -1,7 +1,6 @@
 package spectrum.fittech.componentes
 
 import android.content.Context
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,12 +13,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
@@ -28,7 +25,6 @@ import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import spectrum.fittech.R
 import spectrum.fittech.backend.Object.IdUserManager
-import spectrum.fittech.backend.auth.TokenManager
 
 
 // Barra de navegação
