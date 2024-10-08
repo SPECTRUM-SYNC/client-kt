@@ -37,6 +37,12 @@ import kotlin.math.roundToInt
 class TelaQuestionarioPeso : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val email = intent.getStringExtra("EXTRA_EMAIL")
+        val senha = intent.getStringExtra("EXTRA_SENHA")
+        val generoMasculino = intent.getStringExtra("MASCULINO_SELECIONADO")
+        val generoFeminino = intent.getStringExtra("FEMININO_SELECIONADO")
+        val dataSelecionada = intent.getStringExtra("DATA_SELECIONADA")
+
         enableEdgeToEdge()
         setContent {
             FittechTheme {
@@ -46,7 +52,13 @@ class TelaQuestionarioPeso : ComponentActivity() {
                         .windowInsetsPadding(WindowInsets.safeDrawing)
                 ) { innerPadding ->
                     QuestionarioPeso(
+                        email = email,
+                        senha = senha,
+                        generoMasculino = generoMasculino,
+                        generoFeminino = generoFeminino,
+                        dataSelecionada = dataSelecionada,
                         modifier = Modifier.padding(innerPadding)
+
                     )
                 }
             }
@@ -55,7 +67,7 @@ class TelaQuestionarioPeso : ComponentActivity() {
 }
 
 @Composable
-fun QuestionarioPeso(modifier: Modifier = Modifier) {
+fun QuestionarioPeso(modifier: Modifier = Modifier, email: String?, senha: String?, generoMasculino: String?, generoFeminino: String?, dataSelecionada: String?) {
     val context = LocalContext.current
     var peso by remember { mutableFloatStateOf(75f) } // Peso inicial de 75kg
     val listState = rememberLazyListState(initialFirstVisibleItemIndex = 75 - 30) // Começa com 75kg
@@ -185,7 +197,14 @@ fun QuestionarioPeso(modifier: Modifier = Modifier) {
 
             Button(
                 onClick = {
-                    val telaQuestionarioAltura = Intent(context, TelaQuestionarioAltura::class.java)
+                    val telaQuestionarioAltura = Intent(context, TelaQuestionarioAltura::class.java).apply {
+                        putExtra("MASCULINO_SELECIONADO", generoMasculino)
+                        putExtra("FEMININO_SELECIONADO", generoFeminino)
+                        putExtra("EXTRA_EMAIL", email)
+                        putExtra("EXTRA_SENHA", senha)
+                        putExtra("DATA_SELECIONADA", dataSelecionada)
+                        putExtra("PESO_USUARIO", peso.toString())
+                    }
                     context.startActivity(telaQuestionarioAltura)
                 },
                 colors = ButtonDefaults.buttonColors(
@@ -210,6 +229,6 @@ fun QuestionarioPeso(modifier: Modifier = Modifier) {
 @Composable
 fun QuestionarioPesoPreview() {
     FittechTheme {
-        QuestionarioPeso()
+        QuestionarioPeso(email = "", senha = "", generoMasculino = "", generoFeminino = "", dataSelecionada = "")
     }
 }

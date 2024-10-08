@@ -2,6 +2,7 @@ package spectrum.fittech
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -53,6 +54,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import spectrum.fittech.backend.dtos.UsuarioLogin
+import spectrum.fittech.backend.mock.usuario
+import spectrum.fittech.backend.viewModel.UsuarioService.UsuarioViewModel
 import spectrum.fittech.ui.theme.FittechTheme
 
 class TelaCadastro : ComponentActivity() {
@@ -317,8 +321,20 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
 
             Button(
                 onClick = {
-                    val telaQuestionario = Intent(context, Questionario()::class.java)
-                    context.startActivity(telaQuestionario)
+                    // Verificação de campos preenchidos
+                    if (email.isNotEmpty() && !emailInvalido &&
+                        senha.isNotEmpty() && !senhaInvalida &&
+                        senhaRepetida.isNotEmpty() && !senhaInvalidaRepetida) {
+
+                        val telaQuestionario = Intent(context, Questionario::class.java).apply {
+                            putExtra("EXTRA_EMAIL", email)
+                            putExtra("EXTRA_SENHA", senha)
+                        }
+                        context.startActivity(telaQuestionario)
+
+                    } else {
+                        Toast.makeText(context, "Por favor, preencha todos os campos corretamente.", Toast.LENGTH_SHORT).show()
+                    }
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFFF3B47)
@@ -340,6 +356,7 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
                     )
                 }
             }
+
         }
 
 
