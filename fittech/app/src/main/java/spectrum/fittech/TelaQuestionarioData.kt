@@ -37,6 +37,7 @@ import spectrum.fittech.componentes.BotaoQuestionarioData
 import spectrum.fittech.ui.theme.FittechTheme
 import android.app.DatePickerDialog
 import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
@@ -49,6 +50,10 @@ import java.util.*
 class TelaQuestionarioData : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val email = intent.getStringExtra("EXTRA_EMAIL")
+        val senha = intent.getStringExtra("EXTRA_SENHA")
+        val generoMasculino = intent.getStringExtra("MASCULINO_SELECIONADO")
+        val generoFeminino = intent.getStringExtra("FEMININO_SELECIONADO")
         enableEdgeToEdge()
         setContent {
             FittechTheme {
@@ -56,6 +61,10 @@ class TelaQuestionarioData : ComponentActivity() {
                     .windowInsetsPadding(WindowInsets.safeDrawing)) { innerPadding ->
                     QuestionarioData(
                         name = "Android",
+                        email = email,
+                        senha = senha,
+                        generoMasculino = generoMasculino,
+                        generoFeminino = generoFeminino,
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -66,7 +75,7 @@ class TelaQuestionarioData : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun QuestionarioData(name: String, modifier: Modifier = Modifier) {
+fun QuestionarioData(name: String, email: String?, senha: String?, generoMasculino: String?, generoFeminino: String?, modifier: Modifier = Modifier) {
     var selectedDate by remember { mutableStateOf(TextFieldValue("")) }
     val context = LocalContext.current
     val calendar = Calendar.getInstance()
@@ -149,8 +158,19 @@ fun QuestionarioData(name: String, modifier: Modifier = Modifier) {
 
             Button(
                 onClick = {
-                    val telaQuestionarioPeso = Intent(context, TelaQuestionarioPeso()::class.java)
-                    context.startActivity(telaQuestionarioPeso)
+                    if (selectedDate.text.isNotEmpty()) {
+                        val telaQuestionarioPeso = Intent(context, TelaQuestionarioPeso()::class.java).apply {
+                            putExtra("MASCULINO_SELECIONADO", generoMasculino)
+                            putExtra("FEMININO_SELECIONADO", generoFeminino)
+                            putExtra("EXTRA_EMAIL", email)
+                            putExtra("EXTRA_SENHA", senha)
+                            putExtra("DATA_SELECIONADA", selectedDate.text)
+                        }
+                        context.startActivity(telaQuestionarioPeso)
+                    }else{
+                        Toast.makeText(context, "Por favor, selecione uma data de nascimento para avançar.", Toast.LENGTH_SHORT).show()
+                    }
+
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFFF3B47)
@@ -176,6 +196,6 @@ fun QuestionarioData(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun QuestionarioDataPreview() {
     FittechTheme {
-        QuestionarioData("Android")
+        QuestionarioData("Android", email = "", senha = "", generoMasculino = "", generoFeminino = "")
     }
 }

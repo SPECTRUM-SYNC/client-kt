@@ -2,6 +2,8 @@ package spectrum.fittech
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -42,6 +44,9 @@ import spectrum.fittech.ui.theme.FittechTheme
 class Questionario : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val email = intent.getStringExtra("EXTRA_EMAIL")
+        val senha = intent.getStringExtra("EXTRA_SENHA")
+
         setContent {
             FittechTheme {
                 Scaffold(
@@ -52,6 +57,8 @@ class Questionario : ComponentActivity() {
                 ) { innerPadding ->
                     Tela(
                         nome = "Android",
+                        email = email,
+                        senha = senha,
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -61,7 +68,7 @@ class Questionario : ComponentActivity() {
 }
 
 @Composable
-fun Tela(nome: String, modifier: Modifier = Modifier) {
+fun Tela(nome: String, email: String?, senha: String?, modifier: Modifier = Modifier) {
     // Estados para rastrear a seleção de gênero
     val masculinoSelecionado = remember { mutableStateOf(false) }
     val femininoSelecionado = remember { mutableStateOf(false) }
@@ -74,11 +81,13 @@ fun Tela(nome: String, modifier: Modifier = Modifier) {
             .padding(vertical = 32.dp)
             .padding(horizontal = 32.dp),
         verticalArrangement = Arrangement.SpaceBetween,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         // Título e descrições
+        Log.d("Tela", "Nome: $nome, Email: $email, Senha: $senha")
         Column(
             modifier = modifier.fillMaxWidth(),
+
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
@@ -184,8 +193,20 @@ fun Tela(nome: String, modifier: Modifier = Modifier) {
         ) {
             Button(
                 onClick = {
-                    val telaQuestionarioData = Intent(context, TelaQuestionarioData()::class.java)
-                    context.startActivity(telaQuestionarioData)
+                    if(masculinoSelecionado.value || femininoSelecionado.value){
+                        val telaQuestionarioData = Intent(context, TelaQuestionarioData()::class.java).apply{
+                            putExtra("MASCULINO_SELECIONADO", masculinoSelecionado.value)
+                            putExtra("FEMININO_SELECIONADO", femininoSelecionado.value)
+                            putExtra("EXTRA_EMAIL", email)
+                            putExtra("EXTRA_SENHA", senha)
+
+                        }
+                        context.startActivity(telaQuestionarioData)
+
+                    }else{
+                        Toast.makeText(context, "Por favor, selecione um gênero para avançar.", Toast.LENGTH_SHORT).show()
+                    }
+
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFFF3B47)
@@ -206,6 +227,6 @@ fun Tela(nome: String, modifier: Modifier = Modifier) {
 @Composable
 fun QuestionarioPreview() {
     FittechTheme {
-        Tela(nome = "Android")
+        Tela(nome = "Android", email = "", senha = "")
     }
 }

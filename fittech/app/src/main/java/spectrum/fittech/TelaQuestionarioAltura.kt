@@ -52,6 +52,12 @@ import kotlin.math.roundToInt
 class TelaQuestionarioAltura : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val email = intent.getStringExtra("EXTRA_EMAIL")
+        val senha = intent.getStringExtra("EXTRA_SENHA")
+        val generoMasculino = intent.getStringExtra("MASCULINO_SELECIONADO")
+        val generoFeminino = intent.getStringExtra("FEMININO_SELECIONADO")
+        val dataSelecionada = intent.getStringExtra("DATA_SELECIONADA")
+        val pesoUsuario = intent.getStringExtra("PESO_USUARIO")
         enableEdgeToEdge()
         setContent {
             FittechTheme {
@@ -59,6 +65,12 @@ class TelaQuestionarioAltura : ComponentActivity() {
                     .windowInsetsPadding(WindowInsets.safeDrawing)) { innerPadding ->
                     QuestionarioAltura(
                         name = "Android",
+                        email = email,
+                        senha = senha,
+                        generoMasculino = generoMasculino,
+                        generoFeminino = generoFeminino,
+                        dataSelecionada = dataSelecionada,
+                        pesoUsuario = pesoUsuario,
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -68,7 +80,7 @@ class TelaQuestionarioAltura : ComponentActivity() {
 }
 
 @Composable
-fun QuestionarioAltura(name: String, modifier: Modifier = Modifier) {
+fun QuestionarioAltura(name: String, email: String?, senha: String?, generoMasculino: String?, generoFeminino: String?, dataSelecionada: String?, pesoUsuario: String?, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     var altura by remember { mutableFloatStateOf(170f) } // Altura inicial de 170cm
     val listState = rememberLazyListState(initialFirstVisibleItemIndex = 170 - 140) // Começa com 170cm
@@ -179,7 +191,15 @@ fun QuestionarioAltura(name: String, modifier: Modifier = Modifier) {
 
             Button(
                 onClick = {
-                    val telaQuestionarioMeta = Intent(context, TelaQuestionarioMeta()::class.java)
+                    val telaQuestionarioMeta = Intent(context, TelaQuestionarioMeta()::class.java).apply {
+                        putExtra("MASCULINO_SELECIONADO", generoMasculino)
+                        putExtra("FEMININO_SELECIONADO", generoFeminino)
+                        putExtra("EXTRA_EMAIL", email)
+                        putExtra("EXTRA_SENHA", senha)
+                        putExtra("DATA_SELECIONADA", dataSelecionada)
+                        putExtra("PESO_USUARIO", pesoUsuario)
+                        putExtra("ALTURA_USUARIO", altura.toString())
+                    }
                     context.startActivity(telaQuestionarioMeta)
                 },
                 colors = ButtonDefaults.buttonColors(
@@ -205,6 +225,6 @@ fun QuestionarioAltura(name: String, modifier: Modifier = Modifier) {
 @Composable
 fun QuestionarioAlturaPreview() {
     FittechTheme {
-        QuestionarioAltura("Android")
+        QuestionarioAltura("Android", "", "", "", "", "", "")
     }
 }
