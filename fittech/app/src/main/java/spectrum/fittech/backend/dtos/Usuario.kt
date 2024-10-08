@@ -42,7 +42,6 @@ data class AtualizarUsuarioPerfil(
     val nome: String,
     val altura : Int,
     val dataNascimento: String,
-    val meta : String,
     val nivelCondicao : String
 )
 
@@ -119,7 +118,7 @@ data class UsuarioGet(
     val id: Int,
     val nome: String,
     val email: String,
-    val img: String? = null,
+    val img: String,
     val dataNascimento: String, // Usar String para lidar diretamente com o formato da API
     val genero: String,
     val peso: Double,
@@ -130,5 +129,5 @@ data class UsuarioGet(
     val pontuacao: Double,
     val objetivo: ObjetivoUsuario
 ) {
-    constructor() : this(0, "", "", null, "", "", 0.0, 0, "", "", false, 0.0, ObjetivoUsuario(0, ""))
+    constructor() : this(0, "", "", "", "", "", 0.0, 0, "", "", false, 0.0, ObjetivoUsuario(0, ""))
 }

@@ -13,15 +13,18 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -54,6 +57,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import spectrum.fittech.componentes.google.GoogleSignUpScreen
 import spectrum.fittech.ui.theme.FittechTheme
 
 class TelaCadastro : ComponentActivity() {
@@ -82,11 +86,13 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
     var emailInvalido by remember { mutableStateOf(false) }
     var senha by remember { mutableStateOf("") }
     var senhaInvalida by remember { mutableStateOf(false) }
+    var nome by remember { mutableStateOf("") }
+    var nomeInvalida by remember { mutableStateOf(false) }
     var senhaRepetida by remember { mutableStateOf("") }
     var senhaInvalidaRepetida by remember { mutableStateOf(false) }
     var textWidth by remember { androidx.compose.runtime.mutableFloatStateOf(0f) }
-    val senhaValidaRegex = Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@\$!%*?&])[A-Za-z\\d@\$!%*?&]{8,}\$")
-
+    val senhaValidaRegex =
+        Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@\$!%*?&#])[A-Za-z\\d@\$!%*?&#]{8,}")
     val context = LocalContext.current
 
     Column(
@@ -116,7 +122,7 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
                 painter = painterResource(id = R.mipmap.backgroundcadastro),
                 contentDescription = null,
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxWidth()
                     .alpha(0.5f),
                 contentScale = ContentScale.Crop
             )
@@ -196,7 +202,10 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
+                .fillMaxHeight()
                 .padding(horizontal = 32.dp)
+                .verticalScroll(rememberScrollState())
+
         ) {
             TextField(
                 label = { Text(stringResource(id = R.string.ipt_email)) },
@@ -209,6 +218,37 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
                 supportingText = {
                     if (emailInvalido) {
                         Text(text = stringResource(id = R.string.ipt_email_invalido))
+                    }
+                },
+                colors = TextFieldDefaults.textFieldColors(
+                    unfocusedLabelColor = Color.White,
+                    cursorColor = Color(0xFFFF3B47),
+                    focusedLabelColor = Color(0xFFFF3B47),
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    containerColor = Color.Transparent,
+                    errorContainerColor = Color.Transparent,
+                    errorTextColor = Color.White,
+                    focusedIndicatorColor = Color(0xFFFF3B47)
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp)
+            )
+
+            TextField(
+                label = { Text(stringResource(id = R.string.ipt_nome)) },
+                value = nome,
+                onValueChange = { digitadoNome ->
+                    nome = digitadoNome
+                    nomeInvalida = digitadoNome.isNotBlank() && digitadoNome.length < 3
+                },
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                isError = nomeInvalida,
+                supportingText = {
+                    if (nomeInvalida) {
+                        Text(text = stringResource(id = R.string.ipt_nome_invalida))
                     }
                 },
                 colors = TextFieldDefaults.textFieldColors(
@@ -288,71 +328,77 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
                     .fillMaxWidth()
                     .padding(bottom = 16.dp)
             )
-        }
 
-        // Botões de Cadastro
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 48.dp)
-                .padding(horizontal = 32.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column(
+            // Botões de Cadastro
+            Row(
                 modifier = Modifier
-                    .size(54.dp)
-                    .clip(CircleShape)
-                    .background(Color(0xFF2C2C2E))
-                    .clickable { }
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
+                    .fillMaxSize()
+                    .padding(bottom = 48.dp)
+                    .padding(horizontal = 32.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(
-                    painter = painterResource(id = R.mipmap.google),
-                    contentDescription = "Google",
-                    modifier = Modifier.size(24.dp)
-                )
-            }
-
-            Button(
-                onClick = {
-                    // Verificação de campos preenchidos
-                    if (email.isNotEmpty() && !emailInvalido &&
-                        senha.isNotEmpty() && !senhaInvalida &&
-                        senhaRepetida.isNotEmpty() && !senhaInvalidaRepetida) {
-
-                        val telaQuestionario = Intent(context, Questionario::class.java).apply {
-                            putExtra("EXTRA_EMAIL", email)
-                            putExtra("EXTRA_SENHA", senha)
-                        }
-                        context.startActivity(telaQuestionario)
-
-                    } else {
-                        Toast.makeText(context, "Por favor, preencha todos os campos corretamente.", Toast.LENGTH_SHORT).show()
-                    }
-                },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFFFF3B47)
-                )
-            ) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
+                Column(
+                    modifier = Modifier
+                        .size(54.dp)
+                        .clip(CircleShape)
+                        .background(Color(0xFF2C2C2E))
+                        .clickable { }
+                        .padding(16.dp),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(text = stringResource(id = R.string.btn_cadastrar),
-                        style = TextStyle(
-                            color = Color.White,
-                        ))
-                    Spacer(modifier = Modifier.width(0.dp))
-                    Image(
-                        painter = painterResource(id = R.mipmap.setadireita),
-                        contentDescription = "Seta Direita",
-                        modifier = Modifier.size(24.dp)
-                    )
+                    GoogleSignUpScreen()
                 }
-            }
+
+                Button(
+                    onClick = {
+                        // Verificação de campos preenchidos
+                        if (email.isNotEmpty() && !emailInvalido &&
+                            senha.isNotEmpty() && !senhaInvalida &&
+                            senhaRepetida.isNotEmpty() && !senhaInvalidaRepetida &&
+                            nome.isNotEmpty() && !nomeInvalida
+                        ) {
+
+                            val telaQuestionario = Intent(context, Questionario::class.java).apply {
+                                putExtra("EXTRA_EMAIL", email)
+                                putExtra("EXTRA_SENHA", senha)
+                                putExtra("EXTRA_NOME", nome)
+                                putExtra("EXTRA_FOTO", "")
+                            }
+                            context.startActivity(telaQuestionario)
+
+                        } else {
+                            Toast.makeText(
+                                context,
+                                "Por favor, preencha todos os campos corretamente.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFFF3B47)
+                    )
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.btn_cadastrar),
+                            style = TextStyle(
+                                color = Color.White,
+                            )
+                        )
+                        Spacer(modifier = Modifier.width(0.dp))
+                        Image(
+                            painter = painterResource(id = R.mipmap.setadireita),
+                            contentDescription = "Seta Direita",
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
+                }
+        }
 
         }
 

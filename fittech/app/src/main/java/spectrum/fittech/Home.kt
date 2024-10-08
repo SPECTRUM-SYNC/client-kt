@@ -28,7 +28,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -52,7 +51,6 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.google.gson.Gson
 import spectrum.fittech.backend.Object.IdUserManager
-import spectrum.fittech.backend.auth.TokenManager
 import spectrum.fittech.backend.builder.gson
 import spectrum.fittech.backend.viewModel.UsuarioService.UsuarioViewModel
 import spectrum.fittech.componentes.BottomNavigationBar
@@ -138,12 +136,6 @@ fun saudacaoAtual(): String {
 fun HomeRun(viewModel: UsuarioViewModel = viewModel(), modifier: Modifier = Modifier, navController: NavHostController) {
     val gson = Gson()
     val context = LocalContext.current
-
-    // LaunchedEffect para executar a função apenas uma vez
-    LaunchedEffect(Unit) {
-        viewModel.obterUsuario(IdUserManager.getId(context), token = TokenManager.getToken(context))
-        IdUserManager.saveUserPic(context, viewModel.getUsuarioGet().value?.img)
-    }
 
     Scaffold(
         bottomBar = { BottomNavigationBar(navController = navController, modifier, "Home", context) },

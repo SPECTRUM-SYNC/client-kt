@@ -7,7 +7,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -49,6 +48,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import spectrum.fittech.backend.Object.IdUserManager
@@ -135,9 +135,11 @@ fun TelaEditarPerfilContent(modifier: Modifier = Modifier) {
                     .border(BorderStroke(1.dp, Color.Unspecified), shape = CircleShape),
                 contentAlignment = Alignment.Center
             ) {
-                Image(
-                    painter = painterResource(id = R.mipmap.dalva),
+                AsyncImage(
+                    model = usuarioGet?.img,
                     contentDescription = "user",
+                    placeholder = painterResource(R.drawable.ic_launcher_foreground),
+                    error = painterResource(R.mipmap.user),
                     modifier = Modifier
                         .size(120.dp)
                         .clip(CircleShape)
@@ -220,22 +222,6 @@ fun TelaEditarPerfilContent(modifier: Modifier = Modifier) {
                 modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
             )
 
-            // Campo de meta
-            TextField(
-                label = { Text(text = "Meta") },
-                value = meta,
-                onValueChange = { digitadoMeta -> meta = digitadoMeta },
-                colors = TextFieldDefaults.textFieldColors(
-                    unfocusedLabelColor = Color(0xFFFF3B47),
-                    cursorColor = Color(0xFFFF3B47),
-                    focusedLabelColor = Color(0xFFFF3B47),
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White,
-                    containerColor = Color.Transparent,
-                    focusedIndicatorColor = Color(0xFFFF3B47)
-                ),
-                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
-            )
 
             // Campo de nível de condição física
             TextField(
@@ -266,7 +252,6 @@ fun TelaEditarPerfilContent(modifier: Modifier = Modifier) {
                         nome = nome,
                         altura = altura.toIntOrNull() ?: 0,
                         dataNascimento = dataNascimento,
-                        meta = meta,
                         nivelCondicao = nivelCondicao
                     )
 

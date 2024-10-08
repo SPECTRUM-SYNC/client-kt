@@ -1,11 +1,7 @@
-package spectrum.fittech.componentes
+package spectrum.fittech.componentes.google
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -17,8 +13,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Text
+
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -27,12 +22,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.compose.AsyncImage
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -41,7 +34,6 @@ import com.google.android.gms.common.api.ApiException
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetError
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetInfo
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetSuccess
-import kotlinx.coroutines.delay
 import spectrum.fittech.Home
 import spectrum.fittech.R
 import spectrum.fittech.backend.dtos.UsuarioLoginGoogle
@@ -127,12 +119,8 @@ fun GoogleSignInScreen() {
             contentAlignment = Alignment.TopCenter
         )
 
-        // Usando uma coroutine para aguardar antes de redirecionar
-        LaunchedEffect(Unit) {
-            delay(2000)
             val home = Intent(context, Home::class.java)
             context.startActivity(home)
-        }
 
         openDialogSuccess = false
     }

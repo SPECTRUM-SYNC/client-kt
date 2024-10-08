@@ -138,6 +138,7 @@ class UsuarioViewModel : ViewModel() {
         }
     }
 
+    // Função para obter usuário por ID
     suspend fun obterUsuario(id: Int?, token: String?): UsuarioGet? {
         return withContext(Dispatchers.IO) {
             try {
@@ -269,8 +270,10 @@ class UsuarioViewModel : ViewModel() {
 
                         val token = response.body()?.token
                         val idUsuario = response.body()?.userId
+                        val nome = response.body()?.nome
 
                         IdUserManager.saveId(context, idUsuario)
+                        IdUserManager.saveUserName(context, nome)
                         TokenManager.saveToken(context, token)
 
                         callback(true, "Login realizado com sucesso!")

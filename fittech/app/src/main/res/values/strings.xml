@@ -164,6 +164,8 @@
     <string name="title_activity_tela_questionario_descanso">TelaQuestionarioDescanso</string>
     <string name="title_activity_main2">MainActivity2</string>
     <string name="title_activity_tela_questionario_altura">TelaQuestionarioAltura</string>
+    <string name="ipt_nome">Nome</string>
+    <string name="ipt_nome_invalida">Seu nome/apelido deve ter pelo menos 3 letras</string>
 
 
 </resources>

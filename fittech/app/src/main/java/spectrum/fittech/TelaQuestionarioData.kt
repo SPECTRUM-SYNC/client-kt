@@ -57,15 +57,21 @@ class TelaQuestionarioData : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val email = intent.getStringExtra("EXTRA_EMAIL")
         val senha = intent.getStringExtra("EXTRA_SENHA")
-        val generoMasculino = intent.getStringExtra("MASCULINO_SELECIONADO")
-        val generoFeminino = intent.getStringExtra("FEMININO_SELECIONADO")
+        val nome = intent.getStringExtra("EXTRA_NOME")
+        val foto = intent.getStringExtra("EXTRA_FOTO")
+        val generoMasculino = intent.getBooleanExtra("MASCULINO_SELECIONADO", false)
+        val generoFeminino = intent.getBooleanExtra("FEMININO_SELECIONADO", false)
         enableEdgeToEdge()
         setContent {
             FittechTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()
-                    .windowInsetsPadding(WindowInsets.safeDrawing)) { innerPadding ->
+                Scaffold(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .windowInsetsPadding(WindowInsets.safeDrawing)
+                ) { innerPadding ->
                     QuestionarioData(
-                        name = "Android",
+                        nome = nome,
+                        foto = foto,
                         email = email,
                         senha = senha,
                         generoMasculino = generoMasculino,
@@ -80,7 +86,15 @@ class TelaQuestionarioData : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun QuestionarioData(name: String, email: String?, senha: String?, generoMasculino: String?, generoFeminino: String?, modifier: Modifier = Modifier) {
+fun QuestionarioData(
+    nome: String?,
+    foto: String?,
+    email: String?,
+    senha: String?,
+    generoMasculino: Boolean?,
+    generoFeminino: Boolean?,
+    modifier: Modifier = Modifier
+) {
     var selectedDate by remember { mutableStateOf(TextFieldValue("")) }
     val context = LocalContext.current
     val calendar = Calendar.getInstance()
@@ -147,7 +161,10 @@ fun QuestionarioData(name: String, email: String?, senha: String?, generoMasculi
                 ),
                 trailingIcon = {
                     IconButton(onClick = { datePickerDialog.show() }) {
-                        Icon(imageVector = Icons.Default.DateRange, contentDescription = "Selecionar Data")
+                        Icon(
+                            imageVector = Icons.Default.DateRange,
+                            contentDescription = "Selecionar Data"
+                        )
                     }
                 }
             )
@@ -164,16 +181,23 @@ fun QuestionarioData(name: String, email: String?, senha: String?, generoMasculi
             Button(
                 onClick = {
                     if (selectedDate.text.isNotEmpty()) {
-                        val telaQuestionarioPeso = Intent(context, TelaQuestionarioPeso()::class.java).apply {
-                            putExtra("MASCULINO_SELECIONADO", generoMasculino)
-                            putExtra("FEMININO_SELECIONADO", generoFeminino)
-                            putExtra("EXTRA_EMAIL", email)
-                            putExtra("EXTRA_SENHA", senha)
-                            putExtra("DATA_SELECIONADA", selectedDate.text)
-                        }
+                        val telaQuestionarioPeso =
+                            Intent(context, TelaQuestionarioPeso()::class.java).apply {
+                                putExtra("MASCULINO_SELECIONADO", generoMasculino)
+                                putExtra("FEMININO_SELECIONADO", generoFeminino)
+                                putExtra("EXTRA_EMAIL", email)
+                                putExtra("EXTRA_SENHA", senha)
+                                putExtra("DATA_SELECIONADA", selectedDate.text)
+                                putExtra("EXTRA_NOME", nome)
+                                putExtra("EXTRA_FOTO", foto)
+                            }
                         context.startActivity(telaQuestionarioPeso)
-                    }else{
-                        Toast.makeText(context, "Por favor, selecione uma data de nascimento para avançar.", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Por favor, selecione uma data de nascimento para avançar.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
 
                 },
@@ -201,6 +225,13 @@ fun QuestionarioData(name: String, email: String?, senha: String?, generoMasculi
 @Composable
 fun QuestionarioDataPreview() {
     FittechTheme {
-        QuestionarioData("Android", email = "", senha = "", generoMasculino = "", generoFeminino = "")
+        QuestionarioData(
+            email = "",
+            senha = "",
+            generoMasculino = null,
+            generoFeminino = null,
+            nome = "",
+            foto = ""
+        )
     }
 }

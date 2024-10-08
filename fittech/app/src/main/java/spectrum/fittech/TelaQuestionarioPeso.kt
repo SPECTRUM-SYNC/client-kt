@@ -58,8 +58,10 @@ class TelaQuestionarioPeso : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val email = intent.getStringExtra("EXTRA_EMAIL")
         val senha = intent.getStringExtra("EXTRA_SENHA")
-        val generoMasculino = intent.getStringExtra("MASCULINO_SELECIONADO")
-        val generoFeminino = intent.getStringExtra("FEMININO_SELECIONADO")
+        val nome = intent.getStringExtra("EXTRA_NOME")
+        val foto = intent.getStringExtra("EXTRA_FOTO")
+        val generoMasculino = intent.getBooleanExtra("MASCULINO_SELECIONADO", false)
+        val generoFeminino = intent.getBooleanExtra("FEMININO_SELECIONADO", false)
         val dataSelecionada = intent.getStringExtra("DATA_SELECIONADA")
 
         enableEdgeToEdge()
@@ -71,6 +73,8 @@ class TelaQuestionarioPeso : ComponentActivity() {
                         .windowInsetsPadding(WindowInsets.safeDrawing)
                 ) { innerPadding ->
                     QuestionarioPeso(
+                        nome = nome,
+                        foto = foto,
                         email = email,
                         senha = senha,
                         generoMasculino = generoMasculino,
@@ -86,7 +90,16 @@ class TelaQuestionarioPeso : ComponentActivity() {
 }
 
 @Composable
-fun QuestionarioPeso(modifier: Modifier = Modifier, email: String?, senha: String?, generoMasculino: String?, generoFeminino: String?, dataSelecionada: String?) {
+fun QuestionarioPeso(
+    nome: String?,
+    foto: String?,
+    modifier: Modifier = Modifier,
+    email: String?,
+    senha: String?,
+    generoMasculino: Boolean?,
+    generoFeminino: Boolean?,
+    dataSelecionada: String?
+) {
     val context = LocalContext.current
     var peso by remember { mutableFloatStateOf(75f) } // Peso inicial de 75kg
     val listState = rememberLazyListState(initialFirstVisibleItemIndex = 75 - 30) // Começa com 75kg
@@ -191,7 +204,10 @@ fun QuestionarioPeso(modifier: Modifier = Modifier, email: String?, senha: Strin
             }
 
             // Atualiza o valor do peso conforme o scroll
-            LaunchedEffect(listState.firstVisibleItemIndex, listState.firstVisibleItemScrollOffset) {
+            LaunchedEffect(
+                listState.firstVisibleItemIndex,
+                listState.firstVisibleItemScrollOffset
+            ) {
                 if (userInteracted) {
                     val index = listState.firstVisibleItemIndex
                     peso = (index + 30).toFloat()
@@ -216,14 +232,17 @@ fun QuestionarioPeso(modifier: Modifier = Modifier, email: String?, senha: Strin
 
             Button(
                 onClick = {
-                    val telaQuestionarioAltura = Intent(context, TelaQuestionarioAltura::class.java).apply {
-                        putExtra("MASCULINO_SELECIONADO", generoMasculino)
-                        putExtra("FEMININO_SELECIONADO", generoFeminino)
-                        putExtra("EXTRA_EMAIL", email)
-                        putExtra("EXTRA_SENHA", senha)
-                        putExtra("DATA_SELECIONADA", dataSelecionada)
-                        putExtra("PESO_USUARIO", peso.toString())
-                    }
+                    val telaQuestionarioAltura =
+                        Intent(context, TelaQuestionarioAltura::class.java).apply {
+                            putExtra("MASCULINO_SELECIONADO", generoMasculino)
+                            putExtra("FEMININO_SELECIONADO", generoFeminino)
+                            putExtra("EXTRA_EMAIL", email)
+                            putExtra("EXTRA_SENHA", senha)
+                            putExtra("EXTRA_NOME", nome)
+                            putExtra("EXTRA_FOTO", foto)
+                            putExtra("DATA_SELECIONADA", dataSelecionada)
+                            putExtra("PESO_USUARIO", peso.toString())
+                        }
                     context.startActivity(telaQuestionarioAltura)
                 },
                 colors = ButtonDefaults.buttonColors(
@@ -248,6 +267,14 @@ fun QuestionarioPeso(modifier: Modifier = Modifier, email: String?, senha: Strin
 @Composable
 fun QuestionarioPesoPreview() {
     FittechTheme {
-        QuestionarioPeso(email = "", senha = "", generoMasculino = "", generoFeminino = "", dataSelecionada = "")
+        QuestionarioPeso(
+            email = "",
+            senha = "",
+            generoMasculino = null,
+            generoFeminino = null,
+            dataSelecionada = "",
+            nome = "",
+            foto = ""
+        )
     }
 }

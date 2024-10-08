@@ -63,7 +63,7 @@ import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetInfo
 import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetSuccess
 import spectrum.fittech.backend.dtos.UsuarioLogin
 import spectrum.fittech.backend.viewModel.UsuarioService.UsuarioViewModel
-import spectrum.fittech.componentes.GoogleSignInScreen
+import spectrum.fittech.componentes.google.GoogleSignInScreen
 import spectrum.fittech.ui.theme.FittechTheme
 
 class TelaLogin : ComponentActivity() {

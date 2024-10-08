@@ -2,6 +2,7 @@ package spectrum.fittech
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -53,17 +54,23 @@ class TelaQuestionarioAltura : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val email = intent.getStringExtra("EXTRA_EMAIL")
         val senha = intent.getStringExtra("EXTRA_SENHA")
-        val generoMasculino = intent.getStringExtra("MASCULINO_SELECIONADO")
-        val generoFeminino = intent.getStringExtra("FEMININO_SELECIONADO")
+        val generoMasculino = intent.getBooleanExtra("MASCULINO_SELECIONADO", false)
+        val generoFeminino = intent.getBooleanExtra("FEMININO_SELECIONADO", false)
         val dataSelecionada = intent.getStringExtra("DATA_SELECIONADA")
         val pesoUsuario = intent.getStringExtra("PESO_USUARIO")
+        val nome = intent.getStringExtra("EXTRA_NOME")
+        val foto = intent.getStringExtra("EXTRA_FOTO")
         enableEdgeToEdge()
         setContent {
             FittechTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()
-                    .windowInsetsPadding(WindowInsets.safeDrawing)) { innerPadding ->
+                Scaffold(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .windowInsetsPadding(WindowInsets.safeDrawing)
+                ) { innerPadding ->
                     QuestionarioAltura(
-                        name = "Android",
+                        nome = nome,
+                        foto = foto,
                         email = email,
                         senha = senha,
                         generoMasculino = generoMasculino,
@@ -79,10 +86,21 @@ class TelaQuestionarioAltura : ComponentActivity() {
 }
 
 @Composable
-fun QuestionarioAltura(name: String, email: String?, senha: String?, generoMasculino: String?, generoFeminino: String?, dataSelecionada: String?, pesoUsuario: String?, modifier: Modifier = Modifier) {
+fun QuestionarioAltura(
+    nome: String?,
+    foto: String?,
+    email: String?,
+    senha: String?,
+    generoMasculino: Boolean?,
+    generoFeminino: Boolean?,
+    dataSelecionada: String?,
+    pesoUsuario: String?,
+    modifier: Modifier = Modifier
+) {
     val context = LocalContext.current
     var altura by remember { mutableFloatStateOf(170f) } // Altura inicial de 170cm
-    val listState = rememberLazyListState(initialFirstVisibleItemIndex = 170 - 140) // Começa com 170cm
+    val listState =
+        rememberLazyListState(initialFirstVisibleItemIndex = 170 - 140) // Começa com 170cm
 
     Column(
         modifier = modifier
@@ -190,16 +208,23 @@ fun QuestionarioAltura(name: String, email: String?, senha: String?, generoMascu
 
             Button(
                 onClick = {
-                    val telaQuestionarioMeta = Intent(context, TelaQuestionarioMeta()::class.java).apply {
-                        putExtra("MASCULINO_SELECIONADO", generoMasculino)
-                        putExtra("FEMININO_SELECIONADO", generoFeminino)
-                        putExtra("EXTRA_EMAIL", email)
-                        putExtra("EXTRA_SENHA", senha)
-                        putExtra("DATA_SELECIONADA", dataSelecionada)
-                        putExtra("PESO_USUARIO", pesoUsuario)
-                        putExtra("ALTURA_USUARIO", altura.toString())
-                    }
-                    context.startActivity(telaQuestionarioMeta)
+                    val telaQuestionarioMeta =
+                        Intent(context, TelaQuestionarioMeta()::class.java).apply {
+                            putExtra("MASCULINO_SELECIONADO", generoMasculino)
+                            putExtra("FEMININO_SELECIONADO", generoFeminino)
+                            putExtra("EXTRA_EMAIL", email)
+                            putExtra("EXTRA_SENHA", senha)
+                            putExtra("EXTRA_NOME", nome)
+                            putExtra("EXTRA_FOTO", foto)
+                            putExtra("DATA_SELECIONADA", dataSelecionada)
+                            putExtra("PESO_USUARIO", pesoUsuario)
+                            putExtra("ALTURA_USUARIO", altura.toString())
+                        }
+
+                    Log.e(
+                        "Dados",
+                        "Email: $email, Senha: $senha, Nome: $nome, Data: $dataSelecionada, Peso: $pesoUsuario, Altura: $altura, Genero Masculino: $generoMasculino, Genero Feminino: $generoFeminino, Foto: $foto"
+                    )
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFFF3B47)
@@ -224,6 +249,8 @@ fun QuestionarioAltura(name: String, email: String?, senha: String?, generoMascu
 @Composable
 fun QuestionarioAlturaPreview() {
     FittechTheme {
-        QuestionarioAltura("Android", "", "", "", "", "", "")
+        QuestionarioAltura(
+            nome = "", foto = "", "", "", null, null, "", ""
+        )
     }
 }

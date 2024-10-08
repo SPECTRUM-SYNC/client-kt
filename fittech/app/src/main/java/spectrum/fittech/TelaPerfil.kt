@@ -25,11 +25,16 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -43,6 +48,7 @@ import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import spectrum.fittech.backend.Object.IdUserManager
 import spectrum.fittech.backend.auth.TokenManager
+import spectrum.fittech.backend.dtos.UsuarioGet
 import spectrum.fittech.backend.viewModel.UsuarioService.UsuarioViewModel
 import spectrum.fittech.ui.theme.FittechTheme
 
@@ -66,10 +72,11 @@ class TelaPerfil : ComponentActivity() {
 fun TelaPer(viewModel: UsuarioViewModel = viewModel(), modifier: Modifier = Modifier) {
     val context = LocalContext.current
 
+    var usuarioGet by remember { mutableStateOf<UsuarioGet?>(null) }
 
     // LaunchedEffect para executar a função apenas uma vez
-    LaunchedEffect(Unit) {
-        viewModel.obterUsuario(IdUserManager.getId(context), token = TokenManager.getToken(context))
+    LaunchedEffect(viewModel) {
+        usuarioGet = viewModel.obterUsuario(IdUserManager.getId(context), token = TokenManager.getToken(context))
     }
     Column(
         modifier = Modifier
@@ -126,13 +133,17 @@ fun TelaPer(viewModel: UsuarioViewModel = viewModel(), modifier: Modifier = Modi
                     ),
                 contentAlignment = Alignment.Center
             ) {
+
                 AsyncImage(
-                    model = viewModel.getUsuarioGet().value?.img ?: R.mipmap.user,
+                    model = usuarioGet?.img,
                     contentDescription = "user",
+                    placeholder = painterResource(R.drawable.ic_launcher_foreground),
+                    error = painterResource(R.mipmap.user),
                     modifier = Modifier
                         .size(240.dp)
                         .clip(CircleShape)
                 )
+
             }
 
             viewModel.getUsuarioGet().value?.nome?.let {

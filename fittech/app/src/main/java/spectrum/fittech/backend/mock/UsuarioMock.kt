@@ -46,7 +46,6 @@ val usuarioAtualizarPerfil = AtualizarUsuarioPerfil(
     nome = "João Silva",
     altura = 175,
     dataNascimento = "2001-01-10",
-    meta = "Perda de Peso",
     nivelCondicao = "Intermediário"
 )
 
