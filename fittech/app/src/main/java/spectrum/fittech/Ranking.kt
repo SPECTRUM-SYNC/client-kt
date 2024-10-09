@@ -6,7 +6,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -20,7 +19,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -38,7 +36,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -54,6 +51,7 @@ import coil.compose.AsyncImage
 import kotlinx.coroutines.async
 import spectrum.fittech.backend.Object.IdUserManager
 import spectrum.fittech.backend.auth.TokenManager
+import spectrum.fittech.backend.dtos.UsuarioGet
 import spectrum.fittech.backend.viewModel.UsuarioService.UsuarioViewModel
 import spectrum.fittech.componentes.BottomNavigationBar
 import spectrum.fittech.componentes.RankingUser
@@ -87,29 +85,33 @@ fun RankingRun(
     modifier: Modifier = Modifier,
     navController: NavHostController
 ) {
+
+    var usuarioGet by remember { mutableStateOf<UsuarioGet?>(null) }
+    val usuarioList by viewModel.getUsuarioListGet // Observa a lista de usuários
+
     val context = LocalContext.current
-    val calcularNivel =
-        ((viewModel.getUsuarioGet().value?.pontuacao ?: 0).toDouble() / 100).toInt() + 1
-    val progressBar = viewModel.getUsuarioGet().value?.pontuacao ?: 0 % 100
 
 
     LaunchedEffect(viewModel) {
+        usuarioGet = viewModel.obterUsuario(IdUserManager.getId(context), token = TokenManager.getToken(context))
+
         try {
-            val obterUsuario = async {
-                viewModel.obterUsuario(
-                    IdUserManager.getId(context),
-                    token = TokenManager.getToken(context)
-                )
-            }
+
             val obterRanking =
                 async { viewModel.obterRankUsuariosTop3(token = TokenManager.getToken(context)) }
 
-            obterUsuario.await()
             obterRanking.await()
         } catch (e: Exception) {
             Log.d("Ranking", "RankingRun: ${e.message}")
         }
     }
+
+
+
+    val calcularNivel =
+        ((usuarioGet?.pontuacao ?: 0).toDouble() / 100).toInt() + 1
+    val progressBar = usuarioGet?.pontuacao ?: (0 % 100)
+
 
     Scaffold(
         bottomBar = {
@@ -151,7 +153,7 @@ fun RankingRun(
                     contentAlignment = Alignment.Center
                 ) {
                     AsyncImage(
-                        model = viewModel.getUsuarioGet().value?.img ?: R.mipmap.user,
+                        model = usuarioGet?.img ?: R.mipmap.user,
                         contentDescription = "user",
                         modifier = Modifier
                             .size(120.dp)
@@ -159,7 +161,7 @@ fun RankingRun(
                     )
                 }
 
-                viewModel.getUsuarioGet().value?.nome?.let {
+                usuarioGet?.nome?.let {
                     Text(
                         text = it,
                         style = TextStyle(
@@ -211,7 +213,7 @@ fun RankingRun(
                     ),
                 )
                 Text(
-                    text = (viewModel.getUsuarioGet().value?.pontuacao ?: 0).toInt().toString(),
+                    text = (usuarioGet?.pontuacao ?: 0).toInt().toString(),
                     style = TextStyle(
                         fontSize = 17.sp,
                         color = colorResource(id = R.color.failed)
@@ -223,7 +225,7 @@ fun RankingRun(
             UserLevelProgressBar(level = progressBar.toInt(), maxLevel = 100)
 
             //Ranking
-            if (viewModel.getUsuarioListGet().isNotEmpty()) {
+            if (usuarioList.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(12.dp))
                 Row(
                     modifier = Modifier
@@ -242,38 +244,38 @@ fun RankingRun(
                 }
                 RankingUser(
                     navController = navController,
-                    nome = viewModel.getUsuarioListGet()[0].nome,
+                    nome = usuarioList[0].nome,
                     posicao = 1,
-                    level = ((viewModel.getUsuarioListGet()[0].pontuacao
+                    level = ((usuarioList[0].pontuacao
                         ?: 0).toDouble() / 100).toInt() + 1,
-                    maxLevel = viewModel.getUsuarioListGet()[0].pontuacao.toInt(),
-                    foto = viewModel.getUsuarioListGet()[0].img,
+                    maxLevel = usuarioList[0].pontuacao.toInt(),
+                    foto = usuarioList[0].img,
                     color = colorResource(id = R.color.gold),
-                    userId = viewModel.getUsuarioListGet()[0].id.toString()
+                    userId = usuarioList[0].id.toString()
                 )
 
                 RankingUser(
                     navController = navController,
-                    nome = viewModel.getUsuarioListGet()[1].nome,
+                    nome = usuarioList[1].nome,
                     posicao = 2,
-                    level = ((viewModel.getUsuarioListGet()[1].pontuacao
+                    level = ((usuarioList[1].pontuacao
                         ?: 0).toDouble() / 100).toInt() + 1,
-                    maxLevel = viewModel.getUsuarioListGet()[1].pontuacao.toInt(),
+                    maxLevel = usuarioList[1].pontuacao.toInt(),
                     foto = R.mipmap.dalva.toString(),
                             color = colorResource(id = R.color.silver),
-                    userId = viewModel.getUsuarioListGet()[1].id.toString()
+                    userId = usuarioList[1].id.toString()
                 )
 
                 RankingUser(
                     navController = navController,
-                    nome = viewModel.getUsuarioListGet()[2].nome,
+                    nome = usuarioList[2].nome,
                     posicao = 3,
-                    level = ((viewModel.getUsuarioListGet()[2].pontuacao
+                    level = ((usuarioList[2].pontuacao
                         ?: 0).toDouble() / 100).toInt() + 1,
-                    maxLevel = viewModel.getUsuarioListGet()[2].pontuacao.toInt(),
+                    maxLevel = usuarioList[2].pontuacao.toInt(),
                     foto = R.mipmap.dalva.toString(),
                     color = colorResource(id = R.color.bronze),
-                    userId = viewModel.getUsuarioListGet()[2].id.toString()
+                    userId = usuarioList[2].id.toString()
                 )
             }
         }

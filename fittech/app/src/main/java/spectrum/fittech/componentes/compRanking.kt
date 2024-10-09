@@ -2,7 +2,6 @@ package spectrum.fittech.componentes
 
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -30,6 +29,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -53,8 +56,8 @@ import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import kotlinx.coroutines.async
 import spectrum.fittech.R
-import spectrum.fittech.backend.Object.IdUserManager
 import spectrum.fittech.backend.auth.TokenManager
+import spectrum.fittech.backend.dtos.UsuarioGet
 import spectrum.fittech.backend.viewModel.UsuarioService.UsuarioViewModel
 import java.time.LocalDate
 import java.time.Period
@@ -188,25 +191,18 @@ fun TelaRankingPerfil(
     modifier: Modifier = Modifier,
     userId: String?
 ) {
+    var usuarioGet by remember { mutableStateOf<UsuarioGet?>(null) }
+
     val context = LocalContext.current
     val calcularNivel =
-        ((viewModel.getUsuarioGet().value?.pontuacao ?: 0).toDouble() / 100).toInt() + 1
-    val progressBar = viewModel.getUsuarioGet().value?.pontuacao ?: 0 % 100
-
-    val dataNascimento = viewModel.getUsuarioGet().value?.dataNascimento ?: ""
-    val idade = if (dataNascimento.isNotEmpty()) {
-        val nascimento = LocalDate.parse(dataNascimento)
-        val hoje = LocalDate.now()
-        Period.between(nascimento, hoje).years
-    } else {
-        0
-    }
+        ((usuarioGet?.pontuacao ?: 0).toDouble() / 100).toInt() + 1
+    val progressBar = usuarioGet?.pontuacao ?: (0 % 100)
 
     LaunchedEffect(viewModel) {
         try {
             val obterUsuario = async {
                 if (userId != null) {
-                    viewModel.obterUsuario(
+                    usuarioGet = viewModel.obterUsuario(
                         userId.toInt(), token = TokenManager.getToken(context)
                     )
                 }
@@ -216,6 +212,15 @@ fun TelaRankingPerfil(
         } catch (e: Exception) {
             Log.d("Ranking", "RankingRun: ${e.message}")
         }
+    }
+
+    val dataNascimento = usuarioGet?.dataNascimento ?: ""
+    val idade = if (dataNascimento.isNotEmpty()) {
+        val nascimento = LocalDate.parse(dataNascimento)
+        val hoje = LocalDate.now()
+        Period.between(nascimento, hoje).years
+    } else {
+        0
     }
 
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -301,7 +306,7 @@ fun TelaRankingPerfil(
                         contentAlignment = Alignment.Center
                     ) {
                         AsyncImage(
-                            model = viewModel.getUsuarioGet().value?.img ?: R.mipmap.user,
+                            model = usuarioGet?.img ?: R.mipmap.user,
                             contentDescription = "user",
                             modifier = Modifier
                                 .size(120.dp)
@@ -309,9 +314,9 @@ fun TelaRankingPerfil(
                         )
                     }
 
-                    viewModel.getUsuarioGet().value?.nome?.let {
+                    usuarioGet?.let {
                         Text(
-                            text = it,
+                            text = it.nome,
                             style = TextStyle(
                                 fontSize = 32.sp,
                                 color = Color.White
@@ -320,6 +325,7 @@ fun TelaRankingPerfil(
                                 .padding(start = 25.dp)
                         )
                     }
+
                 }
 
                 Spacer(modifier = Modifier.height(12.dp))
@@ -374,7 +380,7 @@ fun TelaRankingPerfil(
                     Spacer(modifier = Modifier.width(10.dp))
 
                     Text(
-                        text = (viewModel.getUsuarioGet().value?.pontuacao ?: 0).toInt().toString(),
+                        text = (usuarioGet?.pontuacao ?: 0).toInt().toString(),
                         style = TextStyle(
                             fontSize = 17.sp,
                             color = colorResource(id = R.color.failed)
@@ -404,7 +410,7 @@ fun TelaRankingPerfil(
 
                     Text(
                         text = "$idade",
-                            style = TextStyle(
+                        style = TextStyle(
                             fontSize = 17.sp,
                             color = colorResource(id = R.color.failed)
                         ),
@@ -431,7 +437,7 @@ fun TelaRankingPerfil(
                     Spacer(modifier = Modifier.width(10.dp))
 
                     Text(
-                        text = "${viewModel.getUsuarioGet().value?.objetivo?.objetivo}",
+                        text = "${usuarioGet?.objetivo?.objetivo}",
                         style = TextStyle(
                             fontSize = 17.sp,
                             color = colorResource(id = R.color.failed)
@@ -460,7 +466,10 @@ fun TelaRankingPerfil(
 
 
                     Text(
-                        text = viewModel.getUsuarioGet().value?.meta?.replace(Regex("([a-z])([A-Z])"), "$1 $2") ?: "Nenhuma meta definida",
+                        text = usuarioGet?.meta?.replace(
+                            Regex("([a-z])([A-Z])"),
+                            "$1 $2"
+                        ) ?: "Nenhuma meta definida",
                         style = TextStyle(
                             fontSize = 17.sp,
                             color = colorResource(id = R.color.failed)

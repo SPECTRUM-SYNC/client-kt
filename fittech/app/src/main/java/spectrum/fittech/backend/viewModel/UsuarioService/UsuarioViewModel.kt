@@ -2,6 +2,7 @@ package spectrum.fittech.backend.viewModel.UsuarioService
 
 import android.content.Context
 import android.util.Log
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -35,8 +36,8 @@ class UsuarioViewModel : ViewModel() {
     fun getUsuarioGet() = usuarioGet
 
 
-    private val usuarioListGet = mutableListOf<UsuarioGet>();
-    fun getUsuarioListGet() = usuarioListGet.toList()
+    private val _usuarioListGet = mutableStateOf<List<UsuarioGet>>(emptyList())
+    val getUsuarioListGet: State<List<UsuarioGet>> = _usuarioListGet
 
     private val usuarioApi: UsuarioInterface = RetroFitService.usuarioApi()
 
@@ -55,10 +56,10 @@ class UsuarioViewModel : ViewModel() {
                     if (response.isSuccessful) {
                         Log.i("api_info", "status : ${response.code()}")
 
-                        usuarioListGet.clear()
-                        usuarioListGet.addAll(response.body() ?: emptyList())
+                        _usuarioListGet.value = emptyList()
+                        _usuarioListGet.value = response.body() ?: emptyList()
 
-                        Log.i("api_info", "usuarios = $usuarioListGet")
+                        Log.i("api_info", "usuarios = $_usuarioListGet")
                     } else {
                         Log.e("api_error", "Erro ao realizar consulta Usuario: ${response.body()}")
                     }
@@ -87,10 +88,10 @@ class UsuarioViewModel : ViewModel() {
                     if (response.isSuccessful) {
                         Log.i("api_info", "status : ${response.code()}")
 
-                        usuarioListGet.clear()
-                        usuarioListGet.addAll(response.body() ?: emptyList())
+                        _usuarioListGet.value = emptyList()
+                        _usuarioListGet.value = response.body() ?: emptyList()
 
-                        Log.i("api_info", "usuarios = $usuarioListGet")
+                        Log.i("api_info", "usuarios = $_usuarioListGet")
                     } else {
                         Log.e("api_error", "Erro ao realizar consulta Usuario: ${response.body()}")
                     }
@@ -119,10 +120,10 @@ class UsuarioViewModel : ViewModel() {
                     if (response.isSuccessful) {
                         Log.i("api_info", "status : ${response.code()}")
 
-                        usuarioListGet.clear()
-                        usuarioListGet.addAll(response.body() ?: emptyList())
+                        _usuarioListGet.value = emptyList()
+                        _usuarioListGet.value = response.body() ?: emptyList()
 
-                        Log.i("api_info", "usuarios = $usuarioListGet")
+                        Log.i("api_info", "usuarios = $_usuarioListGet")
                     } else {
                         Log.e("api_error", "Erro ao realizar consulta Usuario: ${response.body()}")
                     }

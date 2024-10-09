@@ -2,6 +2,7 @@ package spectrum.fittech.componentes.google
 
 import android.app.Activity
 import android.content.Intent
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -62,8 +63,12 @@ fun GoogleSignInScreen() {
     val launcher: ActivityResultLauncher<Intent> =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
+                Log.e("GoogleLogin", "Login bem-sucedido")
                 val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
                 account = task.getResult(ApiException::class.java)
+            }else{
+                Log.e("GoogleLogin", result.resultCode.toString())
+
             }
         }
 
@@ -119,8 +124,8 @@ fun GoogleSignInScreen() {
             contentAlignment = Alignment.TopCenter
         )
 
-            val home = Intent(context, Home::class.java)
-            context.startActivity(home)
+        val home = Intent(context, Home::class.java)
+        context.startActivity(home)
 
         openDialogSuccess = false
     }
