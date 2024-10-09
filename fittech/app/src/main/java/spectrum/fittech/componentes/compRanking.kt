@@ -1,5 +1,6 @@
 package spectrum.fittech.componentes
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -28,6 +29,7 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,12 +44,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import kotlinx.coroutines.async
 import spectrum.fittech.R
+import spectrum.fittech.backend.Object.IdUserManager
+import spectrum.fittech.backend.auth.TokenManager
+import spectrum.fittech.backend.viewModel.UsuarioService.UsuarioViewModel
+import java.time.LocalDate
+import java.time.Period
 
 
 // Barra de progresso
@@ -91,7 +101,7 @@ fun RankingUser(
     posicao: Int,
     level: Int,
     maxLevel: Int,
-    foto: Int,
+    foto: String?,
     color: Color,
     userId: String
 
@@ -105,12 +115,6 @@ fun RankingUser(
                 navController.navigate("TelaRankingPerfil/${userId}")
             }
     ) {
-        Image(
-            painter = painterResource(id = R.mipmap.card_ranking),
-            contentDescription = "Card de ranking",
-            modifier = Modifier
-                .fillMaxSize()
-        )
 
         Row(
             modifier = Modifier
@@ -130,9 +134,10 @@ fun RankingUser(
                     ),
                 contentAlignment = Alignment.Center
             ) {
-                Image(
-                    painter = painterResource(id = R.mipmap.dalva),
+                AsyncImage(
+                    model = foto,
                     contentDescription = "user",
+                    error = painterResource(id = R.mipmap.user),
                     modifier = Modifier
                         .size(55.dp)
                         .clip(CircleShape)
@@ -178,13 +183,43 @@ fun RankingUser(
 
 @Composable
 fun TelaRankingPerfil(
+    viewModel: UsuarioViewModel = viewModel(),
     navController: NavHostController,
     modifier: Modifier = Modifier,
     userId: String?
 ) {
+    val context = LocalContext.current
+    val calcularNivel =
+        ((viewModel.getUsuarioGet().value?.pontuacao ?: 0).toDouble() / 100).toInt() + 1
+    val progressBar = viewModel.getUsuarioGet().value?.pontuacao ?: 0 % 100
+
+    val dataNascimento = viewModel.getUsuarioGet().value?.dataNascimento ?: ""
+    val idade = if (dataNascimento.isNotEmpty()) {
+        val nascimento = LocalDate.parse(dataNascimento)
+        val hoje = LocalDate.now()
+        Period.between(nascimento, hoje).years
+    } else {
+        0
+    }
+
+    LaunchedEffect(viewModel) {
+        try {
+            val obterUsuario = async {
+                if (userId != null) {
+                    viewModel.obterUsuario(
+                        userId.toInt(), token = TokenManager.getToken(context)
+                    )
+                }
+            }
+
+            obterUsuario.await()
+        } catch (e: Exception) {
+            Log.d("Ranking", "RankingRun: ${e.message}")
+        }
+    }
 
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-    Column(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color(0xFF1C1C1E)),
@@ -265,8 +300,8 @@ fun TelaRankingPerfil(
                             ),
                         contentAlignment = Alignment.Center
                     ) {
-                        Image(
-                            painter = painterResource(id = R.mipmap.dalva),
+                        AsyncImage(
+                            model = viewModel.getUsuarioGet().value?.img ?: R.mipmap.user,
                             contentDescription = "user",
                             modifier = Modifier
                                 .size(120.dp)
@@ -274,32 +309,24 @@ fun TelaRankingPerfil(
                         )
                     }
 
-                    Text(
-                        text = when (userId) {
-                            "1" -> "catia"
-                            "2" -> "Puta"
-                            "3" -> "Caua me mama"
-                            "4" -> "Dalva"
-                            "5" -> "Diogo me beija"
-                            else -> {
-                                "Ninguem"
-                            }
-                        },
-                        style = TextStyle(
-                            fontSize = 32.sp,
-                            color = Color.White
-                        ),
-                        modifier = Modifier
-                            .padding(start = 25.dp)
-                    )
+                    viewModel.getUsuarioGet().value?.nome?.let {
+                        Text(
+                            text = it,
+                            style = TextStyle(
+                                fontSize = 32.sp,
+                                color = Color.White
+                            ),
+                            modifier = Modifier
+                                .padding(start = 25.dp)
+                        )
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                UserLevelProgressBar(level = 3, maxLevel = 100)
+                UserLevelProgressBar(level = progressBar.toInt(), maxLevel = 100)
 
                 Spacer(modifier = Modifier.height(12.dp))
-
 
                 Row(
                     modifier = Modifier
@@ -319,10 +346,10 @@ fun TelaRankingPerfil(
                     Spacer(modifier = Modifier.width(10.dp))
 
                     Text(
-                        text = "5",
+                        text = (calcularNivel).toString(),
                         style = TextStyle(
                             fontSize = 17.sp,
-                            color = colorResource(id = R.color.failed)
+                            color = colorResource(id = R.color.failed),
                         ),
                     )
                 }
@@ -346,9 +373,8 @@ fun TelaRankingPerfil(
 
                     Spacer(modifier = Modifier.width(10.dp))
 
-
                     Text(
-                        text = "575",
+                        text = (viewModel.getUsuarioGet().value?.pontuacao ?: 0).toInt().toString(),
                         style = TextStyle(
                             fontSize = 17.sp,
                             color = colorResource(id = R.color.failed)
@@ -377,8 +403,8 @@ fun TelaRankingPerfil(
 
 
                     Text(
-                        text = "20",
-                        style = TextStyle(
+                        text = "$idade",
+                            style = TextStyle(
                             fontSize = 17.sp,
                             color = colorResource(id = R.color.failed)
                         ),
@@ -405,7 +431,7 @@ fun TelaRankingPerfil(
                     Spacer(modifier = Modifier.width(10.dp))
 
                     Text(
-                        text = "Pegar o biel",
+                        text = "${viewModel.getUsuarioGet().value?.objetivo?.objetivo}",
                         style = TextStyle(
                             fontSize = 17.sp,
                             color = colorResource(id = R.color.failed)
@@ -434,7 +460,7 @@ fun TelaRankingPerfil(
 
 
                     Text(
-                        text = "Corpo atlético",
+                        text = viewModel.getUsuarioGet().value?.meta?.replace(Regex("([a-z])([A-Z])"), "$1 $2") ?: "Nenhuma meta definida",
                         style = TextStyle(
                             fontSize = 17.sp,
                             color = colorResource(id = R.color.failed)
