@@ -3,6 +3,7 @@ package spectrum.fittech
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -40,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -117,7 +119,7 @@ fun QuestionarioAltura(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "Qual sua altura?",
+                text = stringResource(R.string.txt_qual_seu_altura),
                 style = androidx.compose.ui.text.TextStyle(
                     textAlign = TextAlign.Center,
                     fontSize = 25.sp,
@@ -208,23 +210,29 @@ fun QuestionarioAltura(
 
             Button(
                 onClick = {
-                    val telaQuestionarioMeta =
-                        Intent(context, TelaQuestionarioMeta()::class.java).apply {
-                            putExtra("MASCULINO_SELECIONADO", generoMasculino)
-                            putExtra("FEMININO_SELECIONADO", generoFeminino)
-                            putExtra("EXTRA_EMAIL", email)
-                            putExtra("EXTRA_SENHA", senha)
-                            putExtra("EXTRA_NOME", nome)
-                            putExtra("EXTRA_FOTO", foto)
-                            putExtra("DATA_SELECIONADA", dataSelecionada)
-                            putExtra("PESO_USUARIO", pesoUsuario)
-                            putExtra("ALTURA_USUARIO", altura.toString())
-                        }
+                    if (altura.toString().isNotEmpty()) {
 
-                    Log.e(
-                        "Dados",
-                        "Email: $email, Senha: $senha, Nome: $nome, Data: $dataSelecionada, Peso: $pesoUsuario, Altura: $altura, Genero Masculino: $generoMasculino, Genero Feminino: $generoFeminino, Foto: $foto"
-                    )
+                        val telaQuestionarioMeta =
+                            Intent(context, TelaQuestionarioMeta()::class.java).apply {
+                                putExtra("MASCULINO_SELECIONADO", generoMasculino)
+                                putExtra("FEMININO_SELECIONADO", generoFeminino)
+                                putExtra("EXTRA_EMAIL", email)
+                                putExtra("EXTRA_SENHA", senha)
+                                putExtra("EXTRA_NOME", nome)
+                                putExtra("EXTRA_FOTO", foto)
+                                putExtra("DATA_SELECIONADA", dataSelecionada)
+                                putExtra("PESO_USUARIO", pesoUsuario)
+                                putExtra("ALTURA_USUARIO", altura.toString())
+                            }
+
+                        context.startActivity(telaQuestionarioMeta)
+                    }else {
+                        Toast.makeText(
+                            context,
+                            "Por favor, selecione uma altura para avançar.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color(0xFFFF3B47)

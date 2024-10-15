@@ -166,6 +166,20 @@
     <string name="title_activity_tela_questionario_altura">TelaQuestionarioAltura</string>
     <string name="ipt_nome">Nome</string>
     <string name="ipt_nome_invalida">Seu nome/apelido deve ter pelo menos 3 letras</string>
+    <string name="txt_qual_sua_meta">Qual Sua meta ?</string>
+    <string name="txt_qual_seu_altura">Qual Sua Altura ?</string>
+    <string name="txt_qual_seu_nivel_atividade">Qual seu nível de atividade física ?</string>
+    <string name="txt_ver_dados">Ver Dados</string>
+    <string name="txt_finalizar_cadastro">Finalizar Cadastro</string>
+    <string name="txt_nome_user">"Nome: "</string>
+    <string name="txt_sexo_user">"Sexo: "</string>
+    <string name="txt_idade_user">"Data de nascimento: "</string>
+    <string name="txt_peso_user">"Peso: "</string>
+    <string name="txt_altura_user">"Altura: "</string>
+    <string name="txt_meta_user">"Meta: "</string>
+    <string name="txt_atividade_user">"Nível de atividade: "</string>
+    <string name="txt_seus_dados">DADOS A SEREM ENVIADOS</string>
+    <string name="txt_email_user">"Email: "</string>
 
 
 </resources>

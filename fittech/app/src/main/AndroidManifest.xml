@@ -20,11 +20,6 @@
             android:label="@string/title_activity_tela_questionario_altura"
             android:theme="@style/Theme.Fittech" />
         <activity
-            android:name=".TelaQuestionarioDescanso"
-            android:exported="true"
-            android:label="@string/title_activity_tela_questionario_descanso"
-            android:theme="@style/Theme.Fittech" />
-        <activity
             android:name=".TelaQuestionarioAtividade"
             android:exported="true"
             android:label="@string/title_activity_tela_questionario_atividade"
