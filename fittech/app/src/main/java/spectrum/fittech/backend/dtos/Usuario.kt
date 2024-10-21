@@ -9,6 +9,18 @@ data class Usuario(
     val img: String
 )
 
+data class NovoUsuario(
+    val nome: String?,
+    val foto: String?,
+    val email: String?,
+    val senha: String?,
+    val genero: String?,
+    val dataNascimento: String?,
+    val altura: String?,
+    val peso: String?,
+    val meta: String,
+)
+
 data class AdicionarTopRank(
     val nome: String,
     val email: String,

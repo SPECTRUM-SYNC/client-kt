@@ -2,7 +2,6 @@ package spectrum.fittech
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -40,6 +39,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -52,6 +52,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import spectrum.fittech.backend.dtos.NovoUsuario
+import spectrum.fittech.backend.viewModel.UsuarioService.UsuarioViewModel
 import spectrum.fittech.componentes.BotaoQuestionarioData
 import spectrum.fittech.ui.theme.FittechTheme
 
@@ -115,8 +118,9 @@ fun QuestionarioAtividade(
 ) {
     val context = LocalContext.current
     var selectedGoal by remember { mutableStateOf("Iniciante") } // Meta inicial
-
+    val model: UsuarioViewModel = viewModel()
     var showPopup by remember { mutableStateOf(false) }
+    var isButtonEnabled by remember { mutableStateOf(true) }
 
 
 // Lista de metas
@@ -235,15 +239,7 @@ fun QuestionarioAtividade(
             Button(
                 onClick = {
                     if (selectedGoal.isNotEmpty()) {
-//                        Como os treinos são baseados, no basico. Peço que mantenha essa valor tá bom
-
                         showPopup = true
-                    } else {
-                        Toast.makeText(
-                            context,
-                            "Por favor, selecione seu nível de atividade para avançar.",
-                            Toast.LENGTH_SHORT
-                        ).show()
                     }
                 },
                 colors = ButtonDefaults.buttonColors(
@@ -510,14 +506,59 @@ fun QuestionarioAtividade(
 
                     Button(
                         onClick = {
+                            val genero = when {
+                                generoMasculino == true -> "Masculino"
+                                generoFeminino == true -> "Feminino"
+                                else -> null
+                            }
 
-//                            Dados a serem cadastrados
-//                            nome, foto, email, senha, generoMasculino OR generoFeminino, dataSelecionada, altura, pesoUsuario, meta, "Basico"
+                            val usuario = meta?.let {
+                                NovoUsuario(
+                                    nome = nome,
+                                    foto = foto,
+                                    email = email,
+                                    senha = senha,
+                                    genero = genero,
+                                    dataNascimento = dataSelecionada,
+                                    altura = altura.toString(),
+                                    peso = pesoUsuario.toString(),
+                                    meta = it
+                                )
+                            }
+
+                            if (usuario != null) {
+                                isButtonEnabled = false // Desabilita o botão de envio
+                                try {
+                                    model.cadastrarUsuario(usuario) { success, message ->
+                                        if (success) {
+                                            Toast.makeText(
+                                                context,
+                                                "Redirecionando para a tela de login...",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                            context.startActivity(
+                                                Intent(
+                                                    context,
+                                                    TelaLogin::class.java
+                                                )
+                                            )
+                                        }
+                                    }
+                                }catch (e: Exception) {
+                                    isButtonEnabled = true // Reabilita o botão em caso de exceção
+                                    Toast.makeText(context, "Ocorreu um erro ao cadastrar o usuário: ${e.message}", Toast.LENGTH_SHORT).show()
+                                }
+
+                            } else {
+                                Toast.makeText(context, "Certifique-se que todos os campos estão preenchidos corretamente.", Toast.LENGTH_SHORT).show()
+                                isButtonEnabled = true // Reabilita o botão em caso de falha
+                            }
                         },
                         colors = ButtonDefaults.buttonColors(colorResource(R.color.fire)),
                         modifier = Modifier
                             .fillMaxWidth()
                             .shadow(8.dp, shape = RoundedCornerShape(4.dp))
+                            .then(if (isButtonEnabled) Modifier else Modifier.alpha(0.5f)) // Visualmente desabilita o botão
                     ) {
                         Text(stringResource(R.string.txt_finalizar_cadastro), color = Color.Black)
                     }
@@ -532,7 +573,7 @@ fun QuestionarioAtividade(
 fun QuestionarioAtividadePreview() {
     FittechTheme {
         QuestionarioAtividade(
-            nome = "", foto = "", "", "", null, null, "", "", "", "", "",
+            nome = "", foto = "", "", "", null, null, "", "", "", "", ""
         )
     }
 }

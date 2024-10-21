@@ -15,12 +15,12 @@ import retrofit2.http.Query
 import spectrum.fittech.backend.dtos.AtualizarUsuario
 import spectrum.fittech.backend.dtos.AtualizarUsuarioPerfil
 import spectrum.fittech.backend.dtos.EnvioEmailUsuario
+import spectrum.fittech.backend.dtos.NovoUsuario
 import spectrum.fittech.backend.dtos.RespostaCadastro
 import spectrum.fittech.backend.dtos.RespostaEnvioEmail
 import spectrum.fittech.backend.dtos.RespostaLogin
 import spectrum.fittech.backend.dtos.RespostaRank
 import spectrum.fittech.backend.dtos.RespostaRequisicao
-import spectrum.fittech.backend.dtos.Usuario
 import spectrum.fittech.backend.dtos.UsuarioGet
 import spectrum.fittech.backend.dtos.UsuarioLogin
 import spectrum.fittech.backend.dtos.UsuarioLoginGoogle
@@ -33,7 +33,7 @@ interface UsuarioInterface {
         "User-Agent: PostmanRuntime/7.42.0",
         "Connection: keep-alive",
         "Cache-Control: no-cache"
-    )    fun cadastrarUsuario(@Body usuario: Usuario): Call<RespostaCadastro>
+    )    fun cadastrarUsuario(@Body usuario: NovoUsuario?): Call<RespostaCadastro>
 
     @POST("usuarios/login")
     @Headers(

@@ -243,7 +243,6 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
                     nome = digitadoNome
                     nomeInvalida = digitadoNome.isNotBlank() && digitadoNome.length < 3
                 },
-                visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                 isError = nomeInvalida,
                 supportingText = {
