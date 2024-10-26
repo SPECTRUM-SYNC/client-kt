@@ -64,6 +64,13 @@ fun BarChart(
             chart.legend.textSize = 14f
             chart.barData.setValueTextSize(14f)
 
+            // Formatação dos valores da barra para não ter casas decimais
+            dataSet.valueFormatter = object : ValueFormatter() {
+                override fun getBarLabel(barEntry: BarEntry): String {
+                    return barEntry.y.toInt().toString()  // Converte o valor para inteiro
+                }
+            }
+
             chart.invalidate()
             chart
         }
@@ -73,7 +80,7 @@ fun BarChart(
 
 
 
-@Composable
+    @Composable
 fun LineGraph(
     xData: List<String>,
     yData: List<Float>,
@@ -82,7 +89,7 @@ fun LineGraph(
     dataLabel2: String, // Rótulo da segunda linha
     modifier: Modifier = Modifier,
     lineColor: Color = Color.Red,
-    lineColor2: Color = Color.Blue, // Cor da segunda linha
+    lineColor2: Color = Color.White, // Cor da segunda linha
     axisTextColor: Color = Color.White,
     drawValues: Boolean = false,
     drawMarkers: Boolean = false,

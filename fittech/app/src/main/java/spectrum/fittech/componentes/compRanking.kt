@@ -66,7 +66,7 @@ import java.time.Period
 // Barra de progresso
 @Composable
 fun UserLevelProgressBar(level: Int, maxLevel: Int) {
-    val progress = level / maxLevel.toFloat()
+    val progress = if (maxLevel > 0) level / maxLevel.toFloat() else 0f
 
 
     Row(

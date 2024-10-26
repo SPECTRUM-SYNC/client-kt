@@ -134,20 +134,6 @@ interface UsuarioInterface {
         @Body usuario : AtualizarUsuarioPerfil
     ): Call<RespostaRequisicao>
 
-    @PUT("usuarios/pontuacao/{id}")
-    @Headers(
-        "Content-Type: application/json",
-        "Accept: */*",
-        "User-Agent: PostmanRuntime/7.42.0",
-        "Connection: keep-alive",
-        "Cache-Control: no-cache"
-    )
-    fun atualizarUsuarioPontuacao(
-        @Path("id") id: Int?,
-        @Header("Authorization") token: String?
-    ): Call<RespostaRequisicao>
-
-
     @GET("usuarios/{id}")
     @Headers(
         "Content-Type: application/json",

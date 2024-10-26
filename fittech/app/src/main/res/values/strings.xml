@@ -180,6 +180,9 @@
     <string name="txt_atividade_user">"Nível de atividade: "</string>
     <string name="txt_seus_dados">DADOS A SEREM ENVIADOS</string>
     <string name="txt_email_user">"Email: "</string>
+    <string name="criacao_treino">Treino personalizado a caminho!"</string>
+    <string name="criacao_treino_h2">Escolha seus dias de descanso</string>
+    <string name="criacao_treino_h2_max2">(MAX .2)</string>
 
 
 </resources>

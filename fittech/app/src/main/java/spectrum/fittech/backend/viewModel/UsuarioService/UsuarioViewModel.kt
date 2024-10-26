@@ -363,40 +363,6 @@ class UsuarioViewModel : ViewModel() {
     }
 
     // PUT
-    // PUT: Função para atualizar pontuação do usuário
-    fun atualizarUsuarioPontuacao(
-        id: Int?, token: String?, callback: (Boolean, String) -> Unit
-    ) {
-        val call = usuarioApi.atualizarUsuarioPontuacao(id = id, token = "Bearer $token")
-
-        CoroutineScope(Dispatchers.IO).launch {
-            call.enqueue(object : Callback<RespostaRequisicao> {
-                override fun onResponse(
-                    call: Call<RespostaRequisicao>,
-                    response: Response<RespostaRequisicao>
-                ) {
-                    if (response.isSuccessful) {
-                        callback(true, "Pontuação atualizada com sucesso!")
-
-                    } else {
-                        val errorResponse = response.errorBody()?.string()
-                        val errorMessage = parseErrorMessage(errorResponse)
-                        callback(false, errorMessage)
-                    }
-                }
-
-                override fun onFailure(call: Call<RespostaRequisicao>, t: Throwable) {
-                    Log.e(
-                        "api_error",
-                        "Falha na requisição ao atualizar pontuação. Erro: ${t.message}"
-                    )
-                    callback(false, "Erro na requisição: ${t.message}")
-
-                }
-            })
-        }
-    }
-
     // PUT: Função para atualizar usuário
     fun atualizarUsuario(
         id: Int?,

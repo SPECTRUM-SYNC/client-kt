@@ -1,6 +1,7 @@
 package spectrum.fittech
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -28,9 +29,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -54,8 +57,11 @@ import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import spectrum.fittech.backend.Object.IdUserManager
 import spectrum.fittech.backend.auth.TokenManager
+import spectrum.fittech.backend.dtos.DiasTreino
 import spectrum.fittech.backend.dtos.HistoricoPeso
+import spectrum.fittech.backend.dtos.TreinoCountDto
 import spectrum.fittech.backend.viewModel.HistoricoPesoService.HistoricoPesoViewModel
+import spectrum.fittech.backend.viewModel.TreinoService.TreinoViewModel
 import spectrum.fittech.componentes.BottomNavigationBar
 import spectrum.fittech.componentes.DayItem
 import spectrum.fittech.componentes.ModalPeso
@@ -64,6 +70,7 @@ import spectrum.fittech.componentes.charts.LineGraph
 import spectrum.fittech.ui.theme.FittechTheme
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.Calendar
 
 class TelaGraficos : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -87,16 +94,69 @@ class TelaGraficos : ComponentActivity() {
 }
 
 @Composable
-fun TelaGraficosRun(historicoPesoViewModel: HistoricoPesoViewModel = viewModel(), modifier: Modifier = Modifier, navController: NavHostController) {
+fun TelaGraficosRun(
+    treinoViewModel: TreinoViewModel = viewModel(),
+    historicoPesoViewModel: HistoricoPesoViewModel = viewModel(),
+    modifier: Modifier = Modifier,
+    navController: NavHostController
+) {
     val context = LocalContext.current
+    val diasDaSemana = listOf("Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb")
+    val listaTreino = remember { mutableStateListOf<DiasTreino>() }
+    val diaAtual = LocalDate.now().dayOfMonth
+    val listaCountTreino = remember { mutableStateListOf<TreinoCountDto>() }
 
     var historicoPesoList by remember { mutableStateOf(emptyList<HistoricoPeso>()) }
     LaunchedEffect(Unit) {
-     historicoPesoList = historicoPesoViewModel.historicoGrafico(token = TokenManager.getToken(context), IdUserManager.getId(context))!!
+
+        listaTreino.clear()
+        listaCountTreino.clear()
+
+        treinoViewModel.listarTreino(
+            token = TokenManager.getToken(context),
+            id = IdUserManager.getId(context)
+        )?.map { item ->
+            val dataTreino = item.dataTreino
+
+            val date = LocalDate.parse(dataTreino, DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+
+            // Obtem o dia do mês
+            val diaDoMes = date.dayOfMonth
+
+            DiasTreino(
+                dataTreino = diasDaSemana[date.dayOfWeek.value % 7],
+                diaTreino = diaDoMes.toString(),
+                status = item.status,
+                diaAtual = diaAtual == diaDoMes
+            )
+        }?.reversed().let { newList ->
+            if (newList != null) {
+                listaTreino.addAll(newList)
+            }
+        }
+
+        treinoViewModel.listarTreinoPorDiaDaSemana(
+            token = TokenManager.getToken(context),
+            id = IdUserManager.getId(context)
+        )?.let { item ->
+            listaCountTreino.addAll(item)
+        }
+
+        historicoPesoList = historicoPesoViewModel.historicoGrafico(
+            token = TokenManager.getToken(context),
+            IdUserManager.getId(context)
+        )!!
     }
 
     Scaffold(
-        bottomBar = { BottomNavigationBar(navController = navController, modifier, "Dashboards", context) },
+        bottomBar = {
+            BottomNavigationBar(
+                navController = navController,
+                modifier,
+                "Dashboards",
+                context
+            )
+        },
         modifier = modifier.navigationBarsPadding()
     ) { innerPadding ->
 
@@ -127,156 +187,14 @@ fun TelaGraficosRun(historicoPesoViewModel: HistoricoPesoViewModel = viewModel()
             ) {
 
                 Text(
-                    text = stringResource(id = R.string.saudacao_grafico, "Dalva"),
+                    text = stringResource(id = R.string.saudacao_grafico,
+                        IdUserManager.getUserName(context)!!
+                    ),
                     style = TextStyle(
                         fontSize = 22.sp,
                         color = Color.White
                     )
                 )
-            }
-
-            // Primeiro card geral
-            Column {
-                Text(
-                    text = stringResource(id = R.string.txt_desenvolvimento_geral),
-                    style = TextStyle(
-                        fontSize = 20.sp,
-                        color = Color.White,
-                        fontWeight = FontWeight.Bold
-                    )
-                )
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(110.dp)
-                        .shadow(elevation = 10.dp, shape = RoundedCornerShape(25.dp))
-                        .clip(RoundedCornerShape(25.dp))
-                        .background(color = colorResource(id = R.color.background_card))
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .align(Alignment.Center)
-                            .padding(16.dp)
-                            .fillMaxWidth()
-                            .fillMaxHeight(),
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .align(Alignment.CenterVertically)
-                                .fillMaxHeight(),
-                            verticalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Icon(
-                                painter = rememberAsyncImagePainter(
-                                    model = ImageRequest.Builder(LocalContext.current)
-                                        .data("android.resource://spectrum.fittech/raw/treino")
-                                        .decoderFactory(SvgDecoder.Factory())
-                                        .build()
-                                ),
-                                contentDescription = stringResource(id = R.string.txt_treino),
-                                modifier = Modifier
-                                    .size(30.dp)
-                                    .align(Alignment.CenterHorizontally),
-                                tint = Color.Unspecified
-                            )
-                            Text(
-                                text = stringResource(id = R.string.txt_treino),
-                                style = TextStyle(
-                                    fontSize = 16.sp,
-                                    color = Color.White,
-                                    fontWeight = FontWeight.Bold
-                                )
-                            )
-                            Text(
-                                text = "1",
-                                modifier = Modifier.align(Alignment.CenterHorizontally),
-                                style = TextStyle(
-                                    fontSize = 14.sp,
-                                    color = Color(0xFFFF6E77)
-                                )
-                            )
-                        }
-
-                        Column(
-                            modifier = Modifier
-                                .align(Alignment.CenterVertically)
-                                .fillMaxHeight(),
-                            verticalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Icon(
-                                painter = rememberAsyncImagePainter(
-                                    model = ImageRequest.Builder(LocalContext.current)
-                                        .data("android.resource://spectrum.fittech/raw/refeicao")
-                                        .decoderFactory(SvgDecoder.Factory())
-                                        .build()
-                                ),
-                                contentDescription = stringResource(id = R.string.txt_refeicao),
-                                modifier = Modifier
-                                    .size(30.dp)
-                                    .align(Alignment.CenterHorizontally),
-                                tint = Color.Unspecified
-                            )
-                            Text(
-                                text = stringResource(id = R.string.txt_refeicao),
-                                style = TextStyle(
-                                    fontSize = 16.sp,
-                                    color = Color.White,
-                                    fontWeight = FontWeight.Bold
-                                )
-                            )
-                            Text(
-                                text = "1",
-                                modifier = Modifier.align(Alignment.CenterHorizontally),
-                                style = TextStyle(
-                                    fontSize = 14.sp,
-                                    color = Color(0xFFFF6E77)
-                                )
-                            )
-                        }
-
-                        Column(
-                            modifier = Modifier
-                                .align(Alignment.CenterVertically)
-                                .fillMaxHeight(),
-                            verticalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Icon(
-                                painter = rememberAsyncImagePainter(
-                                    model = ImageRequest.Builder(LocalContext.current)
-                                        .data("android.resource://spectrum.fittech/raw/kcal")
-                                        .decoderFactory(SvgDecoder.Factory())
-                                        .build()
-                                ),
-                                contentDescription = stringResource(id = R.string.txt_caloria),
-                                modifier = Modifier
-                                    .size(30.dp)
-                                    .align(Alignment.CenterHorizontally),
-                                tint = colorResource(id = R.color.fire)
-                            )
-                            Text(
-                                text = stringResource(id = R.string.txt_caloria),
-                                style = TextStyle(
-                                    fontSize = 16.sp,
-                                    color = Color.White,
-                                    fontWeight = FontWeight.Bold
-                                )
-                            )
-                            Text(
-                                text = "1",
-                                modifier = Modifier.align(Alignment.CenterHorizontally),
-                                style = TextStyle(
-                                    fontSize = 14.sp,
-                                    color = Color(0xFFFF6E77)
-                                )
-                            )
-                        }
-
-                    }
-                }
             }
 
             Spacer(modifier = Modifier.height(30.dp))
@@ -307,49 +225,47 @@ fun TelaGraficosRun(historicoPesoViewModel: HistoricoPesoViewModel = viewModel()
                             .fillMaxHeight(),
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
-                        DayItem(
-                            dayName = R.string.txt_sexta,
-                            dayNumber = "18",
-                            iconRes = "android.resource://spectrum.fittech/raw/nao_feito",
-                            iconTint = colorResource(id = R.color.failed)
-                        )
-                        DayItem(
-                            dayName = R.string.sabado,
-                            dayNumber = "19",
-                            iconRes = "android.resource://spectrum.fittech/raw/nao_feito",
-                            iconTint = colorResource(id = R.color.failed)
-                        )
-                        DayItem(
-                            dayName = R.string.txt_domingo,
-                            dayNumber = "20",
-                            iconRes = "android.resource://spectrum.fittech/raw/nao_feito",
-                            iconTint = colorResource(id = R.color.failed)
-                        )
-                        DayItem(
-                            dayName = R.string.txt_segunda,
-                            dayNumber = "21",
-                            iconRes = "android.resource://spectrum.fittech/raw/descanso",
-                            iconTint = colorResource(id = R.color.rest),
-                            isBold = true
-                        )
-                        DayItem(
-                            dayName = R.string.txt_terca,
-                            dayNumber = "22",
-                            iconRes = "android.resource://spectrum.fittech/raw/dia_treino",
-                            iconTint = Color.White
-                        )
-                        DayItem(
-                            dayName = R.string.txt_quarta,
-                            dayNumber = "23",
-                            iconRes = "android.resource://spectrum.fittech/raw/dia_treino",
-                            iconTint = Color.White
-                        )
-                        DayItem(
-                            dayName = R.string.txt_quinta,
-                            dayNumber = "24",
-                            iconRes = "android.resource://spectrum.fittech/raw/feito",
-                            iconTint = colorResource(id = R.color.success)
-                        )
+
+                        if (listaTreino.isNotEmpty()) {
+                            listaTreino.forEach { diaTreino ->
+                                // Define as propriedades com base no status
+                                val (dayName, iconRes, iconTint) = when (diaTreino.status) {
+
+                                    "Descanso" -> Triple(
+                                        R.string.txt_segunda,
+                                        "android.resource://spectrum.fittech/raw/descanso",
+                                        colorResource(id = R.color.rest)
+                                    )
+
+                                    "Treino" -> Triple(
+                                        R.string.txt_terca,
+                                        "android.resource://spectrum.fittech/raw/dia_treino",
+                                        Color.White
+                                    )
+
+                                    "Feito" -> Triple(
+                                        R.string.txt_quinta,
+                                        "android.resource://spectrum.fittech/raw/feito",
+                                        colorResource(id = R.color.success)
+                                    )
+
+                                    else -> Triple(
+                                        R.string.txt_sexta,
+                                        "android.resource://spectrum.fittech/raw/nao_feito",
+                                        colorResource(id = R.color.failed)
+                                    )
+                                }
+
+                                // Plota o DayItem
+                                DayItem(
+                                    dayName = diaTreino.dataTreino,
+                                    dayNumber = diaTreino.diaTreino,
+                                    iconRes = iconRes,
+                                    iconTint = iconTint,
+                                    isBold = diaTreino.diaAtual
+                                )
+                            }
+                        }
                     }
                 }
             }
@@ -397,8 +313,14 @@ fun TelaGraficosRun(historicoPesoViewModel: HistoricoPesoViewModel = viewModel()
                             .padding(16.dp)
                             .padding(8.dp)
                     ) {
-                        val x = historicoPesoList.map { val dataPostagem = LocalDate.parse(it.dataPostagem, DateTimeFormatter.ISO_LOCAL_DATE)
-                            dataPostagem.format(DateTimeFormatter.ofPattern("dd/MM")) }
+                        val x = historicoPesoList.map {
+                            val dataPostagem =
+                                LocalDate.parse(
+                                    it.dataPostagem,
+                                    DateTimeFormatter.ISO_LOCAL_DATE
+                                )
+                            dataPostagem.format(DateTimeFormatter.ofPattern("dd/MM"))
+                        }
                         val y = historicoPesoList.map { it.peso.toFloat() }
                         val y2 = historicoPesoList.map { it.pesoMeta.toFloat() }
 
@@ -412,7 +334,7 @@ fun TelaGraficosRun(historicoPesoViewModel: HistoricoPesoViewModel = viewModel()
                                 stringResource(id = R.string.txt_peso_ideal),
                                 modifier.fillMaxWidth()
                             )
-                        }else{
+                        } else {
                             Text(text = "Carregando seu histórico...")
                         }
                     }
@@ -447,15 +369,19 @@ fun TelaGraficosRun(historicoPesoViewModel: HistoricoPesoViewModel = viewModel()
                             .padding(16.dp)
                             .padding(8.dp)
                     ) {
-                        val xLabels = listOf("Seg", "Ter", "Qua", "Qui", "Sex")
-                        val yValues = listOf(20f, 40f, 60f, 80f, 100f)
+                        val xLabels = listaCountTreino.map { it.diaDaSemana }
+                        val yValues = listaCountTreino.map { it.quantidadeTreinos.toFloat() }
 
-                        BarChart(
-                            xData = xLabels,
-                            yData = yValues,
-                            dataLabel = stringResource(id = R.string.txt_dias),
-                            modifier.fillMaxWidth()
-                        )
+                        if (listaCountTreino.isNotEmpty()) {
+                            BarChart(
+                                xData = xLabels,
+                                yData = yValues,
+                                dataLabel = stringResource(id = R.string.txt_dias),
+                                modifier.fillMaxWidth()
+                            )
+                        } else {
+                            Text(text = "Carregando seu histórico de treinos da semana...")
+                        }
                     }
                 }
             }

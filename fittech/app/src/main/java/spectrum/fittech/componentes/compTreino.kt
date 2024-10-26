@@ -5,6 +5,7 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -52,6 +53,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.ImageLoader
 import coil.compose.AsyncImage
@@ -62,6 +64,7 @@ import coil.request.ImageRequest
 import kotlinx.coroutines.delay
 import spectrum.fittech.R
 import spectrum.fittech.backend.builder.gson
+import spectrum.fittech.backend.viewModel.TreinoService.TreinoViewModel
 import spectrum.fittech.utils.treinos.Treino
 
 @Composable
@@ -371,7 +374,10 @@ fun PreviaTreino(
                             .fillMaxWidth()
                             .shadow(8.dp, shape = RoundedCornerShape(4.dp))
                     ) {
-                        Text(stringResource(id = R.string.txt_button_iniciar_treino), color = Color.White)
+                        Text(
+                            stringResource(id = R.string.txt_button_iniciar_treino),
+                            color = Color.White
+                        )
                     }
                     Spacer(modifier = Modifier.height(16.dp))
 
@@ -516,6 +522,13 @@ fun ModalDescanso(
     var isTimerRunning by remember { mutableStateOf(false) }
     val scale = remember { Animatable(1f) }
 
+    // Função para formatar o valor do timer
+    fun formatTime(value: Int): String {
+        val minutes = value / 60
+        val seconds = value % 60
+        return String.format("%02d:%02d", minutes, seconds)
+    }
+
     LaunchedEffect(isTimerRunning) {
         while (timerValue > 0) {
             delay(1000)
@@ -545,7 +558,6 @@ fun ModalDescanso(
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -558,11 +570,9 @@ fun ModalDescanso(
                             fontSize = 25.sp
                         )
                     )
-
                     Spacer(modifier = Modifier.height(8.dp))
                     UserLevelProgressBar(exercicioVez, exercicioTotal)
                     Spacer(modifier = Modifier.height(8.dp))
-
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -595,14 +605,13 @@ fun ModalDescanso(
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-
                     LaunchedEffect(timerValue) {
                         scale.animateTo(1.2f, animationSpec = tween(durationMillis = 200))
                         scale.animateTo(1f, animationSpec = tween(durationMillis = 200))
                     }
 
                     Text(
-                        text = "00:$timerValue",
+                        text = formatTime(timerValue),
                         style = TextStyle(
                             color = Color.White,
                             fontWeight = FontWeight.Bold,
@@ -651,8 +660,12 @@ fun ModalDescanso(
     }
 }
 
+
 @Composable
-fun ModalFinal(isDialogOpen: MutableState<Boolean>, navController: NavHostController) {
+fun ModalFinal(
+    isDialogOpen: MutableState<Boolean>,
+    navController: NavHostController,
+) {
     var timerValue by remember { mutableStateOf(7) }
     var isTimerRunning by remember { mutableStateOf(false) }
 
