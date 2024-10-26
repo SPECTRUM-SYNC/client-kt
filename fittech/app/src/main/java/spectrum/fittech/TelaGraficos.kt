@@ -26,8 +26,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -41,6 +44,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -48,12 +52,18 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import spectrum.fittech.backend.Object.IdUserManager
+import spectrum.fittech.backend.auth.TokenManager
+import spectrum.fittech.backend.dtos.HistoricoPeso
+import spectrum.fittech.backend.viewModel.HistoricoPesoService.HistoricoPesoViewModel
 import spectrum.fittech.componentes.BottomNavigationBar
 import spectrum.fittech.componentes.DayItem
 import spectrum.fittech.componentes.ModalPeso
 import spectrum.fittech.componentes.charts.BarChart
 import spectrum.fittech.componentes.charts.LineGraph
 import spectrum.fittech.ui.theme.FittechTheme
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class TelaGraficos : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,9 +87,13 @@ class TelaGraficos : ComponentActivity() {
 }
 
 @Composable
-fun TelaGraficosRun(modifier: Modifier = Modifier, navController: NavHostController) {
+fun TelaGraficosRun(historicoPesoViewModel: HistoricoPesoViewModel = viewModel(), modifier: Modifier = Modifier, navController: NavHostController) {
     val context = LocalContext.current
 
+    var historicoPesoList by remember { mutableStateOf(emptyList<HistoricoPeso>()) }
+    LaunchedEffect(Unit) {
+     historicoPesoList = historicoPesoViewModel.historicoGrafico(token = TokenManager.getToken(context), IdUserManager.getId(context))!!
+    }
 
     Scaffold(
         bottomBar = { BottomNavigationBar(navController = navController, modifier, "Dashboards", context) },
@@ -383,18 +397,24 @@ fun TelaGraficosRun(modifier: Modifier = Modifier, navController: NavHostControl
                             .padding(16.dp)
                             .padding(8.dp)
                     ) {
-                        val x = listOf("19/08", "20/08", "21/08", "22/08")
-                        val y = listOf(20f, 40f, 10f, 80f, 1f)
-                        val y2 = listOf(40f, 50f, 20f, 90f, 2f)
+                        val x = historicoPesoList.map { val dataPostagem = LocalDate.parse(it.dataPostagem, DateTimeFormatter.ISO_LOCAL_DATE)
+                            dataPostagem.format(DateTimeFormatter.ofPattern("dd/MM")) }
+                        val y = historicoPesoList.map { it.peso.toFloat() }
+                        val y2 = historicoPesoList.map { it.pesoMeta.toFloat() }
 
-                        LineGraph(
-                            x,
-                            y,
-                            y2,
-                            stringResource(id = R.string.txt_peso),
-                            stringResource(id = R.string.txt_peso_ideal),
-                            modifier.fillMaxWidth()
-                        )
+
+                        if (historicoPesoList.isNotEmpty()) {
+                            LineGraph(
+                                x,
+                                y,
+                                y2,
+                                stringResource(id = R.string.txt_peso),
+                                stringResource(id = R.string.txt_peso_ideal),
+                                modifier.fillMaxWidth()
+                            )
+                        }else{
+                            Text(text = "Carregando seu histórico...")
+                        }
                     }
                 }
             }
