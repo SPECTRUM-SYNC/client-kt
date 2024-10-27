@@ -625,11 +625,6 @@ fun HomeRun(
             contentAlignment = Alignment.TopCenter
         )
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            val home = Intent(context, Home::class.java)
-            context.startActivity(home)
-        }, 2000)
-
         openDialogSuccess = false
     }
 

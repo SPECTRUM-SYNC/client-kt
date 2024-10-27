@@ -144,27 +144,6 @@ fun TelaEditarPerfilContent(modifier: Modifier = Modifier) {
                         .size(120.dp)
                         .clip(CircleShape)
                 )
-
-                // Ícone de câmera no canto inferior direito
-                Box(
-                    modifier = Modifier
-                        .size(35.dp)
-                        .clickable { /* Ação para abrir a câmera ou galeria */ }
-                        .align(Alignment.BottomEnd) // Alinhamento no canto inferior direito
-                        .background(Color(0xFF2C2C2E), CircleShape), // Fundo cinza circular para o ícone
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        painter = rememberAsyncImagePainter(
-                            model = ImageRequest.Builder(context)
-                                .data("android.resource://spectrum.fittech/raw/camera")
-                                .build()
-                        ),
-                        contentDescription = "Camera",
-                        modifier = Modifier.size(20.dp),
-                        tint = Color.White
-                    )
-                }
             }
         }
 

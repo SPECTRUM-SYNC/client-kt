@@ -275,7 +275,7 @@ fun RankingRun(
                         else -> 1
                     },
                     maxLevel = usuarioList[0].pontuacao.toInt(),
-                    foto = usuarioList[0].img,
+                    foto = (if (usuarioList[0].img != "") usuarioList[0].img else R.mipmap.user).toString(),
                     color = colorResource(id = R.color.gold),
                     userId = usuarioList[0].id.toString()
                 )
@@ -294,7 +294,7 @@ fun RankingRun(
                         else -> 1
                     },
                     maxLevel = usuarioList[1].pontuacao.toInt(),
-                    foto = R.mipmap.dalva.toString(),
+                    foto = (if (usuarioList[1].img != "") usuarioList[1].img else R.mipmap.user).toString(),
                     color = colorResource(id = R.color.silver),
                     userId = usuarioList[1].id.toString()
                 )
@@ -313,7 +313,7 @@ fun RankingRun(
                         else -> 1
                     },
                     maxLevel = usuarioList[2].pontuacao.toInt(),
-                    foto = R.mipmap.dalva.toString(),
+                    foto = (if (usuarioList[2].img != "") usuarioList[2].img else R.mipmap.user).toString(),
                     color = colorResource(id = R.color.bronze),
                     userId = usuarioList[2].id.toString()
                 )

@@ -9,6 +9,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,6 +35,8 @@ import spectrum.fittech.backend.interfaces.UsuarioInterface
 import spectrum.fittech.retroFit.RetroFitService
 import java.text.SimpleDateFormat
 import java.util.Locale
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 class UsuarioViewModel : ViewModel() {
 
@@ -326,7 +331,10 @@ class UsuarioViewModel : ViewModel() {
                         atualizarPerfilUsuario(userId, usuario)
 
                     } else {
-                        Log.e("api_error", "Erro ao cadastrar usuario: ${usuarioResponse.message()}")
+                        Log.e(
+                            "api_error",
+                            "Erro ao cadastrar usuario: ${usuarioResponse.message()}"
+                        )
                     }
                 } else {
                     Log.e("api_error", "Erro ao cadastrar usuario: ${usuarioResponse.message()}")
@@ -387,34 +395,45 @@ class UsuarioViewModel : ViewModel() {
 
     // PATCH
     // PATCH: Função para trocar a foto do usuário
-    fun atualizarImagem(
-        id: Int?, token: String?, imagem: String, callback: (Boolean, String) -> Unit
+    suspend fun atualizarImagem(
+        id: Int?, token: String?, imagem: ByteArray, callback: (Boolean, String) -> Unit
     ) {
-        val call = usuarioApi.atualizarImagem(id = id, token = "Bearer $token", imagem = imagem)
+        val requestImage = MultipartBody.Part.createFormData(
+            "imageFile", "image.jpg", imagem.toRequestBody("image/jpeg".toMediaTypeOrNull())
+        )
 
-        CoroutineScope(Dispatchers.IO).launch {
-            call.enqueue(object : Callback<RespostaRequisicao> {
-                override fun onResponse(
-                    call: Call<RespostaRequisicao>,
-                    response: Response<RespostaRequisicao>
-                ) {
-                    if (response.isSuccessful) {
-                        callback(true, "Imagem atualizada com sucesso!")
-                    } else {
-                        val errorResponse = response.errorBody()?.string()
-                        val errorMessage = parseErrorMessage(errorResponse)
-                        callback(false, errorMessage)
-                    }
+        val call =
+            usuarioApi.atualizarImagem(id = id, token = "Bearer $token", imagem = requestImage)
+
+        withContext(Dispatchers.IO) {
+            runCatching {
+                suspendCoroutine { continuation ->
+                    call.enqueue(object : Callback<Void> {
+                        override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                            if (response.isSuccessful) {
+                                callback(true, "Imagem atualizada com sucesso, ela será atualizada na próxima vez que entrar no aplicativo!")
+                            } else {
+                                val errorMessage = parseErrorMessage(response.errorBody()?.string())
+                                Log.e("api_error", "Erro ao atualizar imagem. Erro: $errorMessage")
+                                callback(false, errorMessage)
+                            }
+                            continuation.resume(Unit)
+                        }
+
+                        override fun onFailure(call: Call<Void>, t: Throwable) {
+                            Log.e("api_error", "Falha na requisição. Erro: ${t.message}")
+                            callback(false, "Erro na requisição: ${t.message}")
+                            continuation.resume(Unit)
+                        }
+                    })
                 }
-
-                override fun onFailure(call: Call<RespostaRequisicao>, t: Throwable) {
-                    Log.e("api_error", "Falha na requisição. Erro: ${t.message}")
-                    callback(false, "Erro na requisição: ${t.message}")
-
-                }
-            })
+            }.onFailure { throwable ->
+                Log.e("api_error", "Erro inesperado: ${throwable.message}")
+                callback(false, "Erro inesperado: ${throwable.message}")
+            }
         }
     }
+
 
     // PUT
     // PUT: Função para atualizar usuário
