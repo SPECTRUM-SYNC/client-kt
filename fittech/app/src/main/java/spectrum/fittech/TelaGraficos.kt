@@ -142,10 +142,13 @@ fun TelaGraficosRun(
             listaCountTreino.addAll(item)
         }
 
-        historicoPesoList = historicoPesoViewModel.historicoGrafico(
+        val historicoPesoListResult = historicoPesoViewModel.historicoGrafico(
             token = TokenManager.getToken(context),
             IdUserManager.getId(context)
-        )!!
+        )
+
+
+        historicoPesoList = historicoPesoListResult ?: emptyList()
     }
 
     Scaffold(
@@ -187,7 +190,8 @@ fun TelaGraficosRun(
             ) {
 
                 Text(
-                    text = stringResource(id = R.string.saudacao_grafico,
+                    text = stringResource(
+                        id = R.string.saudacao_grafico,
                         IdUserManager.getUserName(context)!!
                     ),
                     style = TextStyle(
@@ -335,7 +339,7 @@ fun TelaGraficosRun(
                                 modifier.fillMaxWidth()
                             )
                         } else {
-                            Text(text = "Carregando seu histórico...")
+                            Text(text = "Carregando seu histórico de peso... Por favor, aguarde ou registre seu peso caso ainda não tenha feito isso.")
                         }
                     }
                 }

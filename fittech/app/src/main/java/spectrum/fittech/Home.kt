@@ -153,6 +153,7 @@ class Home : ComponentActivity() {
 }
 
 fun saudacaoAtual(): String {
+
     val horaAtual = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
 
     return when {
@@ -187,6 +188,7 @@ fun HomeRun(
 
     val listaTreino = remember { mutableStateListOf<TreinoResponseDto>() }
 
+    var processarTreino by remember { mutableStateOf(false) }
 
     Scaffold(
         bottomBar = {
@@ -298,14 +300,21 @@ fun HomeRun(
                                 navController.navigate("PreviaTreino/$encodedNomeTreino/$encodedJson")
                             }
                     ) {
+
                         Image(
                             painter = if (treinoPrincipalGet!!.status == "Treino" || treinoPrincipalGet!!.status == "Feito") painterResource(
                                 id = R.mipmap.esteira
                             ) else painterResource(id = R.mipmap.descanso),
                             contentDescription = "Esteira",
                             modifier = Modifier
-                                .fillMaxSize()
-                                .alpha(0.6f)
+                                .fillMaxWidth()
+                                .fillMaxHeight(0.9f)
+                                .alpha(0.5f)
+                                .clip(RoundedCornerShape(18.dp))
+                                .shadow(
+                                    8.dp,
+                                    shape = RoundedCornerShape(18.dp)
+                                ), contentScale = ContentScale.Crop
                         )
                         Column(
                             modifier = Modifier
@@ -314,7 +323,7 @@ fun HomeRun(
                                 .padding(8.dp)
                         ) {
                             Text(
-                                text = if (treinoPrincipalGet!!.status == "Treino" || treinoPrincipalGet!!.status == "Feito") "Fortalecimento  Muscular" else "Fortalecimento  Muscular",
+                                text = if (treinoPrincipalGet!!.status == "Treino" || treinoPrincipalGet!!.status == "Feito") "Fortalecimento  Muscular" else "Dia de descanso",
                                 style = TextStyle(
                                     fontSize = 16.sp,
                                     color = Color.White,
@@ -341,10 +350,10 @@ fun HomeRun(
                                 Spacer(modifier = Modifier.width(4.dp))
 
                                 Text(
-                                    text = if (treinoPrincipalGet!!.status == "Treino") "A Realizar" else if (treinoPrincipalGet!!.status == "Feito") "Você já fez seu treino hoje!" else "Deixe seu corpo relaxar um pouco",
+                                    text = if (treinoPrincipalGet!!.status == "Treino") "A Realizar" else if (treinoPrincipalGet!!.status == "Feito") "Você já fez seu treino hoje!" else "Dia de descansar os musculos",
                                     style = TextStyle(
                                         fontSize = 14.sp,
-                                        color = if (treinoPrincipalGet!!.status == "Treino") Color.Magenta else if (treinoPrincipalGet!!.status == "Feito") Color.Green else Color.Black,
+                                        color = if (treinoPrincipalGet!!.status == "Treino") Color.Magenta else if (treinoPrincipalGet!!.status == "Feito") Color.Green else Color.White,
                                     )
                                 )
                             }
@@ -380,69 +389,70 @@ fun HomeRun(
                                     .fillParentMaxSize()
                                     .height(200.dp)
                                     .clickable(
-                                        enabled = !(listaTreino.any { it.tipoTreino == treino.nome })) {
-                                            val jsonListaTreino = gson.toJson(treino.treinos)
-                                            val encodedNomeTreino = Uri.encode(treino.nome)
-                                            val encodedJson = Uri.encode(jsonListaTreino)
-                                            navController.navigate("PreviaTreino/$encodedNomeTreino/$encodedJson")
-                                        }
+                                        enabled = !(listaTreino.any { it.tipoTreino == treino.nome })
                                     ) {
-                                        AsyncImage(
-                                            model = treino.image,
-                                            contentDescription = treino.nome,
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .fillMaxHeight(0.9f)
-                                                .alpha(0.5f)
-                                                .clip(RoundedCornerShape(18.dp))
-                                                .shadow(
-                                                    8.dp,
-                                                    shape = RoundedCornerShape(18.dp)
-                                                ), contentScale = ContentScale.Crop
-
-                                        )
-                                        Column(
-                                            modifier = Modifier
-                                                .align(Alignment.BottomStart)
-                                                .padding(16.dp)
-                                                .padding(8.dp)
-                                        ) {
-                                            Text(
-                                                text = treino.nome,
-                                                style = TextStyle(
-                                                    fontSize = 16.sp,
-                                                    color = Color.White,
-                                                    fontWeight = FontWeight.Bold
-                                                )
-                                            )
-                                            Text(
-                                                text = "Treino Extra",
-                                                style = TextStyle(
-                                                    fontSize = 14.sp,
-                                                    color = Color(0xFFFF6E77)
-                                                )
-                                            )
-
-                                            Row {
-                                                Text(
-                                                    text = "STATUS:",
-                                                    style = TextStyle(
-                                                        fontSize = 14.sp,
-                                                        color = Color.White
-                                                    )
-                                                )
-
-                                                Spacer(modifier = Modifier.width(4.dp))
-                                                Text(
-                                                    text = if (listaTreino.any { it.tipoTreino == treino.nome }) "Concluído" else "A Realizar",
-                                                    style = TextStyle(
-                                                        fontSize = 14.sp,
-                                                        color = if (listaTreino.any { it.tipoTreino == treino.nome }) Color.Green else Color.Magenta,
-                                                    )
-                                                )
-                                            }
-                                        }
+                                        val jsonListaTreino = gson.toJson(treino.treinos)
+                                        val encodedNomeTreino = Uri.encode(treino.nome)
+                                        val encodedJson = Uri.encode(jsonListaTreino)
+                                        navController.navigate("PreviaTreino/$encodedNomeTreino/$encodedJson")
                                     }
+                            ) {
+                                AsyncImage(
+                                    model = treino.image,
+                                    contentDescription = treino.nome,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .fillMaxHeight(0.9f)
+                                        .alpha(0.5f)
+                                        .clip(RoundedCornerShape(18.dp))
+                                        .shadow(
+                                            8.dp,
+                                            shape = RoundedCornerShape(18.dp)
+                                        ), contentScale = ContentScale.Crop
+
+                                )
+                                Column(
+                                    modifier = Modifier
+                                        .align(Alignment.BottomStart)
+                                        .padding(16.dp)
+                                        .padding(8.dp)
+                                ) {
+                                    Text(
+                                        text = treino.nome,
+                                        style = TextStyle(
+                                            fontSize = 16.sp,
+                                            color = Color.White,
+                                            fontWeight = FontWeight.Bold
+                                        )
+                                    )
+                                    Text(
+                                        text = "Treino Extra",
+                                        style = TextStyle(
+                                            fontSize = 14.sp,
+                                            color = Color(0xFFFF6E77)
+                                        )
+                                    )
+
+                                    Row {
+                                        Text(
+                                            text = "STATUS:",
+                                            style = TextStyle(
+                                                fontSize = 14.sp,
+                                                color = Color.White
+                                            )
+                                        )
+
+                                        Spacer(modifier = Modifier.width(4.dp))
+                                        Text(
+                                            text = if (listaTreino.any { it.tipoTreino == treino.nome }) "Concluído" else "A Realizar",
+                                            style = TextStyle(
+                                                fontSize = 14.sp,
+                                                color = if (listaTreino.any { it.tipoTreino == treino.nome }) Color.Green else Color.Magenta,
+                                            )
+                                        )
+                                    }
+                                }
+                            }
                         }
                     }
                     Spacer(modifier = Modifier.height(16.dp))
@@ -564,9 +574,10 @@ fun HomeRun(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Button(
-                            enabled = checkedStates.count { it } > 0,
+                            enabled = checkedStates.count { it } > 0 || processarTreino,
                             onClick = {
                                 usuarioGet?.let {
+                                    processarTreino = true
                                     treinoVw.cadastrarTreino(
                                         token = TokenManager.getToken(context),
                                         dias = checkedStates,
@@ -593,7 +604,7 @@ fun HomeRun(
                                 .wrapContentSize()
                                 .fillMaxWidth()
                         ) {
-                            Text(text = stringResource(R.string.btn_proximo), color = Color.White)
+                            Text(text = if (processarTreino) stringResource(R.string.processando_treino) else stringResource(R.string.btn_proximo), color = Color.White)
                             Image(
                                 painter = painterResource(id = R.mipmap.setadireita),
                                 contentDescription = "Seta Direita",

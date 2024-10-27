@@ -150,7 +150,7 @@ fun RankingRun(
                     contentAlignment = Alignment.Center
                 ) {
                     AsyncImage(
-                        model = usuarioGet?.img ?: R.mipmap.user,
+                        model = if (usuarioGet?.img != null && usuarioGet?.img != "") usuarioGet?.img else R.mipmap.user,
                         contentDescription = "user",
                         modifier = Modifier
                             .size(120.dp)
@@ -191,9 +191,9 @@ fun RankingRun(
                         usuarioGet?.pontuacao == null -> "1"
                         usuarioGet!!.pontuacao in 0.0..20.0 -> "2"
                         usuarioGet!!.pontuacao in 21.0..50.0 -> "3"
-                        usuarioGet!!.pontuacao in 51.0 .. 100.0 -> "4"
-                        usuarioGet!!.pontuacao in 101.0 .. 150.0 -> "5"
-                        usuarioGet!!.pontuacao in 151.0 .. 200.0 -> "6"
+                        usuarioGet!!.pontuacao in 51.0..100.0 -> "4"
+                        usuarioGet!!.pontuacao in 101.0..150.0 -> "5"
+                        usuarioGet!!.pontuacao in 151.0..200.0 -> "6"
 
                         else -> "1"
                     },
@@ -230,7 +230,7 @@ fun RankingRun(
             Spacer(modifier = Modifier.height(12.dp))
 
             usuarioGet?.pontuacao?.let { pontuacao ->
-                val level = pontuacao.toInt()
+                val level = pontuacao.toInt() - 1
                 val maxLevel = when {
                     pontuacao in 0.0..20.0 -> 20
                     pontuacao in 21.0..50.0 -> 50
@@ -265,8 +265,15 @@ fun RankingRun(
                     navController = navController,
                     nome = usuarioList[0].nome,
                     posicao = 1,
-                    level = ((usuarioList[0].pontuacao
-                        ?: 0).toDouble() / 100).toInt() + 1,
+                    level = when {
+                        usuarioList[0].pontuacao in 0.0..20.0 -> 2
+                        usuarioList[0].pontuacao in 21.0..50.0 -> 3
+                        usuarioList[0].pontuacao in 51.0..100.0 -> 4
+                        usuarioList[0].pontuacao in 101.0..150.0 -> 5
+                        usuarioList[0].pontuacao in 151.0..200.0 -> 6
+
+                        else -> 1
+                    },
                     maxLevel = usuarioList[0].pontuacao.toInt(),
                     foto = usuarioList[0].img,
                     color = colorResource(id = R.color.gold),
@@ -277,8 +284,15 @@ fun RankingRun(
                     navController = navController,
                     nome = usuarioList[1].nome,
                     posicao = 2,
-                    level = ((usuarioList[1].pontuacao
-                        ?: 0).toDouble() / 100).toInt() + 1,
+                    level = when {
+                        usuarioList[1].pontuacao in 0.0..20.0 -> 2
+                        usuarioList[1].pontuacao in 21.0..50.0 -> 3
+                        usuarioList[1].pontuacao in 51.0..100.0 -> 4
+                        usuarioList[1].pontuacao in 101.0..150.0 -> 5
+                        usuarioList[1].pontuacao in 151.0..200.0 -> 6
+
+                        else -> 1
+                    },
                     maxLevel = usuarioList[1].pontuacao.toInt(),
                     foto = R.mipmap.dalva.toString(),
                     color = colorResource(id = R.color.silver),
@@ -289,8 +303,15 @@ fun RankingRun(
                     navController = navController,
                     nome = usuarioList[2].nome,
                     posicao = 3,
-                    level = ((usuarioList[2].pontuacao
-                        ?: 0).toDouble() / 100).toInt() + 1,
+                    level = when {
+                        usuarioList[2].pontuacao in 0.0..20.0 -> 2
+                        usuarioList[2].pontuacao in 21.0..50.0 -> 3
+                        usuarioList[2].pontuacao in 51.0..100.0 -> 4
+                        usuarioList[2].pontuacao in 101.0..150.0 -> 5
+                        usuarioList[2].pontuacao in 151.0..200.0 -> 6
+
+                        else -> 1
+                    },
                     maxLevel = usuarioList[2].pontuacao.toInt(),
                     foto = R.mipmap.dalva.toString(),
                     color = colorResource(id = R.color.bronze),

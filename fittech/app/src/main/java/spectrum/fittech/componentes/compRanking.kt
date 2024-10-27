@@ -194,9 +194,7 @@ fun TelaRankingPerfil(
     var usuarioGet by remember { mutableStateOf<UsuarioGet?>(null) }
 
     val context = LocalContext.current
-    val calcularNivel =
-        ((usuarioGet?.pontuacao ?: 0).toDouble() / 100).toInt() + 1
-    val progressBar = usuarioGet?.pontuacao ?: (0 % 100)
+
 
     LaunchedEffect(viewModel) {
         try {
@@ -306,7 +304,7 @@ fun TelaRankingPerfil(
                         contentAlignment = Alignment.Center
                     ) {
                         AsyncImage(
-                            model = usuarioGet?.img ?: R.mipmap.user,
+                            model = if (usuarioGet?.img != null && usuarioGet?.img != "") usuarioGet?.img else R.mipmap.user,
                             contentDescription = "user",
                             modifier = Modifier
                                 .size(120.dp)
@@ -330,7 +328,20 @@ fun TelaRankingPerfil(
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                UserLevelProgressBar(level = progressBar.toInt(), maxLevel = 100)
+                usuarioGet?.pontuacao?.let { pontuacao ->
+                    val level = pontuacao.toInt() - 1
+                    val maxLevel = when {
+                        pontuacao in 0.0..20.0 -> 20
+                        pontuacao in 21.0..50.0 -> 50
+                        pontuacao in 51.0..100.0 -> 100
+                        pontuacao in 101.0..150.0 -> 150
+                        pontuacao in 151.0..200.0 -> 200
+                        else -> 1 // Fallback case
+                    }
+
+                    UserLevelProgressBar(level = level, maxLevel = maxLevel)
+
+                }
 
                 Spacer(modifier = Modifier.height(12.dp))
 
@@ -352,7 +363,16 @@ fun TelaRankingPerfil(
                     Spacer(modifier = Modifier.width(10.dp))
 
                     Text(
-                        text = (calcularNivel).toString(),
+                        text = when {
+                            usuarioGet?.pontuacao == null -> "1"
+                            usuarioGet!!.pontuacao in 0.0..20.0 -> "2"
+                            usuarioGet!!.pontuacao in 21.0..50.0 -> "3"
+                            usuarioGet!!.pontuacao in 51.0..100.0 -> "4"
+                            usuarioGet!!.pontuacao in 101.0..150.0 -> "5"
+                            usuarioGet!!.pontuacao in 151.0..200.0 -> "6"
+
+                            else -> "1"
+                        },
                         style = TextStyle(
                             fontSize = 17.sp,
                             color = colorResource(id = R.color.failed),

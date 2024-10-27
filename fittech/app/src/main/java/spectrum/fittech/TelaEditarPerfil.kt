@@ -252,7 +252,8 @@ fun TelaEditarPerfilContent(modifier: Modifier = Modifier) {
                         nome = nome,
                         altura = altura.toIntOrNull() ?: 0,
                         dataNascimento = dataNascimento,
-                        nivelCondicao = nivelCondicao
+                        nivelCondicao = nivelCondicao,
+                        meta = meta
                     )
 
                     // Chamar a função de atualização do perfil
