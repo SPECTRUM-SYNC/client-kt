@@ -1,5 +1,6 @@
 package spectrum.fittech.componentes
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -46,8 +47,15 @@ import androidx.compose.ui.window.Dialog
 import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import spectrum.fittech.R
+import spectrum.fittech.backend.auth.TokenManager
+import spectrum.fittech.backend.dtos.AtualizaPesoDto
+import spectrum.fittech.backend.viewModel.HistoricoPesoService.HistoricoPesoViewModel
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.Date
 import java.util.Locale
 
@@ -55,7 +63,17 @@ import java.util.Locale
 // Modal para atualização de peso do usuario
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ModalPeso(isDialogOpen: MutableState<Boolean>) {
+fun ModalPeso(
+    isDialogOpen: MutableState<Boolean>,
+    idUser: Int,
+    token: String
+) {
+    val atualizaPesoDto = AtualizaPesoDto(
+        peso = 0.0,
+        pesoMeta = 0.0,
+        dataPostagem = LocalDate.now().toString()
+    )
+    val HistoricoPesoViewModel = HistoricoPesoViewModel()
 
     var meta by remember { mutableIntStateOf(0) }
     var metaInvalida by remember { mutableStateOf(false) }
@@ -64,7 +82,6 @@ fun ModalPeso(isDialogOpen: MutableState<Boolean>) {
     var pesoInvalida by remember { mutableStateOf(false) }
 
     val dataAtual = remember { SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date()) }
-
 
     Dialog(onDismissRequest = { isDialogOpen.value = false }) {
         Box(
@@ -102,6 +119,7 @@ fun ModalPeso(isDialogOpen: MutableState<Boolean>) {
                         } else {
                             meta = it.toInt()
                             metaInvalida = !(meta <= 200 && (meta > 0))
+                            atualizaPesoDto.pesoMeta = meta.toDouble()
                         }
                     },
                     isError = metaInvalida,
@@ -138,6 +156,7 @@ fun ModalPeso(isDialogOpen: MutableState<Boolean>) {
                         } else {
                             peso = it.toInt()
                             pesoInvalida = !(peso <= 200 && (peso > 0))
+                            atualizaPesoDto.peso = peso.toDouble()
                         }
                     },
                     isError = pesoInvalida,
@@ -167,7 +186,13 @@ fun ModalPeso(isDialogOpen: MutableState<Boolean>) {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Button(
-                    onClick = { },
+                    onClick = {
+                        Log.e("peso", "stap: cheguei com o objeto atualizado")
+                        Log.e("peso", "stap: ${atualizaPesoDto.toString()}")
+                        CoroutineScope(Dispatchers.IO).launch {
+                            HistoricoPesoViewModel.atualizarPeso(token, idUser, atualizaPesoDto)
+                        }
+                    },
                     colors = ButtonDefaults.buttonColors(colorResource(R.color.fire)),
                     enabled = !(metaInvalida && pesoInvalida),
                     modifier = Modifier

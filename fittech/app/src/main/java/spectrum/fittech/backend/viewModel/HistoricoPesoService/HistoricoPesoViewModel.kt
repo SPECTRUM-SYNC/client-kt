@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import spectrum.fittech.backend.dtos.AtualizaPesoDto
 import spectrum.fittech.backend.dtos.HistoricoPeso
 import spectrum.fittech.backend.interfaces.HistoricoPesoInterface
 import spectrum.fittech.retroFit.RetroFitService
@@ -31,4 +32,21 @@ class HistoricoPesoViewModel : ViewModel() {
         }
     }
 
+    suspend fun atualizarPeso(token: String?, id: Int?, peso: AtualizaPesoDto){
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = historicoPeso.atualizarPeso(token = "Bearer $token", id, peso)
+                if (response.isSuccessful) {
+                    Log.e("Sucesso", "Requisição bem-sucedida" + response.body())
+                     response.message()
+                } else {
+                    Log.e("Erro", "Falha na requisição: ${response.code()}")
+                    null
+                }
+            } catch (e: Exception) {
+                Log.e("Erro", "Falha na requisição: ${e.message}")
+                null
+            }
+        }
+    }
 }

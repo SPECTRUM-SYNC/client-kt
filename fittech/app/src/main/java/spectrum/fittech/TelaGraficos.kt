@@ -1,6 +1,7 @@
 package spectrum.fittech
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -54,6 +55,7 @@ import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import spectrum.fittech.backend.Object.IdUserManager
 import spectrum.fittech.backend.auth.TokenManager
+import spectrum.fittech.backend.dtos.AtualizaPesoDto
 import spectrum.fittech.backend.dtos.HistoricoPeso
 import spectrum.fittech.backend.viewModel.HistoricoPesoService.HistoricoPesoViewModel
 import spectrum.fittech.componentes.BottomNavigationBar
@@ -104,7 +106,7 @@ fun TelaGraficosRun(historicoPesoViewModel: HistoricoPesoViewModel = viewModel()
 
         // Modal
         if (showDialog.value) {
-            ModalPeso(showDialog)
+            ModalPeso(showDialog, IdUserManager.getId(context)!!, TokenManager.getToken(context)!!)
         }
 
         // Container rolável
@@ -373,7 +375,13 @@ fun TelaGraficosRun(historicoPesoViewModel: HistoricoPesoViewModel = viewModel()
                     )
 
                     Button(
-                        onClick = { showDialog.value = true },
+                        onClick = {
+                            if (historicoPesoList[0].dataPostagem != LocalDate.now().toString()){
+                                showDialog.value = true
+                                Log.e("peso", historicoPesoList[0].dataPostagem +"Data postagem")
+                            }
+                            Log.e("peso", "data do histtórico = a data hoje")
+                                  },
                         colors = ButtonDefaults.buttonColors(colorResource(R.color.fire)),
                         modifier = Modifier
                             .shadow(8.dp, shape = RoundedCornerShape(4.dp))
