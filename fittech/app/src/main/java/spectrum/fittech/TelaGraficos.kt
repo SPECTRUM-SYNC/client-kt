@@ -2,6 +2,7 @@ package spectrum.fittech
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -441,6 +442,7 @@ fun TelaGraficosRun(
                                 Log.e("peso", historicoPesoList[0].dataPostagem +"Data postagem")
                             }
                             Log.e("peso", "data do histtórico = a data hoje")
+                            Toast.makeText(context, "Você já registrou seu peso hoje", Toast.LENGTH_SHORT).show()
                                   },
                         colors = ButtonDefaults.buttonColors(colorResource(R.color.fire)),
                         modifier = Modifier
