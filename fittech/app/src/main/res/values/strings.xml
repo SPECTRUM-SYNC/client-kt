@@ -28,6 +28,11 @@
     <string name="txt_entre_com_info">Entre com suas informações para realizar \n o seu cadastro!</string>
     <string name="txt_cadastrar">Cadastrar</string>
     <string name="txt_login">Login</string>
+    <string name="txt_selecionar_genero">Por favor, selecione um gênero para avançar.</string>
+    <string name="txt_preencha_campos">Por favor, preencha todos os campos corretamente.</string>
+    <string name="txt_notificacoes">Notificações</string>
+    <string name="txt_idioma">Idioma</string>
+    <string name="txt_contate_nos">Contate-nos</string>
 
     <!-- Tela de Login -->
     <string name="txt_bem_vindo_login">Bem-vindo(a) de volta</string>
@@ -45,6 +50,7 @@
     <string name="txt_init4">Para ficar forte</string>
     <string name="txt_init5">Ação é a</string>
     <string name="txt_init6">Chave do sucesso</string>
+    <string name="txt_bem_vindo_msg">Seja bem-vindo, %s</string>
     <!-- Text for buttons -->
     <string name="btn_init">Começar</string>
 
@@ -53,6 +59,9 @@
     <string name="txt_politica_privacidade">Política de Privacidade</string>
     <string name="txt_configuracoes">Configurações</string>
     <string name="txt_sair">Sair</string>
+    <string name="txt_altura">Altura (cm)</string>
+    <string name="txt_data_nascimento">Data de Nascimento</string>
+    <string name="txt_nivel_condicao">Nível de Condição</string>
 
     <!-- Tela de Home -->
     <string name="txt_bom_dia">Bom dia.</string>
@@ -62,6 +71,15 @@
     <string name="txt_plano_treino">Seleção de Treino</string>
     <string name="txt_categorias_treino">Categorias de Treino</string>
     <string name="txt_treinos_extras">Treinos Extras</string>
+    <string name="dia_domingo">Domingo</string>
+    <string name="dia_segunda">Segunda</string>
+    <string name="dia_terca">Terça</string>
+    <string name="dia_quarta">Quarta</string>
+    <string name="dia_quinta">Quinta</string>
+    <string name="dia_sexta">Sexta</string>
+    <string name="dia_sabado">Sábado</string>
+    <string name="txt_fortalecimento">Fortalecimento Muscular</string>
+    <string name="txt_dia_descanso">Dia de descanso</string>
 
     <!-- Tela de Questionario -->
     <string name="txt_conte">Conte um pouco de você!</string>
@@ -184,7 +202,42 @@
     <string name="criacao_treino_h2">Escolha seus dias de descanso</string>
     <string name="criacao_treino_h2_max2">(MAX .2)</string>
     <string name="processando_treino">Processando seu treino ...</string>
+    <string name="txt_status">STATUS:</string>
+    <string name="txt_realizar">A Realizar</string>
+    <string name="txt_treino_concluido">Você já fez seu treino hoje!</string>
+    <string name="txt_descansar_musculos">Dia de descansar os musculos</string>
+    <string name="txt_treino_extra">Treino Extra</string>
+    <string name="txt_concluido">Concluído</string>
     <string name="politica_privacidade">Os serviços do Fit Tech são fornecidos pelas pessoas físicas com a seguinte Razão Social/nome: Cauã Ribeiro, Gabriel Roberti, Luiz Paulo¸Ricardo Vicente, Winycios Alves, com nome fantasia Fit Tech, inscrito no CNPJ/CPF sob o nº 19.855.435/0001-46, titular da propriedade intelectual sobre software, website, aplicativos, conteúdos e demais ativos relacionados à plataforma Fit Tech.\n\nO presente termo estabelece obrigações contratadas de livre e espontânea vontade, por tempo indeterminado, entre a plataforma e as pessoas físicas ou jurídicas, usuárias do site e aplicativo.\nAo utilizar a plataforma o usuário aceita integralmente as presentes normas e compromete-se a observá-las, sob o risco de aplicação das penalidades cabíveis.\nA aceitação do presente instrumento é imprescindível para o acesso e para a utilização de quaisquer serviços fornecidos pela empresa. Caso não concorde com as disposições deste instrumento, o usuário não deve utilizá-los.\n\nO acesso às funcionalidades da plataforma exigirá a realização de um cadastro prévio e, a depender dos serviços ou produtos escolhidos.\nAo se cadastrar o usuário deverá informar dados completos, recentes e válidos, sendo de sua exclusiva responsabilidade manter referidos dados atualizados, bem como o usuário se compromete com a veracidade dos dados fornecidos.\nO usuário se compromete a não informar seus dados cadastrais e/ou de acesso à plataforma a terceiros, responsabilizando-se integralmente pelo uso que deles seja feito.\nMenores de 18 anos e aqueles que não possuírem plena capacidade civil deverão obter previamente o consentimento expresso de seus responsáveis legais para utilização da plataforma e dos serviços ou produtos, sendo de responsabilidade exclusiva dos mesmos o eventual acesso por menores de idade e por aqueles que não possuem plena capacidade civil sem a prévia autorização.\nMediante a realização do cadastro o usuário declara e garante expressamente ser plenamente capaz, podendo exercer e usufruir livremente dos serviços e produtos.\nO usuário deverá fornecer um endereço de e-mail válido, através do qual o site realizará todas as comunicações necessárias.\nApós a confirmação do cadastro, o usuário possuirá um login e uma senha pessoal, a qual assegura ao usuário o acesso individual à mesma. Desta forma, compete ao usuário exclusivamente a manutenção de referida senha de maneira confidencial e segura, evitando o acesso indevido às informações pessoais.\nToda e qualquer atividade realizada com o uso da senha será de responsabilidade do usuário, que deverá informar prontamente a plataforma em caso de uso indevido da respectiva senha.\nNão será permitido ceder, vender, alugar ou transferir, de qualquer forma, a conta, que é pessoal e intransferível.\nCaberá ao usuário assegurar que o seu equipamento seja compatível com as características técnicas que viabilize a utilização da plataforma e dos serviços ou produtos.\nO usuário poderá, a qualquer tempo, requerer o cancelamento de seu cadastro junto ao site e aplicativo Fit Tech. O seu cancelamento será realizado o mais rapidamente possível.\nO usuário, ao aceitar os Termos e Política de Privacidade, autoriza expressamente a plataforma a coletar, usar, armazenar, tratar, ceder ou utilizar as informações derivadas do uso dos serviços, do site e quaisquer plataformas, incluindo todas as informações preenchidas pelo usuário quando realizar ou atualizar seu cadastro, além de outras expressamente descritas na Política de Privacidade que deverá ser autorizada pelo usuário.\n\nÉ de responsabilidade do usuário:\na) defeitos ou vícios técnicos originados no próprio sistema do usuário;\nb) a correta utilização da plataforma, dos serviços ou produtos oferecidos, prezando pela boa convivência, pelo respeito e cordialidade entre os usuários;\nc) pelo cumprimento e respeito ao conjunto de regras disposto nesse Termo de Condições Geral de Uso, na respectiva Política de Privacidade e na legislação nacional e internacional;\nd) pela proteção aos dados de acesso à sua conta/perfil (login e senha).\n\nÉ de responsabilidade da plataforma Fit Tech:\na) indicar as características do serviço ou produto;\nb) os defeitos e vícios encontrados no serviço ou produto oferecido desde que lhe tenha dado causa;\nc) as informações que foram por ele divulgadas, sendo que os comentários ou informações divulgadas por usuários são de inteira responsabilidade dos próprios usuários;\nd) os conteúdos ou atividades ilícitas praticadas através da sua plataforma.\n\nA plataforma não se responsabiliza por links externos contidos em seu sistema que possam redirecionar o usuário à ambiente externo a sua rede.\nNão poderão ser incluídos links externos ou páginas que sirvam para fins comerciais ou publicitários ou quaisquer informações ilícitas, violentas, polêmicas, pornográficas, xenofóbicas, discriminatórias ou ofensivas.\n\nO presente Termo de Uso concede aos usuários uma licença não exclusiva, não transferível e não sublicenciável, para acessar e fazer uso da plataforma e dos serviços e produtos por ela disponibilizados.\nA estrutura do site ou aplicativo, as marcas, logotipos, nomes comerciais, layouts, gráficos e design de interface, imagens, ilustrações, fotografias, apresentações, vídeos, conteúdos escritos e de som e áudio, programas de computador, banco de dados, arquivos de transmissão e quaisquer outras informações e direitos de propriedade intelectual da razão social Spectrum Sync, observados os termos da    Lei da Propriedade Industrial (Lei nº 9.279/96),    Lei de Direitos Autorais (Lei nº 9.610/98) e    Lei do Software (Lei nº 9.609/98), estão devidamente reservados.\nEste Termos de Uso não cede ou transfere ao usuário qualquer direito, de modo que o acesso não gera qualquer direito de propriedade intelectual ao usuário, exceto pela licença limitada ora concedida.\nO uso da plataforma pelo usuário é pessoal, individual e intransferível, sendo vedado qualquer uso não autorizado, comercial ou não-comercial. Tais usos consistirão em violação dos direitos de propriedade intelectual da razão social Spectrum Sync, puníveis nos termos da legislação aplicável.\n\nSem prejuízo das demais medidas legais cabíveis, a razão social Spectrum Sync poderá, a qualquer momento, advertir, suspender ou cancelar a conta do usuário:\na) que violar qualquer dispositivo do presente Termo;\nb) que descumprir os seus deveres de usuário;\nc) que tiver qualquer comportamento fraudulento, doloso ou que ofenda a terceiros.\n\nA não observância das obrigações pactuadas neste Termo de Uso ou da legislação aplicável poderá, sem prévio aviso, ensejar a imediata rescisão unilateral por parte da razão social Spectrum Sync e o bloqueio de todos os serviços prestados ao usuário.\n\nAlém do presente Termo, o usuário deverá consentir com as disposições contidas na respectiva Política de Privacidade a ser apresentada a todos os interessados dentro da interface da plataforma. \n</string>
 
+    <!-- Idioma -->
+    <string name="idioma_portugues">Português</string>
+    <string name="idioma_ingles">Inglês</string>
+    <string name="idioma_espanhol">Espanhol</string>
+    <string name="idioma_chines">Chinês</string>
+    <string name="idioma_japones">Japonês</string>
+    <string name="idioma_frances">Francês</string>
+    <string name="idioma_alemao">Alemão</string>
+    <string name="idioma_russo">Russo</string>
+    <string name="idioma_italiano">Italiano</string>
+    <string name="idioma_polones">Polonês</string>
+    <string name="idioma_holandes">Holandês</string>
+    <string name="idioma_coreano">Coreano</string>
+    <string name="idioma_arabe">Árabe</string>
+    <string name="idioma_catalao">Catalão</string>
+    <string name="idioma_grego">Grego</string>
+    <string name="idioma_basco">Basco</string>
+    <string name="idioma_turco">Turco</string>
+    <string name="idioma_vietnamita">Vietnamita</string>
+    <string name="idioma_malaio">Malaio</string>
+    <string name="idioma_esperanto">Esperanto</string>
+    <string name="idioma_tailandes">Tailandês</string>
+    <string name="txt_pesquisar">Pesquisar</string>
 
+    <!-- Tela Notificação -->
+    <string name="txt_lembretes_treino">Lembretes de Treino</string>
+    <string name="txt_programar_notificacoes">Programar Notificações</string>
+    <string name="txt_notificar_treinos_novos">Notificar Treinos Novos</string>
+    <string name="txt_gerenciar_permissoes">Você pode gerenciar a permissão de notificação do aplicativo nas configurações do</string>
+    <string name="txt_configuracoes_telefone">Configurações do Telefone</string>
 </resources>

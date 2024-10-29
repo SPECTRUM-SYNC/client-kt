@@ -39,7 +39,8 @@ class TelaPoliticaPrivacidade : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FittechTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()
+                Scaffold(modifier = Modifier
+                    .fillMaxSize()
                     .windowInsetsPadding(WindowInsets.safeDrawing)) { innerPadding ->
                     TelaPoliticaPrivacidade(
                         name = "Android",
@@ -78,7 +79,7 @@ fun TelaPoliticaPrivacidade(name: String, modifier: Modifier = Modifier) {
             BotaoTelaPerfil()
 
             Text(
-                text = "Política de Privacidade",
+                text = stringResource(id = R.string.txt_politica_privacidade),
                 style = TextStyle(
                     fontSize = 24.sp,
                     color = Color.White,

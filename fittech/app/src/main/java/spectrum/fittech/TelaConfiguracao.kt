@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,7 +47,8 @@ class TelaConfiguracao : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FittechTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()
+                Scaffold(modifier = Modifier
+                    .fillMaxSize()
                     .windowInsetsPadding(WindowInsets.safeDrawing)) { innerPadding ->
                     TelaConfiguracao(
                         name = "Android",
@@ -83,7 +85,7 @@ fun TelaConfiguracao(name: String, modifier: Modifier = Modifier) {
             BotaoTelaPerfil()
 
             Text(
-                text = "Configurações",
+                text = stringResource(id = R.string.txt_configuracoes),
                 style = TextStyle(
                     fontSize = 24.sp,
                     color = Color.White,
@@ -121,7 +123,7 @@ fun TelaConfiguracao(name: String, modifier: Modifier = Modifier) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Notificações",
+                    text = stringResource(id = R.string.txt_notificacoes),
                     style = TextStyle(
                         fontSize = 16.sp,
                         color = Color.White,
@@ -156,16 +158,16 @@ fun TelaConfiguracao(name: String, modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp)
-                    .padding(vertical = 8.dp).
-                clickable {
-                    val idioma = Intent(context, TelaIdioma::class.java)
-                    context.startActivity(idioma)
-                },
+                    .padding(vertical = 8.dp)
+                    .clickable {
+                        val idioma = Intent(context, TelaIdioma::class.java)
+                        context.startActivity(idioma)
+                    },
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Idioma",
+                    text = stringResource(id = R.string.txt_idioma),
                     style = TextStyle(
                         fontSize = 16.sp,
                         color = Color.White,
@@ -209,7 +211,7 @@ fun TelaConfiguracao(name: String, modifier: Modifier = Modifier) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Contate-nos",
+                    text = stringResource(id = R.string.txt_contate_nos),
                     style = TextStyle(
                         fontSize = 16.sp,
                         color = Color.White,

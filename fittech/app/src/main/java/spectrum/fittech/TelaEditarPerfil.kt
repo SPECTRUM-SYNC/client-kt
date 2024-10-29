@@ -44,6 +44,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -65,7 +66,9 @@ class TelaEditarPerfil : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FittechTheme {
-                Scaffold(modifier = Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing)) { innerPadding ->
+                Scaffold(modifier = Modifier
+                    .fillMaxSize()
+                    .windowInsetsPadding(WindowInsets.safeDrawing)) { innerPadding ->
                     TelaEditarPerfilContent(modifier = Modifier.padding(innerPadding))
                 }
             }
@@ -164,12 +167,14 @@ fun TelaEditarPerfilContent(modifier: Modifier = Modifier) {
                     containerColor = Color.Transparent,
                     focusedIndicatorColor = Color(0xFFFF3B47)
                 ),
-                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp)
             )
 
             // Campo de altura
             TextField(
-                label = { Text(text = "Altura (cm)") },
+                label = { Text(text = stringResource(id = R.string.txt_altura)) },
                 value = altura,
                 onValueChange = { digitadoAltura -> altura = digitadoAltura },
                 colors = TextFieldDefaults.textFieldColors(
@@ -181,12 +186,14 @@ fun TelaEditarPerfilContent(modifier: Modifier = Modifier) {
                     containerColor = Color.Transparent,
                     focusedIndicatorColor = Color(0xFFFF3B47)
                 ),
-                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp)
             )
 
             // Campo de data de nascimento
             TextField(
-                label = { Text(text = "Data de Nascimento") },
+                label = { Text(text = stringResource(id = R.string.txt_data_nascimento)) },
                 value = dataNascimento,
                 onValueChange = { digitadoData -> dataNascimento = digitadoData },
                 colors = TextFieldDefaults.textFieldColors(
@@ -198,13 +205,15 @@ fun TelaEditarPerfilContent(modifier: Modifier = Modifier) {
                     containerColor = Color.Transparent,
                     focusedIndicatorColor = Color(0xFFFF3B47)
                 ),
-                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp)
             )
 
 
             // Campo de nível de condição física
             TextField(
-                label = { Text(text = "Nível de Condição") },
+                label = { Text(text = stringResource(id = R.string.txt_nivel_condicao)) },
                 value = nivelCondicao,
                 onValueChange = { digitadoNivelCondicao -> nivelCondicao = digitadoNivelCondicao },
                 colors = TextFieldDefaults.textFieldColors(
@@ -216,7 +225,9 @@ fun TelaEditarPerfilContent(modifier: Modifier = Modifier) {
                     containerColor = Color.Transparent,
                     focusedIndicatorColor = Color(0xFFFF3B47)
                 ),
-                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp)
             )
         }
 
@@ -252,7 +263,9 @@ fun TelaEditarPerfilContent(modifier: Modifier = Modifier) {
                         }
                     )
                 },
-                modifier = Modifier.height(50.dp).width(185.dp),
+                modifier = Modifier
+                    .height(50.dp)
+                    .width(185.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF3B47))
             ) {
                 Text(text = "Salvar", style = TextStyle(color = Color.White))
