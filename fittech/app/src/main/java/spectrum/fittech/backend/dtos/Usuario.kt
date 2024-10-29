@@ -16,6 +16,7 @@ data class NovoUsuario(
     val senha: String?,
     val genero: String?,
     val dataNascimento: String?,
+    val nivelCondicao: String?,
     val altura: String?,
     val peso: String?,
     val meta: String,
@@ -54,7 +55,8 @@ data class AtualizarUsuarioPerfil(
     val nome: String,
     val altura : Int,
     val dataNascimento: String,
-    val nivelCondicao : String
+    val nivelCondicao : String,
+    val meta: String
 )
 
 
@@ -131,10 +133,10 @@ data class UsuarioGet(
     val nome: String,
     val email: String,
     val img: String,
-    val dataNascimento: String, // Usar String para lidar diretamente com o formato da API
+    val dataNascimento: String,
     val genero: String,
     val peso: Double,
-    val altura: Int, // Mudança de Double para Int
+    val altura: Int,
     val nivelCondicao: String,
     val meta: String,
     val contaAtiva: Boolean,

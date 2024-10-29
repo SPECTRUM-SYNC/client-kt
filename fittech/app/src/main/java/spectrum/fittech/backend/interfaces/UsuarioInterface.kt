@@ -1,5 +1,6 @@
 package spectrum.fittech.backend.interfaces
 
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
@@ -7,9 +8,11 @@ import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Headers
+import retrofit2.http.Multipart
 import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 import spectrum.fittech.backend.dtos.AtualizarUsuario
@@ -21,6 +24,7 @@ import spectrum.fittech.backend.dtos.RespostaEnvioEmail
 import spectrum.fittech.backend.dtos.RespostaLogin
 import spectrum.fittech.backend.dtos.RespostaRank
 import spectrum.fittech.backend.dtos.RespostaRequisicao
+import spectrum.fittech.backend.dtos.Usuario
 import spectrum.fittech.backend.dtos.UsuarioGet
 import spectrum.fittech.backend.dtos.UsuarioLogin
 import spectrum.fittech.backend.dtos.UsuarioLoginGoogle
@@ -33,7 +37,7 @@ interface UsuarioInterface {
         "User-Agent: PostmanRuntime/7.42.0",
         "Connection: keep-alive",
         "Cache-Control: no-cache"
-    )    fun cadastrarUsuario(@Body usuario: NovoUsuario?): Call<RespostaCadastro>
+    )    fun cadastrarUsuario(@Body usuario: Usuario?): Call<UsuarioGet>
 
     @POST("usuarios/login")
     @Headers(
@@ -92,18 +96,12 @@ interface UsuarioInterface {
 
 
     @PATCH("usuarios/imagem/{id}")
-    @Headers(
-        "Content-Type: application/json",
-        "Accept: */*",
-        "User-Agent: PostmanRuntime/7.42.0",
-        "Connection: keep-alive",
-        "Cache-Control: no-cache"
-    )
+    @Multipart
     fun atualizarImagem(
         @Path("id") id: Int?,
         @Header("Authorization") token: String?,
-        @Body imagem : String
-    ): Call<RespostaRequisicao>
+        @Part imagem: MultipartBody.Part
+    ): Call<Void>
 
 
     @PUT("usuarios/{id}")
@@ -134,6 +132,7 @@ interface UsuarioInterface {
         @Body usuario : AtualizarUsuarioPerfil
     ): Call<RespostaRequisicao>
 
+
     @PUT("usuarios/pontuacao/{id}")
     @Headers(
         "Content-Type: application/json",
@@ -146,7 +145,6 @@ interface UsuarioInterface {
         @Path("id") id: Int?,
         @Header("Authorization") token: String?
     ): Call<RespostaRequisicao>
-
 
     @GET("usuarios/{id}")
     @Headers(

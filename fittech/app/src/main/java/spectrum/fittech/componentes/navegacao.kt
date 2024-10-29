@@ -53,7 +53,10 @@ fun BottomNavigationBar(
 
     // LaunchedEffect para executar a função apenas uma vez
     LaunchedEffect(viewModel) {
-        usuarioGet =  viewModel.obterUsuario(IdUserManager.getId(context), token = TokenManager.getToken(context))
+        usuarioGet = viewModel.obterUsuario(
+            IdUserManager.getId(context),
+            token = TokenManager.getToken(context)
+        )
         IdUserManager.saveUserName(context, usuarioGet?.nome)
         IdUserManager.saveUserPic(context, usuarioGet?.img)
     }
@@ -135,7 +138,7 @@ fun BottomNavigationBar(
 
                 IconButton(onClick = { navController.navigate("TelaPerfil") }) {
                     AsyncImage(
-                        model = usuarioGet?.img ?: R.mipmap.user,
+                        model = if (usuarioGet?.img != null && usuarioGet?.img != "") usuarioGet?.img else R.mipmap.user,
                         contentDescription = "Profile",
                         modifier = Modifier
                             .size(24.dp)

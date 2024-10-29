@@ -87,13 +87,16 @@ fun RankingRun(
 ) {
 
     var usuarioGet by remember { mutableStateOf<UsuarioGet?>(null) }
-    val usuarioList by viewModel.getUsuarioListGet // Observa a lista de usuários
+    val usuarioList by viewModel.getUsuarioListGet
 
     val context = LocalContext.current
 
 
     LaunchedEffect(viewModel) {
-        usuarioGet = viewModel.obterUsuario(IdUserManager.getId(context), token = TokenManager.getToken(context))
+        usuarioGet = viewModel.obterUsuario(
+            IdUserManager.getId(context),
+            token = TokenManager.getToken(context)
+        )
 
         try {
 
@@ -105,12 +108,6 @@ fun RankingRun(
             Log.d("Ranking", "RankingRun: ${e.message}")
         }
     }
-
-
-
-    val calcularNivel =
-        ((usuarioGet?.pontuacao ?: 0).toDouble() / 100).toInt() + 1
-    val progressBar = usuarioGet?.pontuacao ?: (0 % 100)
 
 
     Scaffold(
@@ -153,7 +150,7 @@ fun RankingRun(
                     contentAlignment = Alignment.Center
                 ) {
                     AsyncImage(
-                        model = usuarioGet?.img ?: R.mipmap.user,
+                        model = if (usuarioGet?.img != null && usuarioGet?.img != "") usuarioGet?.img else R.mipmap.user,
                         contentDescription = "user",
                         modifier = Modifier
                             .size(120.dp)
@@ -190,7 +187,16 @@ fun RankingRun(
                 )
 
                 Text(
-                    text = (calcularNivel).toString(),
+                    text = when {
+                        usuarioGet?.pontuacao == null -> "1"
+                        usuarioGet!!.pontuacao in 0.0..20.0 -> "2"
+                        usuarioGet!!.pontuacao in 21.0..50.0 -> "3"
+                        usuarioGet!!.pontuacao in 51.0..100.0 -> "4"
+                        usuarioGet!!.pontuacao in 101.0..150.0 -> "5"
+                        usuarioGet!!.pontuacao in 151.0..200.0 -> "6"
+
+                        else -> "1"
+                    },
                     style = TextStyle(
                         fontSize = 17.sp,
                         color = colorResource(id = R.color.failed),
@@ -222,7 +228,20 @@ fun RankingRun(
 
             }
             Spacer(modifier = Modifier.height(12.dp))
-            UserLevelProgressBar(level = progressBar.toInt(), maxLevel = 100)
+
+            usuarioGet?.pontuacao?.let { pontuacao ->
+                val level = pontuacao.toInt() - 1
+                val maxLevel = when {
+                    pontuacao in 0.0..20.0 -> 20
+                    pontuacao in 21.0..50.0 -> 50
+                    pontuacao in 51.0..100.0 -> 100
+                    pontuacao in 101.0..150.0 -> 150
+                    pontuacao in 151.0..200.0 -> 200
+                    else -> 1 // Fallback case
+                }
+
+                UserLevelProgressBar(level = level, maxLevel = maxLevel)
+            }
 
             //Ranking
             if (usuarioList.isNotEmpty()) {
@@ -246,10 +265,17 @@ fun RankingRun(
                     navController = navController,
                     nome = usuarioList[0].nome,
                     posicao = 1,
-                    level = ((usuarioList[0].pontuacao
-                        ?: 0).toDouble() / 100).toInt() + 1,
+                    level = when {
+                        usuarioList[0].pontuacao in 0.0..20.0 -> 2
+                        usuarioList[0].pontuacao in 21.0..50.0 -> 3
+                        usuarioList[0].pontuacao in 51.0..100.0 -> 4
+                        usuarioList[0].pontuacao in 101.0..150.0 -> 5
+                        usuarioList[0].pontuacao in 151.0..200.0 -> 6
+
+                        else -> 1
+                    },
                     maxLevel = usuarioList[0].pontuacao.toInt(),
-                    foto = usuarioList[0].img,
+                    foto = (if (usuarioList[0].img != "") usuarioList[0].img else R.mipmap.user).toString(),
                     color = colorResource(id = R.color.gold),
                     userId = usuarioList[0].id.toString()
                 )
@@ -258,11 +284,18 @@ fun RankingRun(
                     navController = navController,
                     nome = usuarioList[1].nome,
                     posicao = 2,
-                    level = ((usuarioList[1].pontuacao
-                        ?: 0).toDouble() / 100).toInt() + 1,
+                    level = when {
+                        usuarioList[1].pontuacao in 0.0..20.0 -> 2
+                        usuarioList[1].pontuacao in 21.0..50.0 -> 3
+                        usuarioList[1].pontuacao in 51.0..100.0 -> 4
+                        usuarioList[1].pontuacao in 101.0..150.0 -> 5
+                        usuarioList[1].pontuacao in 151.0..200.0 -> 6
+
+                        else -> 1
+                    },
                     maxLevel = usuarioList[1].pontuacao.toInt(),
-                    foto = R.mipmap.dalva.toString(),
-                            color = colorResource(id = R.color.silver),
+                    foto = (if (usuarioList[1].img != "") usuarioList[1].img else R.mipmap.user).toString(),
+                    color = colorResource(id = R.color.silver),
                     userId = usuarioList[1].id.toString()
                 )
 
@@ -270,10 +303,17 @@ fun RankingRun(
                     navController = navController,
                     nome = usuarioList[2].nome,
                     posicao = 3,
-                    level = ((usuarioList[2].pontuacao
-                        ?: 0).toDouble() / 100).toInt() + 1,
+                    level = when {
+                        usuarioList[2].pontuacao in 0.0..20.0 -> 2
+                        usuarioList[2].pontuacao in 21.0..50.0 -> 3
+                        usuarioList[2].pontuacao in 51.0..100.0 -> 4
+                        usuarioList[2].pontuacao in 101.0..150.0 -> 5
+                        usuarioList[2].pontuacao in 151.0..200.0 -> 6
+
+                        else -> 1
+                    },
                     maxLevel = usuarioList[2].pontuacao.toInt(),
-                    foto = R.mipmap.dalva.toString(),
+                    foto = (if (usuarioList[2].img != "") usuarioList[2].img else R.mipmap.user).toString(),
                     color = colorResource(id = R.color.bronze),
                     userId = usuarioList[2].id.toString()
                 )

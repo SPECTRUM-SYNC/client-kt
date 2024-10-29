@@ -2,6 +2,7 @@ package spectrum.fittech
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -520,6 +521,7 @@ fun QuestionarioAtividade(
                                     senha = senha,
                                     genero = genero,
                                     dataNascimento = dataSelecionada,
+                                    nivelCondicao = selectedGoal,
                                     altura = altura.toString(),
                                     peso = pesoUsuario.toString(),
                                     meta = it
@@ -529,28 +531,35 @@ fun QuestionarioAtividade(
                             if (usuario != null) {
                                 isButtonEnabled = false // Desabilita o botão de envio
                                 try {
-                                    model.cadastrarUsuario(usuario) { success, message ->
-                                        if (success) {
-                                            Toast.makeText(
-                                                context,
-                                                "Redirecionando para a tela de login...",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                            context.startActivity(
-                                                Intent(
-                                                    context,
-                                                    TelaLogin::class.java
-                                                )
-                                            )
-                                        }
-                                    }
-                                }catch (e: Exception) {
+                                    model.cadastrarUsuario(usuario)
+                                    Toast.makeText(
+                                        context,
+                                        "Cadastrando o usuário...",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                    Thread.sleep(3000)
+
+                                    context.startActivity(
+                                        Intent(
+                                            context,
+                                            TelaLogin::class.java
+                                        ),
+                                    )
+                                } catch (e: Exception) {
                                     isButtonEnabled = true // Reabilita o botão em caso de exceção
-                                    Toast.makeText(context, "Ocorreu um erro ao cadastrar o usuário: ${e.message}", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(
+                                        context,
+                                        "Ocorreu um erro ao cadastrar o usuário: ${e.message}",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
                                 }
 
                             } else {
-                                Toast.makeText(context, "Certifique-se que todos os campos estão preenchidos corretamente.", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    context,
+                                    "Certifique-se que todos os campos estão preenchidos corretamente.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                                 isButtonEnabled = true // Reabilita o botão em caso de falha
                             }
                         },

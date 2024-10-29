@@ -73,7 +73,7 @@ fun TelaInicial(name: String, modifier: Modifier = Modifier) {
     TokenManager.getToken(LocalContext.current)?.let {
         if (it.isNotBlank()) {
             SweetSuccess(
-                message = "Seja bem-vindo, ${IdUserManager.getUserName(LocalContext.current)}",
+                message = context.getString(R.string.txt_bem_vindo_msg, IdUserManager.getUserName(context)),
                 duration = Toast.LENGTH_SHORT,
                 padding = PaddingValues(top = 16.dp),
                 contentAlignment = Alignment.TopCenter

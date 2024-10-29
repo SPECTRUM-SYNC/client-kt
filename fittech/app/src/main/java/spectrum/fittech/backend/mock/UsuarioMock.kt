@@ -41,13 +41,6 @@ val usuarioAtualizar = AtualizarUsuario(
     nivelCondicao = "Intermediário"
 )
 
-// Atualização do perfil do usuário
-val usuarioAtualizarPerfil = AtualizarUsuarioPerfil(
-    nome = "João Silva",
-    altura = 175,
-    dataNascimento = "2001-01-10",
-    nivelCondicao = "Intermediário"
-)
 
 // Definição de objetivo
 val objetivo = Objetivo(

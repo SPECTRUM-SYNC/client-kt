@@ -370,7 +370,7 @@ fun TelaCad(name: String, modifier: Modifier = Modifier) {
                         } else {
                             Toast.makeText(
                                 context,
-                                "Por favor, preencha todos os campos corretamente.",
+                                context.getString(R.string.txt_preencha_campos),
                                 Toast.LENGTH_SHORT
                             ).show()
                         }

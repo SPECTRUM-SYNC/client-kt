@@ -1,10 +1,17 @@
 package spectrum.fittech
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -12,6 +19,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,6 +27,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -28,12 +37,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -46,6 +57,10 @@ import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetError
+import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetSuccess
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import spectrum.fittech.backend.Object.IdUserManager
 import spectrum.fittech.backend.auth.TokenManager
 import spectrum.fittech.backend.dtos.UsuarioGet
@@ -73,11 +88,28 @@ fun TelaPer(viewModel: UsuarioViewModel = viewModel(), modifier: Modifier = Modi
     val context = LocalContext.current
 
     var usuarioGet by remember { mutableStateOf<UsuarioGet?>(null) }
+    var openDialogSuccess by remember { mutableStateOf(false) }
+    var openDialogError by remember { mutableStateOf(false) }
 
-    // LaunchedEffect para executar a função apenas uma vez
-    LaunchedEffect(viewModel) {
-        usuarioGet = viewModel.obterUsuario(IdUserManager.getId(context), token = TokenManager.getToken(context))
+    val coroutineScope = rememberCoroutineScope()
+
+    var messageResponse by remember { mutableStateOf("") }
+    var carregado by remember { mutableStateOf(false) }
+    var imageUri by remember { mutableStateOf<Uri?>(null) }
+    val pickImageLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        // Atualiza imageUri quando uma imagem é selecionada
+        imageUri = uri
     }
+
+    LaunchedEffect(viewModel) {
+        usuarioGet = viewModel.obterUsuario(
+            IdUserManager.getId(context),
+            token = TokenManager.getToken(context)
+        )
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -86,10 +118,8 @@ fun TelaPer(viewModel: UsuarioViewModel = viewModel(), modifier: Modifier = Modi
             .padding(bottom = 16.dp),
         verticalArrangement = Arrangement.SpaceAround
     ) {
-
         Row(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.Start
         ) {
             // Botão voltar
@@ -105,7 +135,7 @@ fun TelaPer(viewModel: UsuarioViewModel = viewModel(), modifier: Modifier = Modi
                 }) {
                     Icon(
                         painter = rememberAsyncImagePainter(
-                            model = ImageRequest.Builder(LocalContext.current)
+                            model = ImageRequest.Builder(context)
                                 .data("android.resource://spectrum.fittech/raw/setaesquerda")
                                 .decoderFactory(SvgDecoder.Factory())
                                 .build()
@@ -118,44 +148,94 @@ fun TelaPer(viewModel: UsuarioViewModel = viewModel(), modifier: Modifier = Modi
             }
         }
 
-        // Outras colunas de conteúdo
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Imagem com borda circular
             Box(
                 modifier = Modifier
                     .size(120.dp)
-                    .border(
-                        BorderStroke(1.dp, Color.Unspecified),
-                        shape = CircleShape
-                    ),
+                    .border(BorderStroke(1.dp, Color.Gray), shape = CircleShape)
+                    .clickable { pickImageLauncher.launch("image/*") },
                 contentAlignment = Alignment.Center
             ) {
-
                 AsyncImage(
-                    model = usuarioGet?.img,
+                    model = imageUri ?: usuarioGet?.img,
                     contentDescription = "user",
                     placeholder = painterResource(R.drawable.ic_launcher_foreground),
                     error = painterResource(R.mipmap.user),
                     modifier = Modifier
-                        .size(240.dp)
+                        .size(120.dp)
                         .clip(CircleShape)
                 )
 
+                Box(
+                    modifier = Modifier
+                        .size(35.dp)
+                        .align(Alignment.BottomEnd)
+                        .background(Color(0xFF2C2C2E), CircleShape),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        painter = rememberAsyncImagePainter(
+                            model = ImageRequest.Builder(context)
+                                .data("android.resource://spectrum.fittech/raw/camera")
+                                .decoderFactory(SvgDecoder.Factory())
+                                .build()
+                        ),
+                        contentDescription = "Camera",
+                        modifier = Modifier.size(25.dp),
+                        tint = Color.White
+                    )
+                }
             }
 
-            viewModel.getUsuarioGet().value?.nome?.let {
-                Text(
-                    text = it,
-                    style = TextStyle(
-                        fontSize = 32.sp,
-                        color = Color.White
-                    ),
-                    modifier = Modifier
-                        .padding(top = 16.dp)
-                )
+            if (imageUri != null) {
+
+                Button(
+                    enabled = !carregado,
+                    onClick = {
+                        carregado = true
+                        coroutineScope.launch {
+                            val inputStream = context.contentResolver.openInputStream(imageUri!!)
+                            val imageBytes = inputStream?.use { it.readBytes() }
+
+                            if (imageBytes != null) {
+                                viewModel.atualizarImagem(
+                                    id = IdUserManager.getId(context),
+                                    token = TokenManager.getToken(context),
+                                    imagem = imageBytes
+                                ) { success, message ->
+                                    if (success) {
+                                        openDialogSuccess = true
+                                        messageResponse = message
+                                    } else {
+                                        openDialogError = true
+                                        messageResponse = message
+                                    }
+
+                                    coroutineScope.launch {
+                                        delay(6000)
+                                        usuarioGet = viewModel.obterUsuario(
+                                            IdUserManager.getId(context),
+                                            token = TokenManager.getToken(context)
+                                        )
+                                        IdUserManager.saveUserPic(context, usuarioGet?.img)
+                                        imageUri = null
+                                        carregado = false
+                                    }
+                                }
+                            } else {
+                                openDialogError = true
+                                messageResponse = "Erro ao ler a imagem"
+                                carregado = false
+                            }
+                        }
+                    },
+                    modifier = Modifier.padding(top = 8.dp)
+                ) {
+                    Text(text = if (carregado) "Processando imagem..." else "Salvar imagem")
+                }
             }
 
         }
@@ -355,6 +435,28 @@ fun TelaPer(viewModel: UsuarioViewModel = viewModel(), modifier: Modifier = Modi
             )
         }
 
+    }
+
+    if (openDialogSuccess) {
+        SweetSuccess(
+            message = messageResponse,
+            duration = Toast.LENGTH_SHORT,
+            padding = PaddingValues(top = 16.dp),
+            contentAlignment = Alignment.TopCenter
+        )
+
+        openDialogSuccess = false
+    }
+
+// Toast de erro
+    if (openDialogError) {
+        openDialogError = false
+        SweetError(
+            message = messageResponse,
+            duration = Toast.LENGTH_SHORT,
+            padding = PaddingValues(top = 16.dp),
+            contentAlignment = Alignment.TopCenter
+        )
     }
 }
 

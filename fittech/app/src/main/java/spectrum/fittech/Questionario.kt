@@ -224,7 +224,7 @@ fun Tela(
                     } else {
                         Toast.makeText(
                             context,
-                            "Por favor, selecione um gênero para avançar.",
+                            context.getString(R.string.txt_selecionar_genero),
                             Toast.LENGTH_SHORT
                         ).show()
                     }

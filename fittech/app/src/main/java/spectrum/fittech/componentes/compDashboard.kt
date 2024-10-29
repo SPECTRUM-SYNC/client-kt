@@ -221,7 +221,7 @@ fun ModalPeso(
 // componente criado para mostrar o que o usuario fará no dia
 @Composable
 fun DayItem(
-    dayName: Int,
+    dayName: String,
     dayNumber: String,
     iconRes: String,
     iconTint: Color,
@@ -235,7 +235,7 @@ fun DayItem(
             verticalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = stringResource(id = dayName),
+                text = dayName,
                 style = TextStyle(
                     fontSize = 16.sp,
                     color = if (isBold) colorResource(id = R.color.day) else Color.White,
@@ -247,7 +247,7 @@ fun DayItem(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 style = TextStyle(
                     fontSize = 14.sp,
-                    color = Color.White
+                    color = if (isBold) colorResource(id = R.color.day) else Color.White,
                 )
             )
             Icon(
@@ -257,11 +257,11 @@ fun DayItem(
                         .decoderFactory(SvgDecoder.Factory())
                         .build()
                 ),
-                contentDescription = stringResource(id = dayName),
+                contentDescription = dayName,
                 modifier = Modifier
                     .size(25.dp)
                     .align(Alignment.CenterHorizontally),
-                tint = iconTint
+                tint = if (isBold) colorResource(id = R.color.day) else iconTint
             )
         }
     }

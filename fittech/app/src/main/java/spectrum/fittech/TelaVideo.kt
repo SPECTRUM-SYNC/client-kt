@@ -48,6 +48,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.ImageLoader
@@ -56,6 +57,9 @@ import coil.compose.rememberAsyncImagePainter
 import coil.decode.GifDecoder
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import spectrum.fittech.backend.Object.IdUserManager
+import spectrum.fittech.backend.auth.TokenManager
+import spectrum.fittech.backend.viewModel.TreinoService.TreinoViewModel
 import spectrum.fittech.componentes.ModalDescanso
 import spectrum.fittech.componentes.ModalFinal
 import spectrum.fittech.componentes.ModalInfoExercicio
@@ -86,8 +90,11 @@ class TelaVideo : ComponentActivity() {
 fun VideoRun(
     listaTreino: List<Treino>? = null,
     modifier: Modifier = Modifier,
-    navController: NavHostController
+    navController: NavHostController,
+    treinoVw: TreinoViewModel = viewModel()
 ) {
+
+    val context = LocalContext.current
 
     var treinoDaVez by remember { mutableIntStateOf(0) };
 
@@ -120,7 +127,7 @@ fun VideoRun(
         }
     }
 
-    // Modal descanso
+    // Modal fim
     if (showDialogFim.value) {
         listaTreino?.get(treinoDaVez)?.let {
             ModalFinal(
@@ -263,13 +270,24 @@ fun VideoRun(
                         if (listaTreino.size == (treinoDaVez + 1)) {
 
                             Button(
-                                onClick = { showDialogFim.value = true },
+                                onClick = {
+                                    treinoVw.atualizarStatusTreino(
+                                        id = IdUserManager.getId(context),
+                                        token = TokenManager.getToken(context),
+                                        listaTreino = listaTreino
+                                    )
+                                    showDialogFim.value = true;
+
+                                },
                                 colors = ButtonDefaults.buttonColors(colorResource(R.color.success)),
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .shadow(8.dp, shape = RoundedCornerShape(4.dp))
                             ) {
-                                Text(stringResource(id = R.string.txt_button_finalizar_treino), color = Color.White)
+                                Text(
+                                    stringResource(id = R.string.txt_button_finalizar_treino),
+                                    color = Color.White
+                                )
                             }
                         } else {
                             Button(
@@ -282,7 +300,10 @@ fun VideoRun(
                                     .fillMaxWidth()
                                     .shadow(8.dp, shape = RoundedCornerShape(4.dp))
                             ) {
-                                Text(stringResource(id = R.string.txt_button_exercicio_concluido), color = Color.White)
+                                Text(
+                                    stringResource(id = R.string.txt_button_exercicio_concluido),
+                                    color = Color.White
+                                )
                             }
                         }
                     }

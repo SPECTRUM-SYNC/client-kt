@@ -3,6 +3,7 @@ package spectrum.fittech.utils.treinos
 
 data class Treino(
     val nome: String,
+    val tituloTreino: String,
     val repeticao: String,
     val backgroundImage: String,
     val beneficios: String,
@@ -13,6 +14,7 @@ data class Treino(
 val ganharMassa = listOf(
     Treino(
         nome = "Agachamento (Squat)",
+        tituloTreino = "Diario",
         repeticao = "4x de 8 repetições",
         backgroundImage = "https://media1.tenor.com/m/Re3T3B66V9UAAAAd/barbellsquats-gymexercisesmen.gif",
         beneficios = "Desenvolvimento Muscular: Principalmente quadríceps, glúteos e isquiotibiais.\nForça Funcional: Melhora a força para atividades diárias.\nEstabilidade e Equilíbrio: Fortalece o core e melhora a coordenação.",
@@ -21,6 +23,7 @@ val ganharMassa = listOf(
     ),
     Treino(
         nome = "Rosca Alternada",
+        tituloTreino = "Diario",
         repeticao = "3x de 10 repetições",
         backgroundImage = "https://www.mundoboaforma.com.br/wp-content/uploads/2022/09/rosca-biceps-direta-com-halteres.gif",
         beneficios = "Desenvolvimento Muscular: Fortalece os bíceps e antebraços.\nForça de Preensão: Melhora a força da pegada.\nEstabilidade Articular: Contribui para a estabilidade do cotovelo.",
@@ -29,6 +32,7 @@ val ganharMassa = listOf(
     ),
     Treino(
         nome = "Tríceps na Máquina",
+        tituloTreino = "Diario",
         repeticao = "3x de 12 repetições",
         backgroundImage = "https://www.mundoboaforma.com.br/wp-content/uploads/2021/07/triceps-sentado-no-aparelho.gif",
         beneficios = "Desenvolvimento Muscular: Foca nos músculos tríceps.\nIsolamento Muscular: Permite um trabalho mais isolado do tríceps.\nFacilidade de Uso: Ideal para iniciantes e pessoas com dificuldade em usar pesos livres.",
@@ -37,6 +41,7 @@ val ganharMassa = listOf(
     ),
     Treino(
         nome = "Supino Reto",
+        tituloTreino = "Diario",
         repeticao = "4x de 6 repetições",
         backgroundImage = "https://media1.tenor.com/m/Re3T3B66V9UAAAAd/barbellsquats-gymexercisesmen.gif",
         beneficios = "Desenvolvimento Muscular: Trabalha peitoral, tríceps e deltoides.\nForça Funcional: Melhora a força para atividades diárias.\nEstabilidade do Core: Fortalece o abdômen e a região lombar.",
@@ -45,6 +50,7 @@ val ganharMassa = listOf(
     ),
     Treino(
         nome = "Remada com Barra",
+        tituloTreino = "Diario",
         repeticao = "4x de 8 repetições",
         backgroundImage = "https://www.mundoboaforma.com.br/wp-content/uploads/2020/12/costas-puxada-aberta-com-barra-no-pulley.gif",
         beneficios = "Desenvolvimento Muscular: Principalmente dorsais, bíceps e ombros.\nPostura: Melhora a postura ao fortalecer os músculos das costas.\nForça Funcional: Facilita atividades que envolvem puxar.",
@@ -53,6 +59,7 @@ val ganharMassa = listOf(
     ),
     Treino(
         nome = "Elevação Lateral",
+        tituloTreino = "Diario",
         repeticao = "3x de 15 repetições",
         backgroundImage = "https://www.hipertrofia.org/blog/wp-content/uploads/2023/11/dumbbell-lateral-raise.gif",
         beneficios = "Desenvolvimento Muscular: Fortalece os deltoides laterais.\nSimetria: Ajuda a desenvolver a simetria nos ombros.\nAmplitude de Movimento: Melhora a amplitude de movimento dos ombros.",
@@ -66,6 +73,7 @@ val repeticao2 = "4x de 10 repetições"
 val ganharMassa2 = listOf(
     Treino(
         nome = "Cadeira Extensora",
+        tituloTreino = "Diario",
         repeticao = repeticao2,
         backgroundImage = "https://media.tenor.com/bqKtsSuqilQAAAAM/gym.gif",
         beneficios = "Desenvolvimento Muscular: Principalmente quadríceps.\nForça Funcional: Melhora a força das pernas para atividades diárias.\nPrevenção de Lesões: Fortalece os músculos ao redor do joelho, ajudando a prevenir lesões.",
@@ -75,6 +83,7 @@ val ganharMassa2 = listOf(
     ),
     Treino(
         nome = "Rosca Scott",
+        tituloTreino = "Diario",
         repeticao = repeticao2,
         backgroundImage = "https://www.mundoboaforma.com.br/wp-content/uploads/2020/12/biceps-rosca-biceps-no-banco-scott-com-barra-W.gif",
         beneficios = "Desenvolvimento Muscular: Fortalece os bíceps de maneira mais isolada.\nForça de Preensão: Melhora a força da pegada.\nEstabilidade Articular: Contribui para a estabilidade do cotovelo.",
@@ -83,6 +92,7 @@ val ganharMassa2 = listOf(
     ),
     Treino(
         nome = "Tríceps no Pulley",
+        tituloTreino = "Diario",
         repeticao = repeticao2,
         backgroundImage = "https://www.mundoboaforma.com.br/wp-content/uploads/2021/07/triceps-puxada-no-pulley.gif",
         beneficios = "Desenvolvimento Muscular: Foca nos músculos tríceps.\nIsolamento Muscular: Permite um trabalho mais isolado do tríceps.\nFacilidade de Uso: Ideal para iniciantes e pessoas com dificuldade em usar pesos livres.",
@@ -91,6 +101,7 @@ val ganharMassa2 = listOf(
     ),
     Treino(
         nome = "Crucifixo",
+        tituloTreino = "Diario",
         repeticao = repeticao2,
         backgroundImage = "https://www.hipertrofia.org/blog/wp-content/uploads/2020/06/dumbbell-incline-fly.gif",
         beneficios = "Desenvolvimento Muscular: Trabalha peitoral de forma isolada.\nSimetria Muscular: Ajuda a desenvolver a simetria entre os lados do peitoral.\nAmplitude de Movimento: Melhora a flexibilidade do peitoral.",
@@ -99,6 +110,7 @@ val ganharMassa2 = listOf(
     ),
     Treino(
         nome = "Puxada Alta com Triângulo",
+        tituloTreino = "Diario",
         repeticao = repeticao2,
         backgroundImage = "https://www.mundoboaforma.com.br/wp-content/uploads/2020/12/costas-puxada-para-frente-no-pulley-com-triangulo.gif",
         beneficios = "Desenvolvimento Muscular: Trabalha os músculos das costas, incluindo trapézio, romboides e latíssimos.\nForça Funcional: Melhora a força para atividades de puxar.\nEstabilidade do Core: Fortalece o abdômen e a região lombar.",
@@ -107,6 +119,7 @@ val ganharMassa2 = listOf(
     ),
     Treino(
         nome = "Elevação Frontal",
+        tituloTreino = "Diario",
         repeticao = repeticao2,
         backgroundImage = "https://www.hipertrofia.org/blog/wp-content/uploads/2023/11/dumbbell-front-raise.gif",
         beneficios = "Desenvolvimento Muscular: Fortalece os deltoides anteriores.\nSimetria: Ajuda a desenvolver a simetria nos ombros.\nAmplitude de Movimento: Melhora a amplitude de movimento dos ombros.",
@@ -119,6 +132,7 @@ val repeticaoPeso = "4x de 20 repetições"
 val perderPeso1 = listOf(
     Treino(
         nome = "Agachamento (Squat)",
+        tituloTreino = "Diario",
         repeticao = repeticaoPeso,
         backgroundImage = "https://media1.tenor.com/m/Re3T3B66V9UAAAAd/barbellsquats-gymexercisesmen.gif",
         beneficios = "Desenvolvimento Muscular: Principalmente quadríceps, glúteos e isquiotibiais.\nForça Funcional: Melhora a força para atividades diárias.\nEstabilidade e Equilíbrio: Fortalece o core e melhora a coordenação.",
@@ -127,6 +141,7 @@ val perderPeso1 = listOf(
     ),
     Treino(
         nome = "Rosca Alternada",
+        tituloTreino = "Diario",
         repeticao = repeticaoPeso,
         backgroundImage = "https://www.mundoboaforma.com.br/wp-content/uploads/2022/09/rosca-biceps-direta-com-halteres.gif",
         beneficios = "Desenvolvimento Muscular: Fortalece os bíceps e antebraços.\nForça de Preensão: Melhora a força da pegada.\nEstabilidade Articular: Contribui para a estabilidade do cotovelo.",
@@ -135,6 +150,7 @@ val perderPeso1 = listOf(
     ),
     Treino(
         nome = "Tríceps na Máquina",
+        tituloTreino = "Diario",
         repeticao = repeticaoPeso,
         backgroundImage = "https://www.mundoboaforma.com.br/wp-content/uploads/2021/07/triceps-sentado-no-aparelho.gif",
         beneficios = "Desenvolvimento Muscular: Foca nos músculos tríceps.\nIsolamento Muscular: Permite um trabalho mais isolado do tríceps.\nFacilidade de Uso: Ideal para iniciantes e pessoas com dificuldade em usar pesos livres.",
@@ -143,6 +159,7 @@ val perderPeso1 = listOf(
     ),
     Treino(
         nome = "Flexão de Braço",
+        tituloTreino = "Diario",
         repeticao = repeticaoPeso,
         backgroundImage = "https://www.mundoboaforma.com.br/wp-content/uploads/2021/04/flexao-de-bracos.gif",
         beneficios = "Desenvolvimento Muscular: Trabalha peitoral, tríceps e deltoides.\nForça Funcional: Melhora a força para atividades diárias.\nEstabilidade do Core: Fortalece o abdômen e a região lombar.",
@@ -151,6 +168,7 @@ val perderPeso1 = listOf(
     ),
     Treino(
         nome = "Puxada na Frente",
+        tituloTreino = "Diario",
         repeticao = repeticaoPeso,
         backgroundImage = "https://www.mundoboaforma.com.br/wp-content/uploads/2020/12/costas-puxada-aberta-com-barra-no-pulley.gif",
         beneficios = "Desenvolvimento Muscular: Principalmente dorsais, bíceps e ombros.\nPostura: Melhora a postura ao fortalecer os músculos das costas.\nForça Funcional: Facilita atividades que envolvem puxar.",
@@ -159,6 +177,7 @@ val perderPeso1 = listOf(
     ),
     Treino(
         nome = "Elevação Lateral",
+        tituloTreino = "Diario",
         repeticao = repeticaoPeso,
         backgroundImage = "https://www.hipertrofia.org/blog/wp-content/uploads/2023/11/dumbbell-lateral-raise.gif",
         beneficios = "Desenvolvimento Muscular: Fortalece os deltoides laterais.\nSimetria: Ajuda a desenvolver a simetria nos ombros.\nAmplitude de Movimento: Melhora a amplitude de movimento dos ombros.",
@@ -171,6 +190,7 @@ val repeticaoPeso2 = "4x de 15 repetições"
 val perderPeso2 = listOf(
     Treino(
         nome = "Cadeira Extensora",
+        tituloTreino = "Diario",
         repeticao = repeticaoPeso2,
         backgroundImage = "https://media1.tenor.com/m/bqKtsSuqilQAAAAC/gym.gif",
         beneficios = "Desenvolvimento Muscular: Principalmente quadríceps.\nForça Funcional: Melhora a força das pernas para atividades diárias.\nPrevenção de Lesões: Fortalece os músculos ao redor do joelho, ajudando a prevenir lesões.",
@@ -179,6 +199,7 @@ val perderPeso2 = listOf(
     ),
     Treino(
         nome = "Rosca Martelo",
+        tituloTreino = "Diario",
         repeticao = repeticaoPeso2,
         backgroundImage = "https://www.hipertrofia.org/blog/wp-content/uploads/2023/04/dumbbell-hammer-curl-v-2.gif",
         beneficios = "Desenvolvimento Muscular: Fortalece os bíceps e antebraços.\nForça de Preensão: Melhora a força da pegada.\nEstabilidade Articular: Contribui para a estabilidade do cotovelo.",
@@ -187,6 +208,7 @@ val perderPeso2 = listOf(
     ),
     Treino(
         nome = "Tríceps com Máquina 2",
+        tituloTreino = "Diario",
         repeticao = repeticaoPeso2,
         backgroundImage = "https://fitnessprogramer.com/wp-content/uploads/2021/09/Triceps-Extension-Machine.gif",
         beneficios = "Desenvolvimento Muscular: Foca nos músculos tríceps.\nIsolamento Muscular: Permite um trabalho mais isolado do tríceps.\nFacilidade de Uso: Ideal para iniciantes e pessoas com dificuldade em usar pesos livres.",
@@ -195,6 +217,7 @@ val perderPeso2 = listOf(
     ),
     Treino(
         nome = "Flexão de Braço",
+        tituloTreino = "Diario",
         repeticao = repeticaoPeso2,
         backgroundImage = "https://media1.tenor.com/m/bqKtsSuqilQAAAAC/gym.gif",
         beneficios = "Desenvolvimento Muscular: Trabalha peitoral, tríceps e deltoides.\nForça Funcional: Melhora a força para atividades diárias.\nEstabilidade do Core: Fortalece o abdômen e a região lombar.",
@@ -203,6 +226,7 @@ val perderPeso2 = listOf(
     ),
     Treino(
         nome = "Remada com Barra",
+        tituloTreino = "Diario",
         repeticao = repeticaoPeso2,
         backgroundImage = "https://media.tenor.com/AYJ_bNXDvoUAAAAM/workout-muscles.gif",
         beneficios = "Desenvolvimento Muscular: Trabalha os músculos das costas, incluindo trapézio, romboides e latíssimos.\nForça Funcional: Melhora a força para atividades de puxar.\nEstabilidade do Core: Fortalece o abdômen e a região lombar.",
@@ -211,6 +235,7 @@ val perderPeso2 = listOf(
     ),
     Treino(
         nome = "Elevação Frontal",
+        tituloTreino = "Diario",
         repeticao = repeticaoPeso2,
         backgroundImage = "https://www.hipertrofia.org/blog/wp-content/uploads/2023/11/dumbbell-front-raise.gif",
         beneficios = "Desenvolvimento Muscular: Fortalece os deltoides anteriores.\nSimetria: Ajuda a desenvolver a simetria nos ombros.\nAmplitude de Movimento: Melhora a amplitude de movimento dos ombros.",
@@ -222,6 +247,7 @@ val perderPeso2 = listOf(
 val cardioAlta = listOf(
     Treino(
         nome = "Squat Jump",
+        tituloTreino = "Cardio (alta Intensidade)",
         repeticao = "3 séries de 15 repetições",
         backgroundImage = "https://j.gifs.com/lO82oM.gif",
         beneficios = "Queima Calórica: Alta queima de calorias e gordura.\nSaúde Cardiovascular: Melhora a saúde do coração e a capacidade pulmonar.\nResistência: Aumenta a resistência física geral.",
@@ -230,6 +256,7 @@ val cardioAlta = listOf(
     ),
     Treino(
         nome = "Plank Jacks",
+        tituloTreino = "Cardio (alta Intensidade)",
         repeticao = "40 minutos",
         backgroundImage = "https://hips.hearstapps.com/hmg-prod/images/766/fitgif-friday-sweep-plank-slider-thumbnail-override-1509654737.gif",
         beneficios = "Coordenação: Melhora a coordenação e agilidade.\nQueima Calórica: Alta queima de calorias em curto tempo.\nResistência: Aumenta a resistência cardiovascular e muscular.",
@@ -238,6 +265,7 @@ val cardioAlta = listOf(
     ),
     Treino(
         nome = "Prancha Escalada",
+        tituloTreino = "Cardio (alta Intensidade)",
         repeticao = "3 séries de 20 repetições por perna",
         backgroundImage = "https://i.pinimg.com/originals/62/c5/75/62c5759fb23253bf1153dd4f2aa0ce83.gif",
         beneficios = "Queima Calórica: Alta queima de calorias e gordura.\nSaúde Cardiovascular: Melhora a saúde do coração e a capacidade pulmonar.\nResistência: Aumenta a resistência física geral.",
@@ -246,6 +274,7 @@ val cardioAlta = listOf(
     ),
     Treino(
         nome = "Box Jump",
+        tituloTreino = "Cardio (alta Intensidade)",
         repeticao = "40 minutos",
         backgroundImage = "https://bod-blog-assets.prod.cd.beachbodyondemand.com/bod-blog/wp-content/uploads/2024/01/09113749/box-jump-600-demo.gif",
         beneficios = "Coordenação: Melhora a coordenação e agilidade.\nQueima Calórica: Alta queima de calorias em curto tempo.\nResistência: Aumenta a resistência cardiovascular e muscular.",
@@ -257,6 +286,7 @@ val cardioAlta = listOf(
 val cardioBaixa = listOf(
     Treino(
         nome = "Polichinelos Moderados",
+        tituloTreino = "Cardio (Baixa Intensidade)",
         repeticao = "30 minutos",
         backgroundImage = "https://www.hipertrofia.org/blog/wp-content/uploads/2023/11/polichinelos.gif",
         beneficios = "Saúde Cardiovascular: Melhora a saúde do coração e a circulação.\nBaixo Impacto: Ótimo para pessoas com problemas nas articulações.\nBem-Estar Mental: Reduz o estresse e melhora o humor.",
@@ -265,6 +295,7 @@ val cardioBaixa = listOf(
     ),
     Treino(
         nome = "Agachamentos Leves",
+        tituloTreino = "Cardio (Baixa Intensidade)",
         repeticao = "3 séries de 15 repetições",
         backgroundImage = "https://media.tenor.com/3Id5iyj7kuUAAAAM/agachamento.gif",
         beneficios = "Total do Corpo: Trabalha todos os principais grupos musculares.\nBaixo Impacto: Ideal para pessoas com problemas nas articulações.\nResistência: Aumenta a resistência cardiovascular e muscular.",
@@ -273,6 +304,7 @@ val cardioBaixa = listOf(
     ),
     Treino(
         nome = "Prancha",
+        tituloTreino = "Cardio (Baixa Intensidade)",
         repeticao = "3 séries de 1 minuto",
         backgroundImage = "https://i.pinimg.com/originals/bb/e7/86/bbe78693697daed4037ea5439025f68f.gif",
         beneficios = "Saúde Cardiovascular: Melhora a saúde do coração e a circulação.\nBaixo Impacto: Ótimo para pessoas com problemas nas articulações.\nBem-Estar Mental: Reduz o estresse e melhora o humor.",
@@ -281,6 +313,7 @@ val cardioBaixa = listOf(
     ),
     Treino(
         nome = "Abdominal Curto",
+        tituloTreino = "Cardio (Baixa Intensidade)",
         repeticao = "3 séries de 20 repetições",
         backgroundImage = "https://s2-ug.ap4r.com/image-aigc-article/seoPic/origin/b79cc2135caceac828548a01d65511dc1f821283.gif",
         beneficios = "Total do Corpo: Trabalha todos os principais grupos musculares.\nBaixo Impacto: Ideal para pessoas com problemas nas articulações.\nResistência: Aumenta a resistência cardiovascular e muscular.",
@@ -292,6 +325,7 @@ val cardioBaixa = listOf(
 val funcional = listOf(
     Treino(
         nome = "Abdominal Curto",
+        tituloTreino = "Funcional",
         repeticao = "3 séries de 20 repetições",
         backgroundImage = "https://s2-ug.ap4r.com/image-aigc-article/seoPic/origin/b79cc2135caceac828548a01d65511dc1f821283.gif",
         beneficios = "Força do Core: Fortalece o abdômen.\nEstabilidade: Melhora o equilíbrio e a postura.\nFunção Funcional: Melhora a capacidade de realizar atividades diárias.",
@@ -300,6 +334,7 @@ val funcional = listOf(
     ),
     Treino(
         nome = "Prancha",
+        tituloTreino = "Funcional",
         repeticao = "3 séries de 1 minuto",
         backgroundImage = "https://i.pinimg.com/originals/bb/e7/86/bbe78693697daed4037ea5439025f68f.gif",
         beneficios = "Força do Core: Fortalece o abdômen e a lombar.\nEstabilidade: Melhora o equilíbrio e a postura.\nFunção Funcional: Melhora a capacidade de realizar atividades diárias.",
@@ -308,6 +343,7 @@ val funcional = listOf(
     ),
     Treino(
         nome = "Flexão de Braço",
+        tituloTreino = "Funcional",
         repeticao = "3 séries de 15 repetições",
         backgroundImage = "https://www.hipertrofia.org/blog/wp-content/uploads/2019/12/negative-push-up.gif",
         beneficios = "Força Superior: Fortalece peitoral, ombros e tríceps.\nEstabilidade do Core: Fortalece o abdômen e a lombar.\nFunção Funcional: Melhora a capacidade de empurrar e suportar peso.",
@@ -316,6 +352,7 @@ val funcional = listOf(
     ),
     Treino(
         nome = "Agachamento",
+        tituloTreino = "Funcional",
         repeticao = "3 séries de 15 repetições",
         backgroundImage = "https://media.tenor.com/3Id5iyj7kuUAAAAM/agachamento.gif",
         beneficios = "Força Inferior: Fortalece glúteos, quadríceps e isquiotibiais.\nEstabilidade: Melhora o equilíbrio e a postura.\nFunção Funcional: Melhora a capacidade de sentar e levantar objetos.",
@@ -327,6 +364,7 @@ val funcional = listOf(
 val alongamento = listOf(
     Treino(
         nome = "Postura da Cobra",
+        tituloTreino = "Alongamento",
         repeticao = "2 minutos",
         backgroundImage = "https://www.mundoboaforma.com.br/wp-content/uploads/2020/12/alongamento-serpente.gif",
         beneficios = "Flexibilidade: Aumenta a flexibilidade da coluna e dos isquiotibiais.\nAlívio de Tensão: Reduz a tensão na parte inferior das costas.\nPostura: Melhora a postura e o alinhamento da coluna.",
@@ -335,6 +373,7 @@ val alongamento = listOf(
     ),
     Treino(
         nome = "Postura da Cobra a fundo",
+        tituloTreino = "Alongamento",
         repeticao = "2 minutos",
         backgroundImage = "https://www.mundoboaforma.com.br/wp-content/uploads/2019/01/alongamento-postura-crianca-para-cobra.gif",
         beneficios = "Flexibilidade: Aumenta a flexibilidade da coluna e quadris.\nAlívio de Tensão: Reduz a tensão na parte inferior das costas.\nRelaxamento: Promove relaxamento muscular e bem-estar.",
@@ -343,6 +382,7 @@ val alongamento = listOf(
     ),
     Treino(
         nome = "Alongamento de Coluna Sentado",
+        tituloTreino = "Alongamento",
         repeticao = "2 minutos",
         backgroundImage = "https://www.mundoboaforma.com.br/wp-content/uploads/2021/09/alongamento-de-coluna-sentado.gif",
         beneficios = "Flexibilidade: Aumenta a flexibilidade da coluna e dos isquiotibiais.\nAlívio de Tensão: Reduz a tensão na parte inferior das costas.\nPostura: Melhora a postura e o alinhamento da coluna.",
@@ -351,6 +391,7 @@ val alongamento = listOf(
     ),
     Treino(
         nome = "Alongamento em Pé para Trás",
+        tituloTreino = "Alongamento",
         repeticao = "2 minutos",
         backgroundImage = "https://www.mundoboaforma.com.br/wp-content/uploads/2020/12/alongamento-em-pe-para-tras.gif",
         beneficios = "Flexibilidade: Aumenta a flexibilidade da coluna e quadris.\nAlívio de Tensão: Reduz a tensão na parte inferior das costas.\nRelaxamento: Promove relaxamento muscular e bem-estar.",

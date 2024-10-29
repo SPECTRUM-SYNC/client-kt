@@ -8,12 +8,12 @@ data class OpcaoTreinoExtra(
 
 val opcoesTreinos = listOf(
     OpcaoTreinoExtra(
-        nome = "cardio Alta Intensidade",
+        nome = "Cardio (alta Intensidade)",
         treinos = cardioAlta,
         image = "https://www.hipertrofia.org/blog/wp-content/uploads/2023/05/exercicio-escalador.jpg"
     ),
     OpcaoTreinoExtra(
-        nome = "Cardio baixa Intensidade",
+        nome = "Cardio (Baixa Intensidade)",
         treinos = cardioBaixa,
         image = "https://www.oxerbrasil.com.br/wp-content/uploads/2024/03/exercicio-de-prancha.jpg"
     ),
