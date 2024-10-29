@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -119,7 +120,7 @@ fun TelaNotificacao(name: String, modifier: Modifier = Modifier) {
             }
 
             Text(
-                text = "Notificações",
+                text = stringResource(id = R.string.txt_notificacoes),
                 style = TextStyle(
                     fontSize = 24.sp,
                     color = Color.White,
@@ -153,7 +154,7 @@ fun TelaNotificacao(name: String, modifier: Modifier = Modifier) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Lembretes de Treino",
+                    text = stringResource(id = R.string.txt_lembretes_treino),
                     style = TextStyle(
                         fontSize = 16.sp,
                         color = Color.White,
@@ -190,7 +191,7 @@ fun TelaNotificacao(name: String, modifier: Modifier = Modifier) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Programar Notificações",
+                    text = stringResource(id = R.string.txt_programar_notificacoes),
                     style = TextStyle(
                         fontSize = 16.sp,
                         color = Color.White,
@@ -227,7 +228,7 @@ fun TelaNotificacao(name: String, modifier: Modifier = Modifier) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Notificar Treinos Novos",
+                    text = stringResource(id = R.string.txt_notificar_treinos_novos),
                     style = TextStyle(
                         fontSize = 16.sp,
                         color = Color.White,
@@ -263,12 +264,12 @@ fun TelaNotificacao(name: String, modifier: Modifier = Modifier) {
             verticalArrangement = Arrangement.Bottom
         ) {
             Text(
-                text = "Você pode gerenciar a permissão de notificação do aplicativo nas configurações do",
+                text = stringResource(id = R.string.txt_gerenciar_permissoes),
                 color = Color.White,
                 textAlign = TextAlign.Center
             )
             Text(
-                text = "Configurações do Telefone",
+                text = stringResource(id = R.string.txt_configuracoes_telefone),
                 color = Color(0xFFFF3B47)
             )
         }

@@ -152,14 +152,15 @@ class Home : ComponentActivity() {
     }
 }
 
+@Composable
 fun saudacaoAtual(): String {
 
     val horaAtual = Calendar.getInstance().get(Calendar.HOUR_OF_DAY)
 
     return when {
-        horaAtual in 18..23 || horaAtual in 0..5 -> "Boa noite."
-        horaAtual in 5..11 -> "Bom dia."
-        else -> "Boa tarde."
+        horaAtual in 18..23 || horaAtual in 0..5 -> stringResource(id = R.string.txt_boa_noite)
+        horaAtual in 5..11 -> stringResource(id = R.string.txt_bom_dia)
+        else -> stringResource(id = R.string.txt_boa_tarde)
     }
 }
 
@@ -174,7 +175,15 @@ fun HomeRun(
     val context = LocalContext.current
     val showPopup = remember { mutableStateOf(false) }
 
-    val dias = listOf("Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado")
+    val dias = listOf(
+        context.getString(R.string.dia_domingo),
+        context.getString(R.string.dia_segunda),
+        context.getString(R.string.dia_terca),
+        context.getString(R.string.dia_quarta),
+        context.getString(R.string.dia_quinta),
+        context.getString(R.string.dia_sexta),
+        context.getString(R.string.dia_sabado)
+    )
     val checkedStates =
         remember { mutableStateListOf<Boolean>().apply { repeat(dias.size) { add(false) } } }
 
@@ -323,7 +332,9 @@ fun HomeRun(
                                 .padding(8.dp)
                         ) {
                             Text(
-                                text = if (treinoPrincipalGet!!.status == "Treino" || treinoPrincipalGet!!.status == "Feito") "Fortalecimento  Muscular" else "Dia de descanso",
+                                text = if (treinoPrincipalGet!!.status == "Treino" || treinoPrincipalGet!!.status == "Feito") stringResource(
+                                    id = R.string.txt_fortalecimento
+                                ) else stringResource(id = R.string.txt_dia_descanso),
                                 style = TextStyle(
                                     fontSize = 16.sp,
                                     color = Color.White,
@@ -331,7 +342,7 @@ fun HomeRun(
                                 )
                             )
                             Text(
-                                text = "Treino Diário",
+                                text = stringResource(id = R.string.txt_treino_diario),
                                 style = TextStyle(
                                     fontSize = 14.sp,
                                     color = Color(0xFFFF6E77)
@@ -340,7 +351,7 @@ fun HomeRun(
 
                             Row {
                                 Text(
-                                    text = "STATUS:",
+                                    text = stringResource(id = R.string.txt_status),
                                     style = TextStyle(
                                         fontSize = 14.sp,
                                         color = Color.White
@@ -350,7 +361,11 @@ fun HomeRun(
                                 Spacer(modifier = Modifier.width(4.dp))
 
                                 Text(
-                                    text = if (treinoPrincipalGet!!.status == "Treino") "A Realizar" else if (treinoPrincipalGet!!.status == "Feito") "Você já fez seu treino hoje!" else "Dia de descansar os musculos",
+                                    text = if (treinoPrincipalGet!!.status == "Treino") stringResource(
+                                        id = R.string.txt_realizar
+                                    ) else if (treinoPrincipalGet!!.status == "Feito") stringResource(
+                                        id = R.string.txt_treino_concluido
+                                    ) else stringResource(id = R.string.txt_descansar_musculos),
                                     style = TextStyle(
                                         fontSize = 14.sp,
                                         color = if (treinoPrincipalGet!!.status == "Treino") Color.Magenta else if (treinoPrincipalGet!!.status == "Feito") Color.Green else Color.White,
@@ -426,7 +441,7 @@ fun HomeRun(
                                         )
                                     )
                                     Text(
-                                        text = "Treino Extra",
+                                        text = stringResource(id = R.string.txt_treino_extra),
                                         style = TextStyle(
                                             fontSize = 14.sp,
                                             color = Color(0xFFFF6E77)
@@ -435,7 +450,7 @@ fun HomeRun(
 
                                     Row {
                                         Text(
-                                            text = "STATUS:",
+                                            text = stringResource(id = R.string.txt_status),
                                             style = TextStyle(
                                                 fontSize = 14.sp,
                                                 color = Color.White
@@ -444,7 +459,11 @@ fun HomeRun(
 
                                         Spacer(modifier = Modifier.width(4.dp))
                                         Text(
-                                            text = if (listaTreino.any { it.tipoTreino == treino.nome }) "Concluído" else "A Realizar",
+                                            text = if (listaTreino.any { it.tipoTreino == treino.nome }) stringResource(
+                                                id = R.string.txt_concluido
+                                            ) else stringResource(
+                                                id = R.string.txt_realizar
+                                            ),
                                             style = TextStyle(
                                                 fontSize = 14.sp,
                                                 color = if (listaTreino.any { it.tipoTreino == treino.nome }) Color.Green else Color.Magenta,

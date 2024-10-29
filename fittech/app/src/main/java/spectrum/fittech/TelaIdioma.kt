@@ -37,6 +37,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -45,6 +46,8 @@ import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import spectrum.fittech.ui.theme.FittechTheme
+import android.content.res.Configuration
+import java.util.Locale
 
 class TelaIdioma : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +55,8 @@ class TelaIdioma : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FittechTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()
+                Scaffold(modifier = Modifier
+                    .fillMaxSize()
                     .windowInsetsPadding(WindowInsets.safeDrawing)) { innerPadding ->
                     Idioma(modifier = Modifier.padding(innerPadding))
                 }
@@ -61,18 +65,49 @@ class TelaIdioma : ComponentActivity() {
     }
 }
 
+fun setLocale(activity: ComponentActivity, languageCode: String) {
+    val locale = Locale(languageCode)
+    Locale.setDefault(locale)
+
+    val config = Configuration(activity.resources.configuration)
+    config.setLocale(locale)
+
+    activity.resources.updateConfiguration(config, activity.resources.displayMetrics)
+
+    // Recria a Activity para aplicar a alteração de idioma
+    activity.recreate()
+}
+
 @Composable
 fun Idioma(modifier: Modifier = Modifier) {
+    val context = LocalContext.current
     val idiomas = listOf(
-        "Português", "Inglês", "Espanhol", "Chinês", "Japonês",
-        "Francês", "Alemão", "Russo", "Italiano", "Polonês",
-        "Holandês", "Coreano", "Árabe", "Catalão", "Grego",
-        "Basco", "Turco", "Vietnamita", "Malaio", "Esperanto", "Tailandês"
+        context.getString(R.string.idioma_portugues),
+        context.getString(R.string.idioma_ingles),
+        context.getString(R.string.idioma_espanhol),
+        context.getString(R.string.idioma_chines),
+        context.getString(R.string.idioma_japones),
+        context.getString(R.string.idioma_frances),
+        context.getString(R.string.idioma_alemao),
+        context.getString(R.string.idioma_russo),
+        context.getString(R.string.idioma_italiano),
+        context.getString(R.string.idioma_polones),
+        context.getString(R.string.idioma_holandes),
+        context.getString(R.string.idioma_coreano),
+        context.getString(R.string.idioma_arabe),
+        context.getString(R.string.idioma_catalao),
+        context.getString(R.string.idioma_grego),
+        context.getString(R.string.idioma_basco),
+        context.getString(R.string.idioma_turco),
+        context.getString(R.string.idioma_vietnamita),
+        context.getString(R.string.idioma_malaio),
+        context.getString(R.string.idioma_esperanto),
+        context.getString(R.string.idioma_tailandes)
     )
+
     val textState = remember { mutableStateOf("") }
     val selectedLanguage = remember { mutableStateOf<String?>("Português") }
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
-    val context = LocalContext.current
 
     // Filtrar idiomas conforme a pesquisa
     val filteredLanguages = idiomas.filter {
@@ -120,7 +155,7 @@ fun Idioma(modifier: Modifier = Modifier) {
             }
 
             Text(
-                text = "Idioma",
+                text = stringResource(id = R.string.txt_idioma),
                 style = androidx.compose.ui.text.TextStyle(
                     fontSize = 24.sp,
                     color = Color.White,
@@ -136,8 +171,9 @@ fun Idioma(modifier: Modifier = Modifier) {
         OutlinedTextField(
             value = textState.value,
             onValueChange = { textState.value = it },
-            label = { Text("Pesquisar") },
-            modifier = Modifier.fillMaxWidth()
+            label = { Text(stringResource(id = R.string.txt_pesquisar)) },
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(top = 32.dp, bottom = 32.dp),
             shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
             textStyle = androidx.compose.ui.text.TextStyle(color = Color.White),
@@ -167,6 +203,12 @@ fun Idioma(modifier: Modifier = Modifier) {
                         .padding(vertical = 16.dp)
                         .clickable {
                             selectedLanguage.value = idioma
+                            // Alteração de idioma
+                            if (idioma == context.getString(R.string.idioma_ingles)) {
+                                setLocale(context as ComponentActivity, "en")
+                            } else if (idioma == context.getString(R.string.idioma_portugues)) {
+                                setLocale(context as ComponentActivity, "pt")
+                            }
                         },
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
