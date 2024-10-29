@@ -30,11 +30,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -59,12 +57,9 @@ import coil.request.ImageRequest
 import spectrum.fittech.backend.Object.IdUserManager
 import spectrum.fittech.backend.auth.TokenManager
 import spectrum.fittech.backend.dtos.DiasTreino
-import spectrum.fittech.backend.dtos.DiasTreino
 import spectrum.fittech.backend.dtos.HistoricoPeso
 import spectrum.fittech.backend.dtos.TreinoCountDto
-import spectrum.fittech.backend.dtos.TreinoCountDto
 import spectrum.fittech.backend.viewModel.HistoricoPesoService.HistoricoPesoViewModel
-import spectrum.fittech.backend.viewModel.TreinoService.TreinoViewModel
 import spectrum.fittech.backend.viewModel.TreinoService.TreinoViewModel
 import spectrum.fittech.componentes.BottomNavigationBar
 import spectrum.fittech.componentes.DayItem
@@ -74,7 +69,6 @@ import spectrum.fittech.componentes.charts.LineGraph
 import spectrum.fittech.ui.theme.FittechTheme
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.Calendar
 
 class TelaGraficos : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
