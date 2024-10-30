@@ -2,6 +2,7 @@ package spectrum.fittech
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -33,7 +34,6 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -70,7 +70,6 @@ import spectrum.fittech.componentes.charts.LineGraph
 import spectrum.fittech.ui.theme.FittechTheme
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.Calendar
 
 class TelaGraficos : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -167,7 +166,7 @@ fun TelaGraficosRun(
 
         // Modal
         if (showDialog.value) {
-            ModalPeso(showDialog)
+            ModalPeso(showDialog, IdUserManager.getId(context)!!, TokenManager.getToken(context)!!)
         }
 
         // Container rolável
@@ -199,6 +198,150 @@ fun TelaGraficosRun(
                         color = Color.White
                     )
                 )
+            }
+
+            // Primeiro card geral
+            Column {
+                Text(
+                    text = stringResource(id = R.string.txt_desenvolvimento_geral),
+                    style = TextStyle(
+                        fontSize = 20.sp,
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(110.dp)
+                        .shadow(elevation = 10.dp, shape = RoundedCornerShape(25.dp))
+                        .clip(RoundedCornerShape(25.dp))
+                        .background(color = colorResource(id = R.color.background_card))
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(16.dp)
+                            .fillMaxWidth()
+                            .fillMaxHeight(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .align(Alignment.CenterVertically)
+                                .fillMaxHeight(),
+                            verticalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Icon(
+                                painter = rememberAsyncImagePainter(
+                                    model = ImageRequest.Builder(LocalContext.current)
+                                        .data("android.resource://spectrum.fittech/raw/treino")
+                                        .decoderFactory(SvgDecoder.Factory())
+                                        .build()
+                                ),
+                                contentDescription = stringResource(id = R.string.txt_treino),
+                                modifier = Modifier
+                                    .size(30.dp)
+                                    .align(Alignment.CenterHorizontally),
+                                tint = Color.Unspecified
+                            )
+                            Text(
+                                text = stringResource(id = R.string.txt_treino),
+                                style = TextStyle(
+                                    fontSize = 16.sp,
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            )
+                            Text(
+                                text = "1",
+                                modifier = Modifier.align(Alignment.CenterHorizontally),
+                                style = TextStyle(
+                                    fontSize = 14.sp,
+                                    color = Color(0xFFFF6E77)
+                                )
+                            )
+                        }
+
+                        Column(
+                            modifier = Modifier
+                                .align(Alignment.CenterVertically)
+                                .fillMaxHeight(),
+                            verticalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Icon(
+                                painter = rememberAsyncImagePainter(
+                                    model = ImageRequest.Builder(LocalContext.current)
+                                        .data("android.resource://spectrum.fittech/raw/refeicao")
+                                        .decoderFactory(SvgDecoder.Factory())
+                                        .build()
+                                ),
+                                contentDescription = stringResource(id = R.string.txt_refeicao),
+                                modifier = Modifier
+                                    .size(30.dp)
+                                    .align(Alignment.CenterHorizontally),
+                                tint = Color.Unspecified
+                            )
+                            Text(
+                                text = stringResource(id = R.string.txt_refeicao),
+                                style = TextStyle(
+                                    fontSize = 16.sp,
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            )
+                            Text(
+                                text = "1",
+                                modifier = Modifier.align(Alignment.CenterHorizontally),
+                                style = TextStyle(
+                                    fontSize = 14.sp,
+                                    color = Color(0xFFFF6E77)
+                                )
+                            )
+                        }
+
+                        Column(
+                            modifier = Modifier
+                                .align(Alignment.CenterVertically)
+                                .fillMaxHeight(),
+                            verticalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Icon(
+                                painter = rememberAsyncImagePainter(
+                                    model = ImageRequest.Builder(LocalContext.current)
+                                        .data("android.resource://spectrum.fittech/raw/kcal")
+                                        .decoderFactory(SvgDecoder.Factory())
+                                        .build()
+                                ),
+                                contentDescription = stringResource(id = R.string.txt_caloria),
+                                modifier = Modifier
+                                    .size(30.dp)
+                                    .align(Alignment.CenterHorizontally),
+                                tint = colorResource(id = R.color.fire)
+                            )
+                            Text(
+                                text = stringResource(id = R.string.txt_caloria),
+                                style = TextStyle(
+                                    fontSize = 16.sp,
+                                    color = Color.White,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            )
+                            Text(
+                                text = "1",
+                                modifier = Modifier.align(Alignment.CenterHorizontally),
+                                style = TextStyle(
+                                    fontSize = 14.sp,
+                                    color = Color(0xFFFF6E77)
+                                )
+                            )
+                        }
+
+                    }
+                }
             }
 
             Spacer(modifier = Modifier.height(30.dp))
@@ -293,7 +436,14 @@ fun TelaGraficosRun(
                     )
 
                     Button(
-                        onClick = { showDialog.value = true },
+                        onClick = {
+                            if (historicoPesoList[0].dataPostagem != LocalDate.now().toString()){
+                                showDialog.value = true
+                                Log.e("peso", historicoPesoList[0].dataPostagem +"Data postagem")
+                            }
+                            Log.e("peso", "data do histtórico = a data hoje")
+                            Toast.makeText(context, "Você já registrou seu peso hoje", Toast.LENGTH_SHORT).show()
+                                  },
                         colors = ButtonDefaults.buttonColors(colorResource(R.color.fire)),
                         modifier = Modifier
                             .shadow(8.dp, shape = RoundedCornerShape(4.dp))

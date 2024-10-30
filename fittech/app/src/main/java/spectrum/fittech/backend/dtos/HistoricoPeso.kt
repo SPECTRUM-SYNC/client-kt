@@ -6,7 +6,7 @@ import java.util.Objects
 
 data class HistoricoPeso(
     val id: Long,
-    val dataPostagem: String,
-    val peso: Double,
-    val pesoMeta: Double,
+    var dataPostagem: String,
+    var peso: Double,
+    var pesoMeta: Double,
  )
