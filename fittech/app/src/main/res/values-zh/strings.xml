@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FitTech</string>
+    <string name="title_activity_tela_login">登录页面</string>
+    <string name="title_activity_home">主页</string>
+    <string name="title_activity_tela_cadastro">注册页面</string>
+    <string name="title_activity_perfil">个人资料</string>
+    <string name="title_activity_questionario">问卷</string>
+    <string name="title_activity_tela_inicial_dois">初始页面二</string>
+    <string name="title_activity_tela_inicial_tres">初始页面三</string>
+    <string name="title_activity_tela_esqueceu_senha">忘记密码页面</string>
+    <string name="title_activity_tela_idioma">语言页面</string>
+
+    <!-- Tela de Cadastro -->
+    <string name="ipt_email">邮箱</string>
+    <string name="ipt_senha">密码</string>
+    <string name="ipt_senha_novamente">再次输入密码</string>
+    <string name="ipt_email_invalido">输入的邮箱无效。</string>
+    <string name="ipt_senha_invalida">密码必须包含至少8个字符，包括1个数字、1个小写字母、1个大写字母和1个特殊字符。</string>
+    <string name="ipt_senha_nao_correspondem">密码不匹配或无效。</string>
+    <string name="btn_cadastrar">注册</string>
+    <string name="desc_seta_direita">右箭头</string>
+    <string name="desc_google">谷歌</string>
+    <string name="txt_ola">你好 %1$s，</string>
+    <string name="txt_entre_com_info">请输入您的信息完成注册！</string>
+    <string name="txt_cadastrar">注册</string>
+    <string name="txt_login">登录</string>
+    <string name="txt_selecionar_genero">请选择一个性别以继续。</string>
+    <string name="txt_preencha_campos">请正确填写所有字段。</string>
+    <string name="txt_notificacoes">通知</string>
+    <string name="txt_idioma">语言</string>
+    <string name="txt_contate_nos">联系我们</string>
+
+    <!-- Tela de Login -->
+    <string name="txt_bem_vindo_login">欢迎回来</string>
+    <string name="txt_bem_vinda_login">欢迎回来</string>
+    <string name="txt_esqueci_senha">忘记密码</string>
+    <string name="ipt_senha_invalida_login">输入的密码无效。</string>
+    <string name="btn_login">登录</string>
+
+    <!-- Tela Inicial -->
+    <string name="txt_init1">学习训练，</string>
+    <string name="txt_init2">开始您的旅程</string>
+    <string name="txt_init3">制定训练计划，</string>
+    <string name="txt_init4">变得更强</string>
+    <string name="txt_init5">行动是</string>
+    <string name="txt_init6">成功的关键</string>
+    <string name="txt_bem_vindo_msg">欢迎，%s</string>
+    <string name="btn_init">开始</string>
+
+    <!-- Tela de Perfil -->
+    <string name="txt_editar_perfil">编辑资料</string>
+    <string name="txt_politica_privacidade">隐私政策</string>
+    <string name="txt_configuracoes">设置</string>
+    <string name="txt_sair">退出</string>
+    <string name="txt_altura">身高（厘米）</string>
+    <string name="txt_data_nascimento">出生日期</string>
+    <string name="txt_nivel_condicao">体能水平</string>
+
+    <!-- Tela de Home -->
+    <string name="txt_bom_dia">早上好。</string>
+    <string name="txt_boa_noite">晚上好。</string>
+    <string name="txt_boa_tarde">下午好。</string>
+    <string name="txt_saudacao">你好 %1$s，</string>
+    <string name="txt_plano_treino">训练选择</string>
+    <string name="txt_categorias_treino">训练类别</string>
+    <string name="txt_treinos_extras">额外训练</string>
+    <string name="dia_domingo">星期日</string>
+    <string name="dia_segunda">星期一</string>
+    <string name="dia_terca">星期二</string>
+    <string name="dia_quarta">星期三</string>
+    <string name="dia_quinta">星期四</string>
+    <string name="dia_sexta">星期五</string>
+    <string name="dia_sabado">星期六</string>
+    <string name="txt_fortalecimento">肌肉强化</string>
+    <string name="txt_dia_descanso">休息日</string>
+
+    <!-- Tela de Questionario -->
+    <string name="txt_conte">说说您自己！</string>
+    <string name="txt_experiencia">为了更好的体验，我们需要</string>
+    <string name="txt_informe_genero">您提供您的性别</string>
+    <string name="txt_masculino">男性</string>
+    <string name="txt_feminino">女性</string>
+    <string name="btn_proximo">下一步</string>
+
+    <!-- Tela de Esqueceu a Senha -->
+    <string name="txt_esqueceu_senha">忘记密码？</string>
+    <string name="txt_esqueceu_senha_txt">输入您注册的邮箱以接收验证码</string>
+    <string name="txt_tentar_outra_maneira">尝试其他方式</string>
+    <string name="btn_entrar">进入</string>
+    <string name="title_activity_tela_configuracao">设置页面</string>
+    <string name="title_activity_tela_notificacao">通知页面</string>
+    <string name="title_activity_tela_politica_privacidade">隐私政策页面</string>
+    <string name="title_activity_tela_graficos">图表页面</string>
+    <!-- Tela de gráficos -->
+    <string name="saudacao_grafico">你好，<b>%1$s</b>,\n这里是您的报告</string>
+    <string name="txt_historico_treino"><b>训练历史</b></string>
+    <string name="txt_desenvolvimento_geral"><b>总体发展</b></string>
+    <string name="txt_treinos_feitos"><b>本周完成的训练</b></string>
+    <string name="txt_historico_peso">体重历史</string>
+    <string name="txt_treino">训练</string>
+    <string name="txt_refeicao">膳食</string>
+    <string name="txt_caloria">卡路里</string>
+    <string name="txt_peso">体重</string>
+    <string name="txt_peso_ideal">目标</string>
+    <string name="txt_dias">训练天数</string>
+    <string name="txt_segunda">周一</string>
+    <string name="txt_terca">周二</string>
+    <string name="txt_quarta">周三</string>
+    <string name="txt_quinta">周四</string>
+    <string name="txt_feito">已完成的训练</string>
+    <string name="txt_dia_treino">训练日</string>
+    <string name="txt_descanso">休息日</string>
+    <string name="txt_nao_feito">未完成的训练</string>
+    <string name="txt_domingo">周日</string>
+    <string name="sabado">周六</string>
+    <string name="txt_sexta">周五</string>
+    <string name="txt_button_peso">更新体重</string>
+    <string name="ipt_meta_peso">您的体重目标：</string>
+    <string name="ipt_meta_invalido">输入值无效</string>
+    <string name="ipt_peso">当前体重：</string>
+    <string name="ipt_peso_data">当前日期：</string>
+    <string name="txt_cancel">取消</string>
+    <string name="txt_h1_modal_peso">体重更新</string>
+    <string name="title_activity_tela_editar_perfil">编辑资料页面</string>
+
+    <!-- Ranking -->
+    <string name="title_activity_ranking">排名</string>
+    <string name="texto_ranking"><b>当前等级：</b></string>
+    <string name="texto_ranking_ponto"><b>总积分：</b></string>
+    <string name="texto_ranking_h1">总排名</string>
+    <string name="texto_ranking_posicao">#\n%d</string>
+    <string name="texto_ranking_posicao_ponto">%d\n%d</string>
+    <string name="texto_ranking_idade">年龄: </string>
+    <string name="texto_ranking_objetivo">目标: </string>
+    <string name="texto_ranking_meta">目标: </string>
+    <string name="texto_ranking_treino">最喜欢的训练: </string>
+    <string name="title_activity_tela_ranking_perfil">排名资料页面</string>
+
+    <!-- Receitas -->
+    <string name="title_activity_tela_receita">食谱页面</string>
+
+    <!-- Treinos -->
+    <string name="txt_home_treino">0%d 初学者练习</string>
+    <string name="txt_treino_diario">每日训练</string>
+    <string name="txt_tipo_treino_diario">此训练涵盖所有肌肉群，结合力量、耐力和灵活性。根据您的目标量身定制，配有 GIF 以确保正确姿势，使您在每次训练中感到精力充沛和强健。</string>
+    <string name="txt_tipo_musculacao">此力量训练计划集中于所有肌肉群，结合力量和耐力练习。根据您的目标量身定制，包括展示正确姿势的 GIF，帮助您在每次训练中获得显著的效果。</string>
+    <string name="txt_tipo_alongamento">该拉伸运动计划旨在锻炼全身，促进灵活性和肌肉放松。根据您的需求量身定制，配有正确姿势的 GIF，帮助您提高灵活性并防止伤害。</string>
+    <string name="txt_tipo_geral">此综合训练计划包含力量、拉伸和心肺锻炼，增强力量、灵活性和耐力。展示正确姿势的 GIF 使其适合任何目标，提高您的健康水平。</string>
+    <string name="txt_button_iniciar_treino">开始训练</string>
+    <string name="txt_lista_treino">练习列表</string>
+    <string name="txt_sobre_treino">关于该训练</string>
+    <string name="txt_button_finalizar_treino">完成训练</string>
+    <string name="txt_button_proximo_treino">下一个练习</string>
+    <string name="txt_treino_info_serie">重复</string>
+    <string name="txt_treino_info_instrucao">说明</string>
+    <string name="txt_treino_info_beneficio">好处:</string>
+    <string name="txt_button_fechar">关闭</string>
+    <string name="txt_button_descanso">增加时间</string>
+    <string name="txt_button_exercicio_concluido">下一个练习</string>
+    <string name="txt_treino_descanso">稍作休息</string>
+    <string name="txt_proximo_treino">下一个训练：</string>
+    <string name="txt_parabens">恭喜，继续保持！</string>
+    <string name="title_activity_tela_video">视频页面</string>
+    <string name="txt_h1_receita">您今天的餐点</string>
+    <string name="title_activity_tela_contato">联系人页面</string>
+    <string name="title_activity_tela_questionario_data">问卷日期页面</string>
+    <string name="title_activity_tela_questionario_peso">问卷体重页面</string>
+    <string name="title_activity_tela_questionario_meta">问卷目标页面</string>
+    <string name="title_activity_tela_questionario_atividade">问卷活动页面</string>
+    <string name="title_activity_tela_questionario_descanso">问卷休息页面</string>
+    <string name="title_activity_main2">主活动页面2</string>
+    <string name="title_activity_tela_questionario_altura">问卷身高页面</string>
+    <string name="ipt_nome">姓名</string>
+    <string name="ipt_nome_invalida">您的姓名/昵称至少需包含3个字母</string>
+    <string name="txt_qual_sua_meta">您的目标是什么？</string>
+    <string name="txt_qual_seu_altura">您的身高是多少？</string>
+    <string name="txt_qual_seu_nivel_atividade">您的活动水平是什么？</string>
+    <string name="txt_ver_dados">查看数据</string>
+    <string name="txt_finalizar_cadastro">完成注册</string>
+    <string name="txt_nome_user">"姓名: "</string>
+    <string name="txt_sexo_user">"性别: "</string>
+    <string name="txt_idade_user">"出生日期: "</string>
+    <string name="txt_peso_user">"体重: "</string>
+    <string name="txt_altura_user">"身高: "</string>
+    <string name="txt_meta_user">"目标: "</string>
+    <string name="txt_atividade_user">"活动水平: "</string>
+    <string name="txt_seus_dados">待发送数据</string>
+    <string name="txt_email_user">"电子邮件: "</string>
+    <string name="criacao_treino">个性化训练即将推出！</string>
+    <string name="criacao_treino_h2">选择您的休息日</string>
+    <string name="criacao_treino_h2_max2">(最多2天)</string>
+    <string name="processando_treino">正在处理您的训练…</string>
+    <string name="txt_status">状态:</string>
+    <string name="txt_realizar">待完成</string>
+    <string name="txt_treino_concluido">您今天已经完成了训练！</string>
+    <string name="txt_descansar_musculos">今天是肌肉休息日</string>
+    <string name="txt_treino_extra">额外训练</string>
+    <string name="txt_concluido">完成</string>
+    <string name="politica_privacidade">Fit Tech 服务由以下自然人提供：Cauã Ribeiro, Gabriel Roberti, Luiz Paulo, Ricardo Vicente 和 Winycios Alves，商号为 Fit Tech，注册号为 19.855.435/0001–46，拥有关于软件、网站、应用程序、内容等知识产权的所有权…\n(政策内容简化，继续根据需求添加)</string>
+
+    <!-- Idioma -->
+    <string name="idioma_portugues">葡萄牙语</string>
+    <string name="idioma_ingles">英语</string>
+    <string name="idioma_espanhol">西班牙语</string>
+    <string name="idioma_chines">中文</string>
+    <string name="idioma_japones">日语</string>
+    <string name="idioma_frances">法语</string>
+    <string name="idioma_alemao">德语</string>
+    <string name="idioma_russo">俄语</string>
+    <string name="idioma_italiano">意大利语</string>
+    <string name="idioma_polones">波兰语</string>
+    <string name="idioma_holandes">荷兰语</string>
+    <string name="idioma_coreano">韩语</string>
+    <string name="idioma_arabe">阿拉伯语</string>
+    <string name="idioma_catalao">加泰罗尼亚语</string>
+    <string name="idioma_grego">希腊语</string>
+    <string name="idioma_basco">巴斯克语</string>
+    <string name="idioma_turco">土耳其语</string>
+    <string name="idioma_vietnamita">越南语</string>
+    <string name="idioma_malaio">马来语</string>
+    <string name="idioma_esperanto">世界语</string>
+    <string name="idioma_tailandes">泰语</string>
+    <string name="txt_pesquisar">搜索</string>
+
+    <!-- Tela Notificação -->
+    <string name="txt_lembretes_treino">训练提醒</string>
+    <string name="txt_programar_notificacoes">安排通知</string>
+    <string name="txt_notificar_treinos_novos">通知新训练</string>
+    <string name="txt_gerenciar_permissoes">你好 %1$s,</string>
+    <string name="txt_configuracoes_telefone">手机设置</string>
+
+</resources>
