@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">フィットテック</string>
+    <string name="title_activity_tela_login">ログイン画面</string>
+    <string name="title_activity_home">ホーム</string>
+    <string name="title_activity_tela_cadastro">登録画面</string>
+    <string name="title_activity_perfil">プロフィール</string>
+    <string name="title_activity_questionario">アンケート</string>
+    <string name="title_activity_tela_inicial_dois">初期画面二</string>
+    <string name="title_activity_tela_inicial_tres">初期画面三</string>
+    <string name="title_activity_tela_esqueceu_senha">パスワード忘れ</string>
+    <string name="title_activity_tela_idioma">言語設定画面</string>
+
+    <!-- Tela de Cadastro -->
+    <!-- Texts for inputs -->
+    <string name="ipt_email">メール</string>
+    <string name="ipt_senha">パスワード</string>
+    <string name="ipt_senha_novamente">再入力パスワード</string>
+    <string name="ipt_email_invalido">入力されたメールが無効です。</string>
+    <string name="ipt_senha_invalida">パスワードは少なくとも8文字で、1つの数字、小文字、大文字、特別な文字が必要です。</string>
+    <string name="ipt_senha_nao_correspondem">パスワードが一致しないか無効です。</string>
+    <!-- Texts for buttons -->
+    <string name="btn_cadastrar">登録</string>
+    <!-- Descriptions -->
+    <string name="desc_seta_direita">右矢印</string>
+    <string name="desc_google">グーグル</string>
+    <!-- General texts -->
+    <string name="txt_ola">こんにちは %1$s さん、</string>
+    <string name="txt_entre_com_info">登録情報を入力してください！</string>
+    <string name="txt_cadastrar">登録</string>
+    <string name="txt_login">ログイン</string>
+    <string name="txt_selecionar_genero">次に進むために性別を選択してください。</string>
+    <string name="txt_preencha_campos">すべてのフィールドを正しく入力してください。</string>
+    <string name="txt_notificacoes">通知</string>
+    <string name="txt_idioma">言語</string>
+    <string name="txt_contate_nos">お問い合わせ</string>
+
+    <!-- Tela de Login -->
+    <string name="txt_bem_vindo_login">お帰りなさい</string>
+    <string name="txt_bem_vinda_login">お帰りなさい</string>
+    <string name="txt_esqueci_senha">パスワードを忘れた</string>
+    <!-- Texts for inputs -->
+    <string name="ipt_senha_invalida_login">入力されたパスワードが無効です。</string>
+    <!-- Texts for buttons -->
+    <string name="btn_login">ログイン</string>
+
+    <!-- Tela Inicial -->
+    <string name="txt_init1">トレーニングを学ぼう、</string>
+    <string name="txt_init2">旅を始めよう</string>
+    <string name="txt_init3">トレーニングプランを作ろう、</string>
+    <string name="txt_init4">強くなるために</string>
+    <string name="txt_init5">行動は</string>
+    <string name="txt_init6">成功の鍵</string>
+    <string name="txt_bem_vindo_msg">ようこそ、%s さん</string>
+    <!-- Text for buttons -->
+    <string name="btn_init">開始</string>
+
+    <!-- Tela de Perfil -->
+    <string name="txt_editar_perfil">プロフィール編集</string>
+    <string name="txt_politica_privacidade">プライバシーポリシー</string>
+    <string name="txt_configuracoes">設定</string>
+    <string name="txt_sair">ログアウト</string>
+    <string name="txt_altura">身長 (cm)</string>
+    <string name="txt_data_nascimento">生年月日</string>
+    <string name="txt_nivel_condicao">コンディションレベル</string>
+
+    <!-- Tela de Home -->
+    <string name="txt_bom_dia">おはようございます。</string>
+    <string name="txt_boa_noite">こんばんは。</string>
+    <string name="txt_boa_tarde">こんにちは。</string>
+    <string name="txt_saudacao">こんにちは %1$s さん、</string>
+    <string name="txt_plano_treino">トレーニングプラン</string>
+    <string name="txt_categorias_treino">トレーニングカテゴリー</string>
+    <string name="txt_treinos_extras">追加トレーニング</string>
+    <string name="dia_domingo">日曜日</string>
+    <string name="dia_segunda">月曜日</string>
+    <string name="dia_terca">火曜日</string>
+    <string name="dia_quarta">水曜日</string>
+    <string name="dia_quinta">木曜日</string>
+    <string name="dia_sexta">金曜日</string>
+    <string name="dia_sabado">土曜日</string>
+    <string name="txt_fortalecimento">筋力トレーニング</string>
+    <string name="txt_dia_descanso">休息日</string>
+
+    <!-- Tela de Questionario -->
+    <string name="txt_conte">自己紹介をしてください！</string>
+    <string name="txt_experiencia">より良い体験のために</string>
+    <string name="txt_informe_genero">性別を教えてください</string>
+    <string name="txt_masculino">男性</string>
+    <string name="txt_feminino">女性</string>
+    <!-- Text for buttons -->
+    <string name="btn_proximo">次へ</string>
+
+    <!-- Tela de Esqueceu a Senha -->
+    <string name="txt_esqueceu_senha">パスワードを忘れた？</string>
+    <string name="txt_esqueceu_senha_txt">登録されたメールアドレスを入力してください。\n確認コードを送信します。</string>
+    <string name="txt_tentar_outra_maneira">他の方法を試す</string>
+    <!-- Text for buttons -->
+    <string name="btn_entrar">入る</string>
+    <string name="title_activity_tela_configuracao">設定画面</string>
+    <string name="title_activity_tela_notificacao">通知画面</string>
+    <string name="title_activity_tela_politica_privacidade">プライバシーポリシー画面</string>
+    <string name="title_activity_tela_graficos">グラフ画面</string>
+
+    <!-- Tela de Graficos -->
+    <string name="saudacao_grafico">こんにちは、<b>%1$s</b> さん、\nこちらがあなたのレポートです</string>
+    <string name="txt_historico_treino"><b>トレーニング履歴</b></string>
+    <string name="txt_desenvolvimento_geral"><b>総合的な進展</b></string>
+    <string name="txt_treinos_feitos"><b>週のトレーニング</b></string>
+    <string name="txt_historico_peso">体重履歴</string>
+    <string name="txt_treino">トレーニング</string>
+    <string name="txt_refeicao">食事</string>
+    <string name="txt_caloria">カロリー</string>
+    <string name="txt_peso">体重</string>
+    <string name="txt_peso_ideal">目標</string>
+    <string name="txt_dias">トレーニング日数</string>
+    <string name="txt_segunda">月</string>
+    <string name="txt_terca">火</string>
+    <string name="txt_quarta">水</string>
+    <string name="txt_quinta">木</string>
+    <string name="txt_feito">トレーニング完了</string>
+    <string name="txt_dia_treino">トレーニング日</string>
+    <string name="txt_descanso">休息日</string>
+    <string name="txt_nao_feito">トレーニング未完了</string>
+    <string name="txt_domingo">日</string>
+    <string name="sabado">土</string>
+    <string name="txt_sexta">金</string>
+    <string name="txt_button_peso">体重更新</string>
+    <string name="ipt_meta_peso">目標体重：</string>
+    <string name="ipt_meta_invalido">無効な入力値</string>
+    <string name="ipt_peso">現在の体重：</string>
+    <string name="ipt_peso_data">現在の日付：</string>
+    <string name="txt_cancel">キャンセル</string>
+    <string name="txt_h1_modal_peso">体重更新</string>
+    <string name="title_activity_tela_editar_perfil">プロフィール編集画面</string>
+
+    <!-- Ranking -->
+    <string name="title_activity_ranking">ランキング</string>
+    <string name="texto_ranking"><b>現在のレベル：</b></string>
+    <string name="texto_ranking_ponto"><b>総ポイント：</b></string>
+    <string name="texto_ranking_h1">総合ランキング</string>
+    <string name="texto_ranking_posicao">#\n%d</string>
+    <string name="texto_ranking_posicao_ponto">%d\n%d</string>
+    <string name="texto_ranking_idade">年齢： </string>
+    <string name="texto_ranking_objetivo">目標： </string>
+    <string name="texto_ranking_meta">目標： </string>
+    <string name="texto_ranking_treino">お気に入りのトレーニング: </string>
+    <string name="title_activity_tela_ranking_perfil">ランキングプロフィール画面</string>
+
+    <!-- Receitas -->
+    <string name="title_activity_tela_receita">レシピ画面</string>
+
+    <!-- Treinos -->
+    <string name="txt_home_treino">初心者向けのエクササイズ%d個</string>
+    <string name="txt_treino_diario">毎日のトレーニング</string>
+    <string name="txt_tipo_treino_diario">このトレーニングはすべての筋肉群を対象とし、力、持久力、柔軟性を組み合わせます。目標に合わせてカスタマイズされ、正しいフォームを確認できるGIFを使用し、毎回元気と強さを感じることができます。</string>
+    <string name="txt_tipo_musculacao">この筋力トレーニングプログラムはすべての筋肉群を対象とし、力と持久力のエクササイズを組み合わせます。目標に合わせて調整され、正しいフォームを示すGIFを含み、筋肉を引き締め、成果を感じることができます。</string>
+    <string name="txt_tipo_alongamento">このストレッチプログラムは体のすべての部分を対象とし、柔軟性と筋肉のリラックスを促進します。ニーズに合わせてカスタマイズされ、正しい姿勢を示すGIFが含まれ、可動性を高め、怪我の予防に役立ちます。</string>
+    <string name="txt_tipo_geral">このトレーニングプログラムは筋力トレーニング、ストレッチ、有酸素運動を含み、力、柔軟性、持久力を向上させます。正しいフォームを示すGIFが含まれており、どんな目標にも最適で、フィットネスと健康の向上をサポートします。</string>
+    <string name="txt_button_iniciar_treino">トレーニングを始める</string>
+    <string name="txt_lista_treino">エクササイズリスト</string>
+    <string name="txt_sobre_treino">このトレーニングについて</string>
+    <string name="txt_button_finalizar_treino">トレーニングを終了する</string>
+    <string name="txt_button_proximo_treino">次のエクササイズ</string>
+    <string name="txt_treino_info_serie">反復</string>
+    <string name="txt_treino_info_instrucao">指示</string>
+    <string name="txt_treino_info_beneficio">メリット:</string>
+    <string name="txt_button_fechar">閉じる</string>
+    <string name="txt_button_descanso">もう少し時間</string>
+    <string name="txt_button_exercicio_concluido">次のエクササイズ</string>
+    <string name="txt_treino_descanso">少し休憩</string>
+    <string name="txt_proximo_treino">次のトレーニング:</string>
+    <string name="txt_parabens">おめでとうございます、その調子で！</string>
+    <string name="title_activity_tela_video">ビデオ画面</string>
+    <string name="txt_h1_receita">今日の食事</string>
+    <string name="title_activity_tela_contato">連絡画面</string>
+    <string name="title_activity_tela_questionario_data">質問データ画面</string>
+    <string name="title_activity_tela_questionario_peso">質問体重画面</string>
+    <string name="title_activity_tela_questionario_meta">質問目標画面</string>
+    <string name="title_activity_tela_questionario_atividade">質問活動画面</string>
+    <string name="title_activity_tela_questionario_descanso">質問休息画面</string>
+    <string name="title_activity_main2">メインアクティビティ2</string>
+    <string name="title_activity_tela_questionario_altura">質問身長画面</string>
+    <string name="ipt_nome">名前</string>
+    <string name="ipt_nome_invalida">名前/ニックネームは少なくとも3文字必要です</string>
+    <string name="txt_qual_sua_meta">あなたの目標は何ですか？</string>
+    <string name="txt_qual_seu_altura">あなたの身長は？</string>
+    <string name="txt_qual_seu_nivel_atividade">あなたの運動レベルは？</string>
+    <string name="txt_ver_dados">データを見る</string>
+    <string name="txt_finalizar_cadastro">登録を完了する</string>
+    <string name="txt_nome_user">名前: </string>
+    <string name="txt_sexo_user">性別: </string>
+    <string name="txt_idade_user">生年月日: </string>
+    <string name="txt_peso_user">体重: </string>
+    <string name="txt_altura_user">身長: </string>
+    <string name="txt_meta_user">目標: </string>
+    <string name="txt_atividade_user">活動レベル: </string>
+    <string name="txt_seus_dados">送信されるデータ</string>
+    <string name="txt_email_user">メール: </string>
+    <string name="criacao_treino">パーソナライズドトレーニングが進行中！</string>
+    <string name="criacao_treino_h2">休息日を選択</string>
+    <string name="criacao_treino_h2_max2">(最大2日)</string>
+    <string name="processando_treino">トレーニングを処理中…</string>
+    <string name="txt_status">ステータス:</string>
+    <string name="txt_realizar">実行</string>
+    <string name="txt_treino_concluido">今日のトレーニングは完了しました！</string>
+    <string name="txt_descansar_musculos">筋肉を休ませる日</string>
+    <string name="txt_treino_extra">追加トレーニング</string>
+    <string name="txt_concluido">完了</string>
+    <string name="politica_privacidade">Fit Techのサービスは、以下の個人によって提供されています...【残りのテキストは非常に長いため、具体的な翻訳が必要な箇所を指定してください。】</string>
+
+    <!-- Idioma -->
+    <string name="idioma_portugues">ポルトガル語</string>
+    <string name="idioma_ingles">英語</string>
+    <string name="idioma_espanhol">スペイン語</string>
+    <string name="idioma_chines">中国語</string>
+    <string name="idioma_japones">日本語</string>
+    <string name="idioma_frances">フランス語</string>
+    <string name="idioma_alemao">ドイツ語</string>
+    <string name="idioma_russo">ロシア語</string>
+    <string name="idioma_italiano">イタリア語</string>
+    <string name="idioma_polones">ポーランド語</string>
+    <string name="idioma_holandes">オランダ語</string>
+    <string name="idioma_coreano">韓国語</string>
+    <string name="idioma_arabe">アラビア語</string>
+    <string name="idioma_catalao">カタルーニャ語</string>
+    <string name="idioma_grego">ギリシャ語</string>
+    <string name="idioma_basco">バスク語</string>
+    <string name="idioma_turco">トルコ語</string>
+    <string name="idioma_vietnamita">ベトナム語</string>
+    <string name="idioma_malaio">マレー語</string>
+    <string name="idioma_esperanto">エスペラント</string>
+    <string name="idioma_tailandes">タイ語</string>
+    <string name="txt_pesquisar">検索</string>
+
+    <!-- Tela Notificação -->
+    <string name="txt_lembretes_treino">トレーニングのリマインダー</string>
+    <string name="txt_programar_notificacoes">通知をスケジュールする</string>
+    <string name="txt_notificar_treinos_novos">新しいトレーニングを通知する</string>
+    <string name="txt_gerenciar_permissoes">こんにちは %1$s さん、</string>
+    <string name="txt_configuracoes_telefone">電話の設定</string>
+</resources>
