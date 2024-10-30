@@ -200,7 +200,7 @@
     <string name="criacao_treino">Personalized workout on the way!"</string>
     <string name="criacao_treino_h2">Choose your rest days</string>
     <string name="criacao_treino_h2_max2">(MAX. 2)</string>
-    <string name="processando_treino">Processing your workout</string>
+    <string name="processando_treino">Processing your workout …</string>
     <string name="txt_status">STATUS:</string>
     <string name="txt_realizar">To Do</string>
     <string name="txt_treino_concluido">You
