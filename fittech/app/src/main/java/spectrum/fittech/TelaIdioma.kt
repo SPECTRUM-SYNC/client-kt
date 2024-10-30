@@ -106,7 +106,7 @@ fun Idioma(modifier: Modifier = Modifier) {
     )
 
     val textState = remember { mutableStateOf("") }
-    val selectedLanguage = remember { mutableStateOf<String?>("Português") }
+    var selectedLanguage = remember { mutableStateOf<String?>("Português") }
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
 
     // Filtrar idiomas conforme a pesquisa
@@ -208,6 +208,8 @@ fun Idioma(modifier: Modifier = Modifier) {
                                 setLocale(context as ComponentActivity, "en")
                             } else if (idioma == context.getString(R.string.idioma_portugues)) {
                                 setLocale(context as ComponentActivity, "pt")
+                            } else if (idioma == context.getString(R.string.idioma_espanhol)) {
+                                setLocale(context as ComponentActivity, "es")
                             }
                         },
                     horizontalArrangement = Arrangement.SpaceBetween,

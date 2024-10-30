@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FitTech</string>
+    <string name="title_activity_tela_login">PantallaLogin</string>
+    <string name="title_activity_home">Inicio</string>
+    <string name="title_activity_tela_cadastro">PantallaRegistro</string>
+    <string name="title_activity_perfil">Perfil</string>
+    <string name="title_activity_questionario">Cuestionario</string>
+    <string name="title_activity_tela_inicial_dois">PantallaInicialDos</string>
+    <string name="title_activity_tela_inicial_tres">PantallaInicialTres</string>
+    <string name="title_activity_tela_esqueceu_senha">PantallaOlvidoContraseña</string>
+    <string name="title_activity_tela_idioma">PantallaIdioma</string>
+
+    <!-- Pantalla de Registro -->
+    <string name="ipt_email">Correo Electrónico</string>
+    <string name="ipt_senha">Contraseña</string>
+    <string name="ipt_senha_novamente">Reingrese la Contraseña</string>
+    <string name="ipt_email_invalido">El correo electrónico ingresado no es válido.</string>
+    <string name="ipt_senha_invalida">La contraseña debe tener al menos 8 caracteres, incluyendo 1 número, 1 letra minúscula, 1 letra mayúscula y 1 carácter especial.</string>
+    <string name="ipt_senha_nao_correspondem">Las contraseñas no coinciden o son inválidas.</string>
+    <string name="btn_cadastrar">Registrar</string>
+    <string name="desc_seta_direita">Flecha Derecha</string>
+    <string name="desc_google">Google</string>
+    <string name="txt_ola">Hola %1$s,</string>
+    <string name="txt_entre_com_info">Ingrese su información para registrarse!</string>
+    <string name="txt_cadastrar">Registrar</string>
+    <string name="txt_login">Iniciar Sesión</string>
+    <string name="txt_selecionar_genero">Seleccione un género para avanzar.</string>
+    <string name="txt_preencha_campos">Complete todos los campos correctamente.</string>
+    <string name="txt_notificacoes">Notificaciones</string>
+    <string name="txt_idioma">Idioma</string>
+    <string name="txt_contate_nos">Contáctenos</string>
+
+    <!-- Pantalla de Inicio de Sesión -->
+    <string name="txt_bem_vindo_login">Bienvenido(a) de vuelta</string>
+    <string name="txt_bem_vinda_login">Bienvenida de vuelta</string>
+    <string name="txt_esqueci_senha">Olvidé la Contraseña</string>
+    <string name="ipt_senha_invalida_login">La contraseña ingresada no es válida.</string>
+    <string name="btn_login">Iniciar Sesión</string>
+
+    <!-- Pantalla Inicial -->
+    <string name="txt_init1">Aprende a entrenar,</string>
+    <string name="txt_init2">Empieza tu jornada</string>
+    <string name="txt_init3">Crea un plan de entrenamiento,</string>
+    <string name="txt_init4">Para fortalecerte</string>
+    <string name="txt_init5">La acción es</string>
+    <string name="txt_init6">La clave del éxito</string>
+    <string name="txt_bem_vindo_msg">Bienvenido, %s</string>
+    <string name="btn_init">Comenzar</string>
+
+    <!-- Pantalla de Perfil -->
+    <string name="txt_editar_perfil">Editar Perfil</string>
+    <string name="txt_politica_privacidade">Política de Privacidad</string>
+    <string name="txt_configuracoes">Configuraciones</string>
+    <string name="txt_sair">Salir</string>
+    <string name="txt_altura">Altura (cm)</string>
+    <string name="txt_data_nascimento">Fecha de Nacimiento</string>
+    <string name="txt_nivel_condicao">Nivel de Condición</string>
+
+    <!-- Pantalla de Inicio -->
+    <string name="txt_bom_dia">Buenos días.</string>
+    <string name="txt_boa_noite">Buenas noches.</string>
+    <string name="txt_boa_tarde">Buenas tardes.</string>
+    <string name="txt_saudacao">Hola %1$s,</string>
+    <string name="txt_plano_treino">Selección de Entrenamiento</string>
+    <string name="txt_categorias_treino">Categorías de Entrenamiento</string>
+    <string name="txt_treinos_extras">Entrenamientos Extra</string>
+    <string name="dia_domingo">Domingo</string>
+    <string name="dia_segunda">Lunes</string>
+    <string name="dia_terca">Martes</string>
+    <string name="dia_quarta">Miércoles</string>
+    <string name="dia_quinta">Jueves</string>
+    <string name="dia_sexta">Viernes</string>
+    <string name="dia_sabado">Sábado</string>
+    <string name="txt_fortalecimento">Fortalecimiento Muscular</string>
+    <string name="txt_dia_descanso">Día de descanso</string>
+
+    <!-- Pantalla de Cuestionario -->
+    <string name="txt_conte">¡Cuéntanos un poco de ti!</string>
+    <string name="txt_experiencia">Para una mejor experiencia necesitamos</string>
+    <string name="txt_informe_genero">que indiques tu género</string>
+    <string name="txt_masculino">Masculino</string>
+    <string name="txt_feminino">Femenino</string>
+    <string name="btn_proximo">Siguiente</string>
+
+    <!-- Pantalla de Olvido Contraseña -->
+    <string name="txt_esqueceu_senha">¿Olvidaste tu contraseña?</string>
+    <string name="txt_esqueceu_senha_txt">Ingrese su correo registrado para recibir el código de verificación</string>
+    <string name="txt_tentar_outra_maneira">Intentar de otra manera</string>
+    <string name="btn_entrar">Entrar</string>
+    <string name="title_activity_tela_configuracao">PantallaConfiguración</string>
+    <string name="title_activity_tela_notificacao">PantallaNotificación</string>
+    <string name="title_activity_tela_politica_privacidade">PantallaPolíticaPrivacidad</string>
+    <string name="title_activity_tela_graficos">PantallaGráficos</string>
+
+    <!-- Pantalla de Gráficos -->
+    <string name="saudacao_grafico">Hola, <b>%1$s</b>,\nAquí está tu informe</string>
+    <string name="txt_historico_treino"><b>Historial de entrenamiento</b></string>
+    <string name="txt_desenvolvimento_geral"><b>Desarrollo general</b></string>
+    <string name="txt_treinos_feitos"><b>Entrenamientos realizados en la semana</b></string>
+    <string name="txt_historico_peso">Historial de peso</string>
+    <string name="txt_treino">Entrenamientos</string>
+    <string name="txt_refeicao">Comida</string>
+    <string name="txt_caloria">Kcal</string>
+    <string name="txt_peso">Peso</string>
+    <string name="txt_peso_ideal">Meta</string>
+    <string name="txt_dias">Días entrenados</string>
+    <string name="txt_segunda">Lun</string>
+    <string name="txt_terca">Mar</string>
+    <string name="txt_quarta">Mié</string>
+    <string name="txt_quinta">Jue</string>
+    <string name="txt_feito">Entrenamiento completado</string>
+    <string name="txt_dia_treino">Día de entrenamiento</string>
+    <string name="txt_descanso">Día de descanso</string>
+    <string name="txt_nao_feito">Entrenamiento no completado</string>
+    <string name="txt_domingo">Dom</string>
+    <string name="sabado">Sáb</string>
+    <string name="txt_sexta">Vie</string>
+    <string name="txt_button_peso">Actualizar Peso</string>
+    <string name="ipt_meta_peso">Tu meta de peso:</string>
+    <string name="ipt_meta_invalido">Valor ingresado no válido</string>
+    <string name="ipt_peso">Peso actual:</string>
+    <string name="ipt_peso_data">Día actual:</string>
+    <string name="txt_cancel">Cancelar</string>
+    <string name="txt_h1_modal_peso">Actualización de Peso</string>
+    <string name="title_activity_tela_editar_perfil">PantallaEditarPerfil</string>
+
+    <!-- Ranking -->
+    <string name="title_activity_ranking">Clasificación</string>
+    <string name="texto_ranking"><b>Nivel Actual:</b></string>
+    <string name="texto_ranking_ponto"><b>Puntos Acumulados:</b></string>
+    <string name="texto_ranking_h1">Clasificación General</string>
+    <string name="texto_ranking_posicao">#\n%d</string>
+    <string name="texto_ranking_posicao_ponto">%d\n%d</string>
+    <string name="texto_ranking_idade">Edad: </string>
+    <string name="texto_ranking_objetivo">Objetivo: </string>
+    <string name="texto_ranking_meta">Meta: </string>
+    <string name="texto_ranking_treino">Entrenamiento preferido: </string>
+    <string name="title_activity_tela_ranking_perfil">PantallaRankingPerfil</string>
+
+    <!-- Recetas -->
+    <string name="title_activity_tela_receita">PantallaReceta</string>
+
+    <!-- Entrenamientos -->
+    <string name="txt_home_treino">0%d Ejercicios para Principiantes</string>
+    <string name="txt_treino_diario">Entrenamiento Diario</string>
+    <string name="txt_tipo_treino_diario">Este entrenamiento abarca todos los grupos musculares, combinando fuerza, resistencia y flexibilidad. Personalizado según tus objetivos, utiliza GIFs para asegurar la forma correcta, ayudándote a sentirte energizado y fortalecido en cada sesión.</string>
+    <string name="txt_tipo_musculacao">Este programa de musculación se enfoca en todos los grupos musculares, combinando ejercicios de fuerza y resistencia. Adaptado a tus objetivos, incluye GIFs que muestran la ejecución adecuada, ayudándote a tonificarte y lograr resultados significativos en cada entrenamiento.</string>
+    <string name="txt_tipo_alongamento">Este programa de estiramiento está diseñado para trabajar todas las áreas del cuerpo, promoviendo flexibilidad y relajación muscular. Personalizado para satisfacer tus necesidades, incluye GIFs que ilustran las posturas correctas, ayudándote a aumentar la movilidad y prevenir lesiones en cada sesión.</string>
+    <string name="txt_tipo_geral">Este programa de entrenamiento abarca musculación, estiramiento y ejercicios cardiovasculares, promoviendo fuerza, flexibilidad y resistencia. Con GIFs que demuestran la ejecución correcta, es ideal para cualquier objetivo, mejorando tu estado físico y bienestar.</string>
+    <string name="txt_button_iniciar_treino">Comenzar Entrenamiento</string>
+    <string name="txt_lista_treino">Lista de Ejercicios</string>
+    <string name="txt_sobre_treino">Sobre este Entrenamiento</string>
+    <string name="txt_button_finalizar_treino">Finalizar Entrenamiento</string>
+    <string name="txt_button_proximo_treino">Próximo Ejercicio</string>
+    <string name="txt_treino_info_serie">REPETICIONES</string>
+    <string name="txt_treino_info_instrucao">INSTRUCCIONES</string>
+    <string name="txt_treino_info_beneficio">BENEFICIOS:</string>
+    <string name="txt_button_fechar">Cerrar</string>
+    <string name="txt_button_descanso">Más Tiempo</string>
+    <string name="txt_button_exercicio_concluido">Próximo Ejercicio</string>
+    <string name="txt_treino_descanso">Descansa un Poco</string>
+    <string name="txt_proximo_treino">Próximo entrenamiento:</string>
+    <string name="txt_parabens">¡Felicitaciones, sigue así!</string>
+    <string name="title_activity_tela_video">PantallaVideo</string>
+    <string name="txt_h1_receita">Tus comidas de hoy</string>
+    <string name="title_activity_tela_contato">PantallaContacto</string>
+    <string name="title_activity_tela_questionario_data">PantallaCuestionarioFecha</string>
+    <string name="title_activity_tela_questionario_peso">PantallaCuestionarioPeso</string>
+    <string name="title_activity_tela_questionario_meta">PantallaCuestionarioMeta</string>
+    <string name="title_activity_tela_questionario_atividade">PantallaCuestionarioActividad</string>
+    <string name="title_activity_tela_questionario_descanso">PantallaCuestionarioDescanso</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="title_activity_tela_questionario_altura">PantallaCuestionarioAltura</string>
+    <string name="ipt_nome">Nombre</string>
+    <string name="ipt_nome_invalida">Tu nombre/apodo debe tener al menos 3 letras</string>
+    <string name="txt_qual_sua_meta">¿Cuál es tu meta?</string>
+    <string name="txt_qual_seu_altura">¿Cuál es tu Altura?</string>
+    <string name="txt_qual_seu_nivel_atividade">¿Cuál es tu nivel de actividad física?</string>
+    <string name="txt_ver_dados">Ver Datos</string>
+    <string name="txt_finalizar_cadastro">Finalizar Registro</string>
+    <string name="txt_nome_user">"Nombre: "</string>
+    <string name="txt_sexo_user">"Sexo: "</string>
+    <string name="txt_idade_user">"Fecha de nacimiento: "</string>
+    <string name="txt_peso_user">"Peso: "</string>
+    <string name="txt_altura_user">"Altura: "</string>
+    <string name="txt_meta_user">"Meta: "</string>
+    <string name="txt_atividade_user">"Nivel de actividad: "</string>
+    <string name="txt_seus_dados">DATOS A ENVIAR</string>
+    <string name="txt_email_user">"Correo electrónico: "</string>
+    <string name="criacao_treino">¡Entrenamiento personalizado en camino!"</string>
+    <string name="criacao_treino_h2">Elige tus días de descanso</string>
+    <string name="criacao_treino_h2_max2">(MÁX. 2)</string>
+    <string name="processando_treino">Procesando tu entrenamiento</string>
+    <string name="txt_status">ESTADO:</string>
+    <string name="txt_realizar">A Realizar</string>
+    <string name="txt_treino_concluido">¡Ya has hecho tu entrenamiento de hoy!</string>
+    <string name="txt_descansar_musculos">Día de descanso muscular</string>
+    <string name="txt_treino_extra">Entrenamiento Extra</string>
+    <string name="txt_concluido">Concluido</string>
+    <string name="politica_privacidade">Los servicios de Fit Tech son proporcionados por las siguientes personas físicas bajo la Razón Social/nombre: Cauã Ribeiro, Gabriel Roberti, Luiz Paulo, Ricardo Vicente, Winycios Alves, con nombre comercial Fit Tech, registrado en el CNPJ/CPF bajo el nº 19.855.435/0001-46, titular de los derechos de propiedad intelectual sobre software, sitio web, aplicaciones, contenidos y demás activos relacionados con la plataforma Fit Tech.\n\nEl presente documento establece obligaciones contratadas libre y espontáneamente, por tiempo indeterminado, entre la plataforma y las personas físicas o jurídicas, usuarias del sitio y la aplicación.\nAl utilizar la plataforma el usuario acepta completamente estas normas y se compromete a observarlas, bajo el riesgo de las sanciones aplicables.\nLa aceptación de este documento es imprescindible para el acceso y uso de cualquier servicio proporcionado por la empresa. Si no está de acuerdo con las disposiciones de este documento, el usuario no debe utilizarlas.\n\nEl acceso a las funcionalidades de la plataforma requerirá un registro previo y, dependiendo de los servicios o productos elegidos.\nAl registrarse el usuario deberá proporcionar datos completos, actualizados y válidos, siendo de su exclusiva responsabilidad mantener dichos datos actualizados, así como comprometerse con la veracidad de los datos proporcionados.\nEl usuario se compromete a no compartir sus datos de registro y/o de acceso a la plataforma con terceros, siendo totalmente responsable por el uso de los mismos.\nMenores de 18 años y aquellos que no tengan plena capacidad civil deberán obtener previamente el consentimiento expreso de sus tutores legales para utilizar la plataforma y los servicios o productos, siendo responsabilidad exclusiva de los mismos el eventual acceso por menores de edad y por aquellos que no tienen plena capacidad civil sin la autorización previa.\nMediante el registro el usuario declara y garantiza expresamente ser plenamente capaz, pudiendo ejercer y disfrutar libremente de los servicios y productos.\nEl usuario deberá proporcionar una dirección de correo electrónico válida, a través de la cual el sitio realizará todas las comunicaciones necesarias.\nTras la confirmación del registro, el usuario tendrá un nombre de usuario y una contraseña personal, que asegura el acceso individual. De esta manera, compete exclusivamente al usuario el mantenimiento de dicha contraseña de manera confidencial y segura, evitando el acceso indebido a la información personal.\nToda actividad realizada con el uso de la contraseña será responsabilidad del usuario, quien deberá informar rápidamente a la plataforma en caso de uso indebido de la respectiva contraseña.\nNo se permitirá ceder, vender, alquilar o transferir de ninguna forma la cuenta, que es personal e intransferible.\nSerá responsabilidad del usuario asegurarse de que su equipo sea compatible con las características técnicas que permitan el uso de la plataforma y de los servicios o productos.\nEl usuario podrá, en cualquier momento, solicitar la cancelación de su registro en el sitio y la aplicación Fit Tech. Su cancelación se realizará lo más rápidamente posible.\nAl aceptar los Términos y la Política de Privacidad, el usuario autoriza expresamente a la plataforma a recopilar, utilizar, almacenar, tratar, ceder o utilizar la información derivada del uso de los servicios, del sitio y cualquier plataforma, incluyendo toda la información proporcionada por el usuario al realizar o actualizar su registro, además de otras expresamente descritas en la Política de Privacidad que deberá ser autorizada por el usuario.\n\nEs responsabilidad del usuario:\na) Defectos o vicios técnicos originados en su propio sistema;\nb) El correcto uso de la plataforma, de los servicios o productos ofrecidos, valorando la buena convivencia, el respeto y la cordialidad en la relación con los demás usuarios;\nc) Por el cumplimiento y respeto por el conjunto de reglas dispuestas en este Término de Uso, en la respectiva Política de Privacidad y en la legislación nacional e internacional;\nd) Por la protección a los datos de acceso a su cuenta/perfil (nombre de usuario y contraseña).\n\nLa empresa no será responsable de:\na) Las características inherentes al ambiente de Internet, principalmente relacionadas con la fiabilidad y la procedencia de la información circulante en este ambiente;\nb) Los contenidos o actividades ilícitas practicadas a través de su plataforma.\n\nEste Término de Uso está sujeto a constantes mejoras y perfeccionamientos. Por lo tanto, Fit Tech se reserva el derecho de modificarlo en cualquier momento, de forma unilateral.\nAl utilizar el servicio después de dichos cambios, el usuario acepta el Término revisado.\n\nLa plataforma se compromete a cumplir con las normas de protección de datos personales, de forma transparente y siempre con respeto al usuario.\n\nEl usuario podrá entrar en contacto con la plataforma en caso de cualquier duda a través del chat de contacto. La empresa se compromete a responder las dudas presentadas en el plazo de hasta 30 días.\nPara los casos de exclusión de datos solicitada por el usuario, se respetará el plazo máximo de 7 días.
+
+    <!-- Tela Idioma -->
+    </string>
+    <string name="idioma_portugues">Portugués</string>
+    <string name="idioma_ingles">Inglés</string>
+    <string name="idioma_espanhol">Español</string>
+    <string name="idioma_chines">Chino</string>
+    <string name="idioma_japones">Japonés</string>
+    <string name="idioma_frances">Francés</string>
+    <string name="idioma_alemao">Alemán</string>
+    <string name="idioma_russo">Ruso</string>
+    <string name="idioma_italiano">Italiano</string>
+    <string name="idioma_polones">Polaco</string>
+    <string name="idioma_holandes">Holandés</string>
+    <string name="idioma_coreano">Coreano</string>
+    <string name="idioma_arabe">Árabe</string>
+    <string name="idioma_catalao">Catalán</string>
+    <string name="idioma_grego">Griego</string>
+    <string name="idioma_basco">Vasco</string>
+    <string name="idioma_turco">Turco</string>
+    <string name="idioma_vietnamita">Vietnamita</string>
+    <string name="idioma_malaio">Malayo</string>
+    <string name="idioma_esperanto">Esperanto</string>
+    <string name="idioma_tailandes">Tailandés</string>
+    <string name="txt_pesquisar">Buscar</string>
+
+    <!-- Tela Notificação -->
+    <string name="txt_lembretes_treino">Recordatorios de Entrenamiento</string>
+    <string name="txt_programar_notificacoes">Programar Notificaciones</string>
+    <string name="txt_notificar_treinos_novos">Notificar Nuevos Entrenamientos</string>
+    <string name="txt_gerenciar_permissoes">Puedes gestionar los permisos de notificación de la aplicación en la configuración del</string>
+    <string name="txt_configuracoes_telefone">Configuración del Teléfono</string>
+
+
+</resources>
