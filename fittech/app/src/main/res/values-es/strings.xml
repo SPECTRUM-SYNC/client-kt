@@ -191,7 +191,7 @@
     <string name="criacao_treino">¡Entrenamiento personalizado en camino!"</string>
     <string name="criacao_treino_h2">Elige tus días de descanso</string>
     <string name="criacao_treino_h2_max2">(MÁX. 2)</string>
-    <string name="processando_treino">Procesando tu entrenamiento</string>
+    <string name="processando_treino">Procesando tu entrenamiento …</string>
     <string name="txt_status">ESTADO:</string>
     <string name="txt_realizar">A Realizar</string>
     <string name="txt_treino_concluido">¡Ya has hecho tu entrenamiento de hoy!</string>

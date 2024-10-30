@@ -210,6 +210,8 @@ fun Idioma(modifier: Modifier = Modifier) {
                                 setLocale(context as ComponentActivity, "pt")
                             } else if (idioma == context.getString(R.string.idioma_espanhol)) {
                                 setLocale(context as ComponentActivity, "es")
+                            } else if (idioma == context.getString(R.string.idioma_frances)) {
+                                setLocale(context as ComponentActivity, "fr")
                             }
                         },
                     horizontalArrangement = Arrangement.SpaceBetween,
