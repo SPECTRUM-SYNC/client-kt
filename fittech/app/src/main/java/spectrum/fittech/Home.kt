@@ -81,6 +81,7 @@ import spectrum.fittech.backend.builder.gson
 import spectrum.fittech.backend.dtos.DiasTreino
 import spectrum.fittech.backend.dtos.TreinoResponseDto
 import spectrum.fittech.backend.dtos.UsuarioGet
+import spectrum.fittech.backend.notificacao.scheduleDailyNotification
 import spectrum.fittech.backend.viewModel.TreinoService.TreinoViewModel
 import spectrum.fittech.backend.viewModel.UsuarioService.UsuarioViewModel
 import spectrum.fittech.componentes.BottomNavigationBar
@@ -174,6 +175,7 @@ fun HomeRun(
     val gson = Gson()
     val context = LocalContext.current
     val showPopup = remember { mutableStateOf(false) }
+    scheduleDailyNotification(context)
 
     val dias = listOf(
         context.getString(R.string.dia_domingo),

@@ -261,62 +261,69 @@ fun RankingRun(
                         ),
                     )
                 }
-                RankingUser(
-                    navController = navController,
-                    nome = usuarioList[0].nome,
-                    posicao = 1,
-                    level = when {
-                        usuarioList[0].pontuacao in 0.0..20.0 -> 2
-                        usuarioList[0].pontuacao in 21.0..50.0 -> 3
-                        usuarioList[0].pontuacao in 51.0..100.0 -> 4
-                        usuarioList[0].pontuacao in 101.0..150.0 -> 5
-                        usuarioList[0].pontuacao in 151.0..200.0 -> 6
 
-                        else -> 1
-                    },
-                    maxLevel = usuarioList[0].pontuacao.toInt(),
-                    foto = (if (usuarioList[0].img != "") usuarioList[0].img else R.mipmap.user).toString(),
-                    color = colorResource(id = R.color.gold),
-                    userId = usuarioList[0].id.toString()
-                )
+                if (usuarioList.size > 1 && usuarioList[1] != null) {
+                    RankingUser(
+                        navController = navController,
+                        nome = usuarioList[0].nome,
+                        posicao = 1,
+                        level = when {
+                            usuarioList[0].pontuacao in 0.0..20.0 -> 2
+                            usuarioList[0].pontuacao in 21.0..50.0 -> 3
+                            usuarioList[0].pontuacao in 51.0..100.0 -> 4
+                            usuarioList[0].pontuacao in 101.0..150.0 -> 5
+                            usuarioList[0].pontuacao in 151.0..200.0 -> 6
 
-                RankingUser(
-                    navController = navController,
-                    nome = usuarioList[1].nome,
-                    posicao = 2,
-                    level = when {
-                        usuarioList[1].pontuacao in 0.0..20.0 -> 2
-                        usuarioList[1].pontuacao in 21.0..50.0 -> 3
-                        usuarioList[1].pontuacao in 51.0..100.0 -> 4
-                        usuarioList[1].pontuacao in 101.0..150.0 -> 5
-                        usuarioList[1].pontuacao in 151.0..200.0 -> 6
+                            else -> 1
+                        },
+                        maxLevel = usuarioList[0].pontuacao.toInt(),
+                        foto = (if (usuarioList[0].img != "") usuarioList[0].img else R.mipmap.user).toString(),
+                        color = colorResource(id = R.color.gold),
+                        userId = usuarioList[0].id.toString()
+                    )
+                }
 
-                        else -> 1
-                    },
-                    maxLevel = usuarioList[1].pontuacao.toInt(),
-                    foto = (if (usuarioList[1].img != "") usuarioList[1].img else R.mipmap.user).toString(),
-                    color = colorResource(id = R.color.silver),
-                    userId = usuarioList[1].id.toString()
-                )
+                if (usuarioList.size > 1 && usuarioList[1] != null) {
+                    RankingUser(
+                        navController = navController,
+                        nome = usuarioList[1].nome,
+                        posicao = 2,
+                        level = when {
+                            usuarioList[1].pontuacao in 0.0..20.0 -> 2
+                            usuarioList[1].pontuacao in 21.0..50.0 -> 3
+                            usuarioList[1].pontuacao in 51.0..100.0 -> 4
+                            usuarioList[1].pontuacao in 101.0..150.0 -> 5
+                            usuarioList[1].pontuacao in 151.0..200.0 -> 6
 
-                RankingUser(
-                    navController = navController,
-                    nome = usuarioList[2].nome,
-                    posicao = 3,
-                    level = when {
-                        usuarioList[2].pontuacao in 0.0..20.0 -> 2
-                        usuarioList[2].pontuacao in 21.0..50.0 -> 3
-                        usuarioList[2].pontuacao in 51.0..100.0 -> 4
-                        usuarioList[2].pontuacao in 101.0..150.0 -> 5
-                        usuarioList[2].pontuacao in 151.0..200.0 -> 6
+                            else -> 1
+                        },
+                        maxLevel = usuarioList[1].pontuacao.toInt(),
+                        foto = (if (usuarioList[1].img != "") usuarioList[1].img else R.mipmap.user).toString(),
+                        color = colorResource(id = R.color.silver),
+                        userId = usuarioList[1].id.toString()
+                    )
+                }
 
-                        else -> 1
-                    },
-                    maxLevel = usuarioList[2].pontuacao.toInt(),
-                    foto = (if (usuarioList[2].img != "") usuarioList[2].img else R.mipmap.user).toString(),
-                    color = colorResource(id = R.color.bronze),
-                    userId = usuarioList[2].id.toString()
-                )
+                if (usuarioList.size > 2 && usuarioList[2] != null) {
+                    RankingUser(
+                        navController = navController,
+                        nome = usuarioList[2].nome,
+                        posicao = 3,
+                        level = when {
+                            usuarioList[2].pontuacao in 0.0..20.0 -> 2
+                            usuarioList[2].pontuacao in 21.0..50.0 -> 3
+                            usuarioList[2].pontuacao in 51.0..100.0 -> 4
+                            usuarioList[2].pontuacao in 101.0..150.0 -> 5
+                            usuarioList[2].pontuacao in 151.0..200.0 -> 6
+
+                            else -> 1
+                        },
+                        maxLevel = usuarioList[2].pontuacao.toInt() ?: 0,
+                        foto = (if (usuarioList[2].img != "" && usuarioList[2].img != null) usuarioList[2].img else R.mipmap.user).toString(),
+                        color = colorResource(id = R.color.bronze),
+                        userId = usuarioList[2].id.toString() ?: "N/A"
+                    )
+                }
             }
         }
     }

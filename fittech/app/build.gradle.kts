@@ -51,6 +51,7 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.work.runtime.ktx)
     implementation("com.google.android.gms:play-services-auth:20.6.0")
     implementation("com.google.api-client:google-api-client-android:2.7.0")
     implementation("com.google.apis:google-api-services-people:v1-rev20240313-2.0.0")
