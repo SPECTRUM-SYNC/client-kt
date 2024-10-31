@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FitTech</string>
+    <string name="title_activity_tela_login">LoginBildschirm</string>
+    <string name="title_activity_home">Startseite</string>
+    <string name="title_activity_tela_cadastro">RegistrierungsBildschirm</string>
+    <string name="title_activity_perfil">Profil</string>
+    <string name="title_activity_questionario">Fragebogen</string>
+    <string name="title_activity_tela_inicial_dois">StartBildschirmZwei</string>
+    <string name="title_activity_tela_inicial_tres">StartBildschirmDrei</string>
+    <string name="title_activity_tela_esqueceu_senha">PasswortVergessenBildschirm</string>
+    <string name="title_activity_tela_idioma">SpracheBildschirm</string>
+
+    <!-- Registrierung Bildschirm -->
+    <string name="ipt_email">E-Mail</string>
+    <string name="ipt_senha">Passwort</string>
+    <string name="ipt_senha_novamente">Passwort erneut</string>
+    <string name="ipt_email_invalido">Die eingegebene E-Mail ist ungültig.</string>
+    <string name="ipt_senha_invalida">Das Passwort muss mindestens 8 Zeichen enthalten, darunter 1 Zahl, 1 Kleinbuchstabe, 1 Großbuchstabe und 1 Sonderzeichen.</string>
+    <string name="ipt_senha_nao_correspondem">Die Passwörter stimmen nicht überein oder sind ungültig.</string>
+    <string name="btn_cadastrar">Registrieren</string>
+    <string name="desc_seta_direita">Pfeil Rechts</string>
+    <string name="desc_google">Google</string>
+    <string name="txt_ola">Hallo %1$s,</string>
+    <string name="txt_entre_com_info">Geben Sie Ihre Daten ein, um sich zu registrieren!</string>
+    <string name="txt_cadastrar">Registrieren</string>
+    <string name="txt_login">Anmelden</string>
+    <string name="txt_selecionar_genero">Bitte wählen Sie ein Geschlecht, um fortzufahren.</string>
+    <string name="txt_preencha_campos">Bitte füllen Sie alle Felder korrekt aus.</string>
+    <string name="txt_notificacoes">Benachrichtigungen</string>
+    <string name="txt_idioma">Sprache</string>
+    <string name="txt_contate_nos">Kontaktieren Sie uns</string>
+
+    <!-- Login Bildschirm -->
+    <string name="txt_bem_vindo_login">Willkommen zurück</string>
+    <string name="txt_bem_vinda_login">Willkommen zurück</string>
+    <string name="txt_esqueci_senha">Passwort vergessen</string>
+    <string name="ipt_senha_invalida_login">Das eingegebene Passwort ist ungültig.</string>
+    <string name="btn_login">Anmelden</string>
+
+    <!-- Startbildschirm -->
+    <string name="txt_init1">Lernen Sie zu trainieren,</string>
+    <string name="txt_init2">Beginnen Sie Ihre Reise</string>
+    <string name="txt_init3">Erstellen Sie einen Trainingsplan,</string>
+    <string name="txt_init4">Um stark zu werden</string>
+    <string name="txt_init5">Handeln ist der</string>
+    <string name="txt_init6">Schlüssel zum Erfolg</string>
+    <string name="txt_bem_vindo_msg">Willkommen, %s</string>
+    <string name="btn_init">Starten</string>
+
+    <!-- Profil Bildschirm -->
+    <string name="txt_editar_perfil">Profil bearbeiten</string>
+    <string name="txt_politica_privacidade">Datenschutzrichtlinie</string>
+    <string name="txt_configuracoes">Einstellungen</string>
+    <string name="txt_sair">Abmelden</string>
+    <string name="txt_altura">Höhe (cm)</string>
+    <string name="txt_data_nascimento">Geburtsdatum</string>
+    <string name="txt_nivel_condicao">Fitnesslevel</string>
+
+    <!-- Startseite -->
+    <string name="txt_bom_dia">Guten Morgen.</string>
+    <string name="txt_boa_noite">Gute Nacht.</string>
+    <string name="txt_boa_tarde">Guten Tag.</string>
+    <string name="txt_saudacao">Hallo %1$s,</string>
+    <string name="txt_plano_treino">Trainingsauswahl</string>
+    <string name="txt_categorias_treino">Trainingskategorien</string>
+    <string name="txt_treinos_extras">Zusätzliche Trainings</string>
+    <string name="dia_domingo">Sonntag</string>
+    <string name="dia_segunda">Montag</string>
+    <string name="dia_terca">Dienstag</string>
+    <string name="dia_quarta">Mittwoch</string>
+    <string name="dia_quinta">Donnerstag</string>
+    <string name="dia_sexta">Freitag</string>
+    <string name="dia_sabado">Samstag</string>
+    <string name="txt_fortalecimento">Muskelkräftigung</string>
+    <string name="txt_dia_descanso">Ruhetag</string>
+
+    <!-- Fragebogen Bildschirm -->
+    <string name="txt_conte">Erzählen Sie uns etwas über sich!</string>
+    <string name="txt_experiencia">Für ein besseres Erlebnis müssen wir</string>
+    <string name="txt_informe_genero">Ihr Geschlecht kennen</string>
+    <string name="txt_masculino">Männlich</string>
+    <string name="txt_feminino">Weiblich</string>
+    <string name="btn_proximo">Weiter</string>
+
+    <!-- Passwort vergessen Bildschirm -->
+    <string name="txt_esqueceu_senha">Passwort vergessen?</string>
+    <string name="txt_esqueceu_senha_txt">Geben Sie Ihre registrierte E-Mail-Adresse ein, um den Verifizierungscode zu erhalten</string>
+    <string name="txt_tentar_outra_maneira">Andere Methode versuchen</string>
+    <string name="btn_entrar">Einloggen</string>
+
+    <!-- Grafiken Bildschirm -->
+    <string name="saudacao_grafico">Hallo, <b>%1$s</b>,\nHier ist Ihr Bericht</string>
+    <string name="txt_historico_treino"><b>Trainingshistorie</b></string>
+    <string name="txt_desenvolvimento_geral"><b>Allgemeine Entwicklung</b></string>
+    <string name="txt_treinos_feitos"><b>Wöchentliche Trainings</b></string>
+    <string name="txt_historico_peso">Gewichtshistorie</string>
+    <string name="txt_treino">Training</string>
+    <string name="txt_refeicao">Mahlzeit</string>
+    <string name="txt_caloria">Kcal</string>
+    <string name="txt_peso">Gewicht</string>
+    <string name="txt_peso_ideal">Ziel</string>
+    <string name="txt_dias">Trainierte Tage</string>
+    <string name="txt_segunda">Mo</string>
+    <string name="txt_terca">Di</string>
+    <string name="txt_quarta">Mi</string>
+    <string name="txt_quinta">Do</string>
+    <string name="txt_feito">Training abgeschlossen</string>
+    <string name="txt_dia_treino">Trainingstag</string>
+    <string name="txt_descanso">Ruhetag</string>
+    <string name="txt_nao_feito">Training nicht abgeschlossen</string>
+    <string name="txt_domingo">So</string>
+    <string name="sabado">Sa</string>
+    <string name="txt_sexta">Fr</string>
+    <string name="txt_button_peso">Gewicht aktualisieren</string>
+    <string name="ipt_meta_peso">Ihr Gewichtsziel:</string>
+    <string name="ipt_meta_invalido">Ungültiger Wert eingegeben</string>
+    <string name="ipt_peso">Aktuelles Gewicht:</string>
+    <string name="ipt_peso_data">Aktuelles Datum:</string>
+    <string name="txt_cancel">Abbrechen</string>
+    <string name="txt_h1_modal_peso">Gewichtsaktualisierung</string>
+    <string name="title_activity_tela_configuracao">Einstellungsbildschirm</string>
+    <string name="title_activity_tela_notificacao">Benachrichtigungsbildschirm</string>
+    <string name="title_activity_tela_politica_privacidade">Datenschutzerklärung-Bildschirm</string>
+    <string name="title_activity_tela_graficos">Diagrammbildschirm</string>
+    <string name="title_activity_tela_editar_perfil">ProfilBearbeitenBildschirm</string>
+
+    <!-- Ranking -->
+    <string name="title_activity_ranking">Rangliste</string>
+    <string name="texto_ranking"><b>Aktuelles Level:</b></string>
+    <string name="texto_ranking_ponto"><b>Gesamtpunkte:</b></string>
+    <string name="texto_ranking_h1">Allgemeine Rangliste</string>
+    <string name="texto_ranking_posicao">#\n%d</string>
+    <string name="texto_ranking_posicao_ponto">%d\n%d</string>
+    <string name="texto_ranking_idade">Alter: </string>
+    <string name="texto_ranking_objetivo">Ziel: </string>
+    <string name="texto_ranking_meta">Zielvorgabe: </string>
+    <string name="texto_ranking_treino">Lieblings-Training: </string>
+    <string name="title_activity_tela_ranking_perfil">ProfilRanglisteBildschirm</string>
+
+    <!-- Receitas -->
+    <string name="title_activity_tela_receita">Rezeptbildschirm</string>
+
+    <!-- Treinos -->
+    <string name="txt_home_treino">0%d Übungen für Anfänger</string>
+    <string name="txt_treino_diario">Tägliches Training</string>
+    <string name="txt_tipo_treino_diario">Dieses Training umfasst alle Muskelgruppen und kombiniert Kraft, Ausdauer und Flexibilität. Es ist auf deine Ziele zugeschnitten und verwendet GIFs, um die richtige Form sicherzustellen, sodass du dich bei jeder Sitzung gestärkt fühlst.</string>
+    <string name="txt_tipo_musculacao">Dieses Krafttrainingsprogramm konzentriert sich auf alle Muskelgruppen, kombiniert Kraft- und Ausdauerübungen und zeigt durch GIFs die richtige Ausführung, um dich zu straffen und signifikante Ergebnisse zu erzielen.</string>
+    <string name="txt_tipo_alongamento">Dieses Dehnprogramm zielt darauf ab, alle Körperpartien zu dehnen und Flexibilität zu fördern. Es ist an deine Bedürfnisse angepasst und verwendet GIFs, die die richtige Haltung zeigen, um deine Mobilität zu erhöhen und Verletzungen vorzubeugen.</string>
+    <string name="txt_tipo_geral">Dieses allgemeine Trainingsprogramm umfasst Kraft, Dehnung und Herz-Kreislauf-Übungen und fördert Stärke, Flexibilität und Ausdauer. Die richtige Ausführung wird durch GIFs gezeigt und ist ideal für jedes Ziel und verbessert Fitness und Wohlbefinden.</string>
+    <string name="txt_button_iniciar_treino">Training starten</string>
+    <string name="txt_lista_treino">Übungsliste</string>
+    <string name="txt_sobre_treino">Über dieses Training</string>
+    <string name="txt_button_finalizar_treino">Training beenden</string>
+    <string name="txt_button_proximo_treino">Nächste Übung</string>
+    <string name="txt_treino_info_serie">WIEDERHOLUNGEN</string>
+    <string name="txt_treino_info_instrucao">ANWEISUNGEN</string>
+    <string name="txt_treino_info_beneficio">VORTEILE:</string>
+    <string name="txt_button_fechar">Schließen</string>
+    <string name="txt_button_descanso">Mehr Zeit</string>
+    <string name="txt_button_exercicio_concluido">Nächste Übung</string>
+    <string name="txt_treino_descanso">Mach eine kurze Pause</string>
+    <string name="txt_proximo_treino">Nächstes Training:</string>
+    <string name="txt_parabens">Herzlichen Glückwunsch, weiter so!</string>
+    <string name="title_activity_tela_video">Videobildschirm</string>
+    <string name="txt_h1_receita">Deine heutigen Mahlzeiten</string>
+    <string name="title_activity_tela_contato">Kontaktbildschirm</string>
+    <string name="title_activity_tela_questionario_data">FragebogenDatumBildschirm</string>
+    <string name="title_activity_tela_questionario_peso">FragebogenGewichtBildschirm</string>
+    <string name="title_activity_tela_questionario_meta">FragebogenZielBildschirm</string>
+    <string name="title_activity_tela_questionario_atividade">FragebogenAktivitätBildschirm</string>
+    <string name="title_activity_tela_questionario_descanso">FragebogenRuheBildschirm</string>
+    <string name="title_activity_main2">Hauptbildschirm2</string>
+    <string name="title_activity_tela_questionario_altura">FragebogenGrößeBildschirm</string>
+    <string name="ipt_nome">Name</string>
+    <string name="ipt_nome_invalida">Dein Name/Spitzname muss mindestens 3 Buchstaben enthalten</string>
+    <string name="txt_qual_sua_meta">Was ist dein Ziel?</string>
+    <string name="txt_qual_seu_altura">Wie groß bist du?</string>
+    <string name="txt_qual_seu_nivel_atividade">Wie ist dein Aktivitätsniveau?</string>
+    <string name="txt_ver_dados">Daten ansehen</string>
+    <string name="txt_finalizar_cadastro">Registrierung abschließen</string>
+    <string name="txt_nome_user">"Name: "</string>
+    <string name="txt_sexo_user">"Geschlecht: "</string>
+    <string name="txt_idade_user">"Geburtsdatum: "</string>
+    <string name="txt_peso_user">"Gewicht: "</string>
+    <string name="txt_altura_user">"Größe: "</string>
+    <string name="txt_meta_user">"Ziel: "</string>
+    <string name="txt_atividade_user">"Aktivitätsniveau: "</string>
+    <string name="txt_seus_dados">ZU SENDENDE DATEN</string>
+    <string name="txt_email_user">"E-Mail: "</string>
+    <string name="criacao_treino">Personalisiertes Training in Arbeit!</string>
+    <string name="criacao_treino_h2">Wähle deine Ruhetage</string>
+    <string name="criacao_treino_h2_max2">(MAX .2)</string>
+    <string name="processando_treino">Dein Training wird verarbeitet …</string>
+    <string name="txt_status">STATUS:</string>
+    <string name="txt_realizar">Noch zu erledigen</string>
+    <string name="txt_treino_concluido">Du hast dein Training heute schon gemacht!</string>
+    <string name="txt_descansar_musculos">Tag zur Muskelentspannung</string>
+    <string name="txt_treino_extra">Zusatztraining</string>
+    <string name="txt_concluido">Abgeschlossen</string>
+    <string name="politica_privacidade">Die Dienste von Fit Tech werden von den natürlichen Personen Cauã Ribeiro, Gabriel Roberti, Luiz Paulo, Ricardo Vicente und Winycios Alves mit dem Markennamen Fit Tech angeboten, die unter der CNPJ/CPF–Nummer 19.855.435/0001–46 eingetragen sind und Eigentümer der geistigen Eigentumsrechte an Software, Website, Anwendungen, Inhalten und anderen mit der Fit Tech-Plattform verbundenen Vermögenswerten sind.</string>
+
+    <!-- Idioma -->
+    <string name="idioma_portugues">Portugiesisch</string>
+    <string name="idioma_ingles">Englisch</string>
+    <string name="idioma_espanhol">Spanisch</string>
+    <string name="idioma_chines">Chinesisch</string>
+    <string name="idioma_japones">Japanisch</string>
+    <string name="idioma_frances">Französisch</string>
+    <string name="idioma_alemao">Deutsch</string>
+    <string name="idioma_russo">Russisch</string>
+    <string name="idioma_italiano">Italienisch</string>
+    <string name="idioma_polones">Polnisch</string>
+    <string name="idioma_holandes">Niederländisch</string>
+    <string name="idioma_coreano">Koreanisch</string>
+    <string name="idioma_arabe">Arabisch</string>
+    <string name="idioma_catalao">Katalanisch</string>
+    <string name="idioma_grego">Griechisch</string>
+    <string name="idioma_basco">Baskisch</string>
+    <string name="idioma_turco">Türkisch</string>
+    <string name="idioma_vietnamita">Vietnamesisch</string>
+    <string name="idioma_malaio">Malaiisch</string>
+    <string name="idioma_esperanto">Esperanto</string>
+    <string name="idioma_tailandes">Thailändisch</string>
+    <string name="txt_pesquisar">Suchen</string>
+
+    <!-- Tela Notificação -->
+    <string name="txt_lembretes_treino">Trainings-Erinnerungen</string>
+    <string name="txt_programar_notificacoes">Benachrichtigungen Planen</string>
+    <string name="txt_notificar_treinos_novos">Neue Trainings Benachrichtigen</string>
+    <string name="txt_gerenciar_permissoes">Hallo %1$s,</string>
+    <string name="txt_configuracoes_telefone">Telefoneinstellungen</string>
+</resources>
