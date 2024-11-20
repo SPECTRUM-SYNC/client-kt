@@ -3,8 +3,8 @@ package spectrum.fittech.retroFit
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import spectrum.fittech.backend.interfaces.TreinoInterface
 import spectrum.fittech.backend.interfaces.HistoricoPesoInterface
+import spectrum.fittech.backend.interfaces.TreinoInterface
 import spectrum.fittech.backend.interfaces.UsuarioInterface
 import spectrum.fittech.backend.log.client
 import java.util.concurrent.TimeUnit

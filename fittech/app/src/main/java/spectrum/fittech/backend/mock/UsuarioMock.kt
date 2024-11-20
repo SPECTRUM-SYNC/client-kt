@@ -5,7 +5,6 @@ import spectrum.fittech.backend.dtos.AdicionarTopRank
 import spectrum.fittech.backend.dtos.AtivarUsuario
 import spectrum.fittech.backend.dtos.AtualizarImagem
 import spectrum.fittech.backend.dtos.AtualizarUsuario
-import spectrum.fittech.backend.dtos.AtualizarUsuarioPerfil
 import spectrum.fittech.backend.dtos.EnvioEmailUsuario
 import spectrum.fittech.backend.dtos.Objetivo
 import spectrum.fittech.backend.dtos.Usuario

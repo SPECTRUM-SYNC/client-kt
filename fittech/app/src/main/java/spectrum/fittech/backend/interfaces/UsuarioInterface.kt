@@ -18,8 +18,6 @@ import retrofit2.http.Query
 import spectrum.fittech.backend.dtos.AtualizarUsuario
 import spectrum.fittech.backend.dtos.AtualizarUsuarioPerfil
 import spectrum.fittech.backend.dtos.EnvioEmailUsuario
-import spectrum.fittech.backend.dtos.NovoUsuario
-import spectrum.fittech.backend.dtos.RespostaCadastro
 import spectrum.fittech.backend.dtos.RespostaEnvioEmail
 import spectrum.fittech.backend.dtos.RespostaLogin
 import spectrum.fittech.backend.dtos.RespostaRank

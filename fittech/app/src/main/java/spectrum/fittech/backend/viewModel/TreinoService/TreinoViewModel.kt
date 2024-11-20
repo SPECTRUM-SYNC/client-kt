@@ -2,29 +2,19 @@ package spectrum.fittech.backend.viewModel.TreinoService
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.navigation.NavController
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.awaitResponse
-import spectrum.fittech.backend.dtos.NovoUsuario
-import spectrum.fittech.backend.dtos.RespostaCadastro
-import spectrum.fittech.backend.dtos.RespostaRequisicao
 import spectrum.fittech.backend.dtos.TreinoCountDto
 import spectrum.fittech.backend.dtos.TreinoCreateDto
 import spectrum.fittech.backend.dtos.TreinoResponseDto
 import spectrum.fittech.backend.dtos.parseErrorMessage
 import spectrum.fittech.backend.interfaces.TreinoInterface
-import spectrum.fittech.backend.interfaces.UsuarioInterface
 import spectrum.fittech.retroFit.RetroFitService
 import spectrum.fittech.utils.treinos.Treino
-import java.text.SimpleDateFormat
 import java.time.LocalDate
-import java.util.Calendar
 
 class TreinoViewModel : ViewModel() {
 

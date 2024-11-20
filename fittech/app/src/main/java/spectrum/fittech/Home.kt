@@ -1,12 +1,8 @@
 package spectrum.fittech
 
 import ReceitaRun
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -78,7 +74,6 @@ import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetSuccess
 import spectrum.fittech.backend.Object.IdUserManager
 import spectrum.fittech.backend.auth.TokenManager
 import spectrum.fittech.backend.builder.gson
-import spectrum.fittech.backend.dtos.DiasTreino
 import spectrum.fittech.backend.dtos.TreinoResponseDto
 import spectrum.fittech.backend.dtos.UsuarioGet
 import spectrum.fittech.backend.notificacao.scheduleDailyNotification

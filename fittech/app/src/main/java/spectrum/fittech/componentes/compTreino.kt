@@ -5,7 +5,6 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -53,7 +52,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.ImageLoader
 import coil.compose.AsyncImage
@@ -64,7 +62,6 @@ import coil.request.ImageRequest
 import kotlinx.coroutines.delay
 import spectrum.fittech.R
 import spectrum.fittech.backend.builder.gson
-import spectrum.fittech.backend.viewModel.TreinoService.TreinoViewModel
 import spectrum.fittech.utils.treinos.Treino
 
 @Composable

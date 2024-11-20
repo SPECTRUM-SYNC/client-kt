@@ -1,6 +1,7 @@
 package spectrum.fittech
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -46,7 +47,6 @@ import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import spectrum.fittech.ui.theme.FittechTheme
-import android.content.res.Configuration
 import java.util.Locale
 
 class TelaIdioma : ComponentActivity() {

@@ -21,7 +21,6 @@ import spectrum.fittech.backend.dtos.AtualizarUsuario
 import spectrum.fittech.backend.dtos.AtualizarUsuarioPerfil
 import spectrum.fittech.backend.dtos.EnvioEmailUsuario
 import spectrum.fittech.backend.dtos.NovoUsuario
-import spectrum.fittech.backend.dtos.RespostaCadastro
 import spectrum.fittech.backend.dtos.RespostaEnvioEmail
 import spectrum.fittech.backend.dtos.RespostaLogin
 import spectrum.fittech.backend.dtos.RespostaRank
@@ -30,7 +29,6 @@ import spectrum.fittech.backend.dtos.Usuario
 import spectrum.fittech.backend.dtos.UsuarioGet
 import spectrum.fittech.backend.dtos.UsuarioLogin
 import spectrum.fittech.backend.dtos.UsuarioLoginGoogle
-import spectrum.fittech.backend.dtos.parseErrorMessage
 import spectrum.fittech.backend.interfaces.UsuarioInterface
 import spectrum.fittech.retroFit.RetroFitService
 import java.text.SimpleDateFormat

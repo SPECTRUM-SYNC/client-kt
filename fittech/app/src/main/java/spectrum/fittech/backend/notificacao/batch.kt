@@ -9,8 +9,8 @@ import java.util.concurrent.TimeUnit
 fun scheduleDailyNotification(context: Context) {
     val currentDateTime = Calendar.getInstance()
     val targetDateTime = Calendar.getInstance().apply {
-        set(Calendar.HOUR_OF_DAY, 23)
-        set(Calendar.MINUTE, 50)
+        set(Calendar.HOUR_OF_DAY, 18)
+        set(Calendar.MINUTE, 0)
         set(Calendar.SECOND, 0)
     }
 

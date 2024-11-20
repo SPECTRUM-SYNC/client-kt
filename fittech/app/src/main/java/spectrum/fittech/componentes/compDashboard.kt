@@ -51,7 +51,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import spectrum.fittech.R
-import spectrum.fittech.backend.auth.TokenManager
 import spectrum.fittech.backend.dtos.AtualizaPesoDto
 import spectrum.fittech.backend.viewModel.HistoricoPesoService.HistoricoPesoViewModel
 import java.text.SimpleDateFormat

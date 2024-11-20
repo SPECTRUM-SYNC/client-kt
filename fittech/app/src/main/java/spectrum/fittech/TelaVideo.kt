@@ -60,6 +60,7 @@ import coil.request.ImageRequest
 import spectrum.fittech.backend.Object.IdUserManager
 import spectrum.fittech.backend.auth.TokenManager
 import spectrum.fittech.backend.viewModel.TreinoService.TreinoViewModel
+import spectrum.fittech.componentes.AudioSpeech
 import spectrum.fittech.componentes.ModalDescanso
 import spectrum.fittech.componentes.ModalFinal
 import spectrum.fittech.componentes.ModalInfoExercicio
@@ -257,13 +258,19 @@ fun VideoRun(
                     }
 
                     if (listaTreino != null) {
-                        Text(
-                            text = listaTreino[treinoDaVez].repeticao,
-                            style = TextStyle(
-                                color = Color.White,
-                                fontSize = 20.sp
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {                            Text(
+                                text = listaTreino[treinoDaVez].repeticao,
+                                style = TextStyle(
+                                    color = Color.White,
+                                    fontSize = 20.sp
+                                )
                             )
-                        )
+                            AudioSpeech(treino =  listaTreino[treinoDaVez].nome, repeticoes = listaTreino[treinoDaVez].repeticao )
+                        }
                     }
 
                     if (listaTreino != null) {
