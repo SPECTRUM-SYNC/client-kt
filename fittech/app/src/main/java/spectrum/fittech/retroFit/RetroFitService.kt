@@ -4,6 +4,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import spectrum.fittech.backend.interfaces.HistoricoPesoInterface
+import spectrum.fittech.backend.interfaces.ReceitaInterface
 import spectrum.fittech.backend.interfaces.TreinoInterface
 import spectrum.fittech.backend.interfaces.UsuarioInterface
 import spectrum.fittech.backend.log.client
@@ -49,4 +50,20 @@ object RetroFitService {
 
         return historicoPeso.create(HistoricoPesoInterface::class.java)
     }
+
+    fun receitaApi(): ReceitaInterface {
+        val client = OkHttpClient.Builder()
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .build()
+
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ReceitaInterface::class.java)
+    }
+
 }

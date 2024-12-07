@@ -1,6 +1,5 @@
 package spectrum.fittech
 
-import ReceitaRun
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
@@ -69,8 +68,6 @@ import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import com.google.gson.Gson
-import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetError
-import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetSuccess
 import spectrum.fittech.backend.Object.IdUserManager
 import spectrum.fittech.backend.auth.TokenManager
 import spectrum.fittech.backend.builder.gson
@@ -82,6 +79,7 @@ import spectrum.fittech.backend.viewModel.UsuarioService.UsuarioViewModel
 import spectrum.fittech.componentes.BottomNavigationBar
 import spectrum.fittech.componentes.PreviaTreino
 import spectrum.fittech.componentes.TelaRankingPerfil
+import spectrum.fittech.ui.receita.ReceitaRun
 import spectrum.fittech.ui.theme.FittechTheme
 import spectrum.fittech.utils.treinos.Treino
 import spectrum.fittech.utils.treinos.ganharMassa
@@ -107,7 +105,7 @@ class Home : ComponentActivity() {
                     composable("TelaGraficos") { TelaGraficosRun(navController = navController) }
                     composable("Ranking") { RankingRun(navController = navController) }
                     composable("TelaPerfil") { TelaPer() }
-                    composable("Receita") { ReceitaRun(navController = navController) }
+                    composable("Receita") { ReceitaRun(modifier = Modifier.fillMaxSize(), navController = navController) }
 
                     composable("PreviaTreino/{nomeTreino}/{listaTreino}") { backStackEntry ->
                         val nomeTreino = backStackEntry.arguments?.getString("nomeTreino")
@@ -631,28 +629,6 @@ fun HomeRun(
                 }
             }
         }
-    }
-
-    if (openDialogSuccess) {
-        SweetSuccess(
-            message = messageResponse,
-            duration = Toast.LENGTH_SHORT,
-            padding = PaddingValues(top = 16.dp),
-            contentAlignment = Alignment.TopCenter
-        )
-
-        openDialogSuccess = false
-    }
-
-// Toast de erro
-    if (openDialogError) {
-        openDialogError = false
-        SweetError(
-            message = messageResponse,
-            duration = Toast.LENGTH_SHORT,
-            padding = PaddingValues(top = 16.dp),
-            contentAlignment = Alignment.TopCenter
-        )
     }
 }
 

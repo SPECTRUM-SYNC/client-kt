@@ -44,8 +44,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityOptionsCompat
-import com.talhafaki.composablesweettoast.util.SweetToastUtil.SweetSuccess
-import spectrum.fittech.backend.Object.IdUserManager
 import spectrum.fittech.backend.auth.TokenManager
 import spectrum.fittech.ui.theme.FittechTheme
 
@@ -72,12 +70,6 @@ fun TelaInicial(name: String, modifier: Modifier = Modifier) {
 
     TokenManager.getToken(LocalContext.current)?.let {
         if (it.isNotBlank()) {
-            SweetSuccess(
-                message = context.getString(R.string.txt_bem_vindo_msg, IdUserManager.getUserName(context)),
-                duration = Toast.LENGTH_SHORT,
-                padding = PaddingValues(top = 16.dp),
-                contentAlignment = Alignment.TopCenter
-            )
 
             Handler(Looper.getMainLooper()).postDelayed({
                 val home = Intent(context, Home::class.java)

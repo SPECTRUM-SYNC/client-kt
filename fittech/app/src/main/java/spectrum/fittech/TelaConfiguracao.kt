@@ -196,50 +196,6 @@ fun TelaConfiguracao(name: String, modifier: Modifier = Modifier) {
                     .height(1.dp)
                     .background(Color(0xFF2C2C2E))
             )
-
-            // Terceira Row
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp)
-                    .padding(vertical = 8.dp)
-                    .clickable {
-                        val chatbot = Intent(context, TelaContato::class.java)
-                        context.startActivity(chatbot)
-                    },
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = stringResource(id = R.string.txt_contate_nos),
-                    style = TextStyle(
-                        fontSize = 16.sp,
-                        color = Color.White,
-                        fontWeight = FontWeight.Bold
-                    )
-                )
-                IconButton(onClick = { }) {
-                    Icon(
-                        painter = rememberAsyncImagePainter(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data("android.resource://spectrum.fittech/raw/setadireita")
-                                .decoderFactory(SvgDecoder.Factory())
-                                .build()
-                        ),
-                        contentDescription = "Contate-nos",
-                        modifier = Modifier.size(16.dp),
-                        tint = Color.White
-                    )
-                }
-            }
-
-            // Quarta linha
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(1.dp)
-                    .background(Color(0xFF2C2C2E))
-            )
         }
 
 

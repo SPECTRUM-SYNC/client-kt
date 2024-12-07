@@ -729,4 +729,3 @@ fun ModalFinal(
         }
     }
 }
-

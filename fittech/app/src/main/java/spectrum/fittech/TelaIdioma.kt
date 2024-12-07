@@ -88,21 +88,7 @@ fun Idioma(modifier: Modifier = Modifier) {
         context.getString(R.string.idioma_chines),
         context.getString(R.string.idioma_japones),
         context.getString(R.string.idioma_frances),
-        context.getString(R.string.idioma_alemao),
-        context.getString(R.string.idioma_russo),
-        context.getString(R.string.idioma_italiano),
-        context.getString(R.string.idioma_polones),
-        context.getString(R.string.idioma_holandes),
-        context.getString(R.string.idioma_coreano),
-        context.getString(R.string.idioma_arabe),
-        context.getString(R.string.idioma_catalao),
-        context.getString(R.string.idioma_grego),
-        context.getString(R.string.idioma_basco),
-        context.getString(R.string.idioma_turco),
-        context.getString(R.string.idioma_vietnamita),
-        context.getString(R.string.idioma_malaio),
-        context.getString(R.string.idioma_esperanto),
-        context.getString(R.string.idioma_tailandes)
+        context.getString(R.string.idioma_alemao)
     )
 
     val textState = remember { mutableStateOf("") }
