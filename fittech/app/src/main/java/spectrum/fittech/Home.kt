@@ -71,16 +71,19 @@ import com.google.gson.Gson
 import spectrum.fittech.backend.Object.IdUserManager
 import spectrum.fittech.backend.auth.TokenManager
 import spectrum.fittech.backend.builder.gson
+import spectrum.fittech.backend.dtos.Receita
 import spectrum.fittech.backend.dtos.TreinoResponseDto
 import spectrum.fittech.backend.dtos.UsuarioGet
 import spectrum.fittech.backend.notificacao.scheduleDailyNotification
 import spectrum.fittech.backend.viewModel.TreinoService.TreinoViewModel
 import spectrum.fittech.backend.viewModel.UsuarioService.UsuarioViewModel
 import spectrum.fittech.componentes.BottomNavigationBar
+import spectrum.fittech.componentes.PreviaReceita
 import spectrum.fittech.componentes.PreviaTreino
 import spectrum.fittech.componentes.TelaRankingPerfil
 import spectrum.fittech.ui.receita.ReceitaRun
 import spectrum.fittech.ui.theme.FittechTheme
+import spectrum.fittech.utils.receita.receitas
 import spectrum.fittech.utils.treinos.Treino
 import spectrum.fittech.utils.treinos.ganharMassa
 import spectrum.fittech.utils.treinos.opcoesTreinos
@@ -105,7 +108,12 @@ class Home : ComponentActivity() {
                     composable("TelaGraficos") { TelaGraficosRun(navController = navController) }
                     composable("Ranking") { RankingRun(navController = navController) }
                     composable("TelaPerfil") { TelaPer() }
-                    composable("Receita") { ReceitaRun(modifier = Modifier.fillMaxSize(), navController = navController) }
+                    composable("Receita") {
+                        ReceitaRun(
+                            modifier = Modifier.fillMaxSize(),
+                            navController = navController
+                        )
+                    }
 
                     composable("PreviaTreino/{nomeTreino}/{listaTreino}") { backStackEntry ->
                         val nomeTreino = backStackEntry.arguments?.getString("nomeTreino")
@@ -140,6 +148,25 @@ class Home : ComponentActivity() {
                             userId = backStackEntry.arguments?.getString("userId")
                         )
                     }
+
+                    composable("previaReceita/{jsonReceita}") { backStackEntry ->
+                        val jsonReceita = backStackEntry.arguments?.getString("jsonReceita")?.let {
+                            Uri.decode(it)
+                        }
+
+                        val receita = jsonReceita?.let {
+                            gson.fromJson(it, Receita::class.java)
+                        }
+
+                        if (receita != null) {
+                            PreviaReceita(
+                                navController = navController,
+                                receita = receita
+                            )
+                        }
+                    }
+
+
                 }
             }
         }
@@ -618,7 +645,11 @@ fun HomeRun(
                                 .wrapContentSize()
                                 .fillMaxWidth()
                         ) {
-                            Text(text = if (processarTreino) stringResource(R.string.processando_treino) else stringResource(R.string.btn_proximo), color = Color.White)
+                            Text(
+                                text = if (processarTreino) stringResource(R.string.processando_treino) else stringResource(
+                                    R.string.btn_proximo
+                                ), color = Color.White
+                            )
                             Image(
                                 painter = painterResource(id = R.mipmap.setadireita),
                                 contentDescription = "Seta Direita",

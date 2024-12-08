@@ -1,7 +1,9 @@
 package spectrum.fittech.ui.receita
 
 import ReceitaViewModel
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -17,7 +19,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -26,8 +27,11 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -36,14 +40,25 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
+import coil.compose.rememberAsyncImagePainter
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import spectrum.fittech.R
 import spectrum.fittech.backend.Object.IdUserManager
 import spectrum.fittech.backend.auth.TokenManager
+import spectrum.fittech.backend.builder.gson
 import spectrum.fittech.backend.dtos.Receita
 import spectrum.fittech.backend.dtos.UsuarioGet
 import spectrum.fittech.backend.viewModel.UsuarioService.UsuarioViewModel
 import spectrum.fittech.componentes.BottomNavigationBar
+import spectrum.fittech.componentes.PreviaReceita
 import spectrum.fittech.ui.theme.FittechTheme
-import java.time.format.TextStyle
+import spectrum.fittech.utils.treinos.ganharMassa
 
 class TelaReceita : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,12 +74,32 @@ class TelaReceita : ComponentActivity() {
                             navController = navController
                         )
                     }
+
+                    composable("previaReceita/{jsonReceita}") { backStackEntry ->
+                        val jsonReceita = backStackEntry.arguments?.getString("jsonReceita")?.let {
+                            Uri.decode(it)
+                        }
+
+                        val receita = jsonReceita?.let {
+                            gson.fromJson(it, Receita::class.java)
+                        }
+
+                        if (receita != null) {
+                            PreviaReceita(
+                                navController = navController,
+                                receita = receita
+                            )
+                        }
+                    }
+
+
                 }
             }
         }
     }
 }
 
+@OptIn(DelicateCoroutinesApi::class)
 @Composable
 fun ReceitaRun(
     modifier: Modifier,
@@ -73,23 +108,48 @@ fun ReceitaRun(
     receitaViewModel: ReceitaViewModel = viewModel()
 ) {
     var showPopup by remember { mutableStateOf(false) }
-    val receitas by receitaViewModel.receitas.observeAsState(initial = emptyList())
-    var qtdRefeicoes by remember { mutableStateOf(1) }
     val context = LocalContext.current
     var usuarioGet by remember { mutableStateOf<UsuarioGet?>(null) }
+    val listarReceita = remember { mutableStateListOf<Receita>() }
+
+    val isLoading = remember { mutableStateOf(true) } // Controle de carregamento
+    val isLoadingPost = remember { mutableStateOf(false) } // Controle de cadastro
+    val errorMessage = remember { mutableStateOf<String?>(null) } // Mensagem de erro
 
     LaunchedEffect(viewModel) {
-        usuarioGet = viewModel.obterUsuario(
-            IdUserManager.getId(context),
-            token = TokenManager.getToken(context)
-        )
-    }
+        val token = TokenManager.getToken(context)
+        val userId = IdUserManager.getId(context)
 
+        try {
+            // Obter usuário
+            usuarioGet = viewModel.obterUsuario(userId, token)
+
+            // Obter receitas
+            receitaViewModel.listarReceitas(token = token, id = userId)?.let {
+                listarReceita.clear()
+                listarReceita.addAll(it)
+                isLoading.value = false
+            } ?: run {
+                errorMessage.value = "Erro ao carregar receitas"
+                isLoading.value = false
+            }
+        } catch (e: Exception) {
+            errorMessage.value = "Falha na conexão. Tente novamente."
+            isLoading.value = false
+        }
+    }
     val usuarioLogado: Long? = usuarioGet?.id?.toLong()
     val objetivoUsuario: String? = usuarioGet?.objetivo.toString()
 
     Scaffold(
-        bottomBar = { BottomNavigationBar(navController = navController, modifier, "Receita", context) },
+        bottomBar = {
+            BottomNavigationBar(
+                navController = navController,
+                modifier,
+                "Receita",
+                context
+            )
+        },
         modifier = Modifier.navigationBarsPadding()
     ) { innerPadding ->
         Column(
@@ -103,20 +163,25 @@ fun ReceitaRun(
             // Cabeçalho e botão
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxSize()
                     .padding(32.dp),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Suas Refeições de Hoje:",
+                    text = "Refeições Recomendadas para você:",
                     fontSize = 20.sp,
-                    modifier = Modifier .padding(top = 16.dp),
+                    modifier = Modifier
+                        .padding(top = 16.dp)
+                        .fillMaxWidth(0.8f)
+                        .fillMaxHeight(1f),
                     color = Color.White,
                     textAlign = TextAlign.Center
                 )
                 Box(
                     modifier = Modifier
                         .size(56.dp)
+                        .fillMaxSize()
                         .background(Color(0xFF2C2C2E), shape = CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
@@ -126,14 +191,44 @@ fun ReceitaRun(
                 }
             }
 
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(20.dp)
+            ) {
+
+            }
             // Lista de receitas
-            if (receitas.isNotEmpty()) {
+            if (isLoading.value) {
+
+                CircularProgressIndicator(color = Color.White)
+            } else if (errorMessage.value != null) {
+                Text(
+                    text = errorMessage.value ?: "Erro desconhecido",
+                    color = Color.Red,
+                    modifier = Modifier.padding(16.dp),
+                    textAlign = TextAlign.Center
+                )
+            } else if (listarReceita.isNotEmpty()) {
+
                 LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .navigationBarsPadding()
+                        .height(900.dp)
+                        .fillMaxWidth()
+                        .padding(28.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    items(receitas) { receita ->
-                        ReceitaCard(receita = receita)
+                    item {
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text(
+                            text = "Suas receitas", color = Color.White, fontSize = 20.sp,
+                            modifier = Modifier.padding(start = 32.dp)
+                        )
+                    }
+
+                    items(listarReceita) { receita ->
+                        ReceitaCard(receita = receita, navController = navController)
                     }
                 }
             } else {
@@ -143,60 +238,79 @@ fun ReceitaRun(
                     modifier = Modifier.padding(16.dp),
                     textAlign = TextAlign.Center
                 )
-
             }
         }
+    }
 
-        // Popup para geração de receitas
-        if (showPopup) {
+    // Popup para geração de receitas
+    if (showPopup) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black.copy(alpha = 0.5f))
+                .clickable { if (!isLoadingPost.value) showPopup = false },
+            contentAlignment = Alignment.Center
+        ) {
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Black.copy(alpha = 0.5f))
-                    .clickable { showPopup = false },
-                contentAlignment = Alignment.Center
+                    .background(Color(0xFF1C1C1E), shape = RoundedCornerShape(8.dp))
+                    .padding(16.dp)
             ) {
-                Box(
-                    modifier = Modifier
-                        .background(Color(0xFF1C1C1E), shape = RoundedCornerShape(8.dp))
-                        .padding(16.dp)
-                ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(
-                            text = "Escolha o número de refeições:",
-                            fontSize = 18.sp,
-                            color = Color.White
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                            modifier = Modifier.align(Alignment.CenterHorizontally)
-                        ) {
-                            Button(onClick = { if (qtdRefeicoes > 1) qtdRefeicoes-- }) {
-                                Text("-")
-                            }
-                            Text(text = "$qtdRefeicoes", fontSize = 18.sp, modifier = Modifier .padding(top = 12.dp), color = Color.White)
-                            Button(onClick = { if (qtdRefeicoes < 5) qtdRefeicoes++ }) {
-                                Text("+")
-                            }
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        text = "Criaremos cinco receitas para você:",
+                        fontSize = 18.sp,
+                        color = Color.White
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
 
-                        }
-                        Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
+                    if (isLoadingPost.value) {
+                        CircularProgressIndicator(color = Color.White)
+
+                    } else {
                         Button(
                             onClick = {
-                                showPopup = false
+                                isLoadingPost.value = true
+
                                 if (usuarioLogado != null && objetivoUsuario != null) {
                                     val token = TokenManager.getToken(context)
 
                                     if (!token.isNullOrEmpty()) {
-                                        receitaViewModel.fetchReceitas(
-                                            usuarioLogado!!,
-                                            objetivoUsuario,
-                                            qtdRefeicoes,
-                                            token
-                                        )
+                                        GlobalScope.launch {
+                                            val receitaPost = receitaViewModel.fetchReceitas(
+                                                usuarioLogado!!,
+                                                objetivoUsuario,
+                                                token
+                                            )
+
+                                            withContext(Dispatchers.Main) {
+                                                if (!receitaPost.isNullOrEmpty()) {
+                                                    Toast.makeText(
+                                                        context,
+                                                        "Receitas geradas com sucesso",
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+                                                    listarReceita.clear()
+                                                    listarReceita.addAll(receitaPost)
+                                                } else {
+                                                    Toast.makeText(
+                                                        context,
+                                                        "Erro ao gerar receitas",
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+                                                }
+
+                                                isLoading.value = false
+                                                showPopup = false
+                                            }
+                                        }
                                     } else {
-                                        Toast.makeText(context, "Token inválido ou não encontrado", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(
+                                            context,
+                                            "Token inválido",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
                                     }
                                 }
                             },
@@ -211,23 +325,169 @@ fun ReceitaRun(
     }
 }
 
+
 @Composable
-fun ReceitaCard(receita: Receita) {
+fun ReceitaCard(receita: Receita, navController: NavHostController, modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(200.dp)
-            .background(Color(0xFF2C2C2E), RoundedCornerShape(16.dp)),
-        contentAlignment = Alignment.Center
+            .height(250.dp)
+            .clickable {
+                val jsonReceita = gson.toJson(receita)
+                val encodedJson = Uri.encode(jsonReceita)
+                navController.navigate("previaReceita/$encodedJson")
+            }
+
+
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = receita.nome, color = Color.White, fontSize = 20.sp)
-            Text(
-                text = "Calorias: ${receita.calorias}, Tempo: ${receita.tempoDePreparo} min",
-                color = Color.Gray,
-                fontSize = 16.sp
+        AsyncImage(
+            model = receita.img,
+            contentDescription = receita.nome,
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(0.9f)
+                .alpha(0.5f)
+                .clip(RoundedCornerShape(18.dp))
+                .shadow(
+                    8.dp,
+                    shape = RoundedCornerShape(18.dp)
+                ), contentScale = ContentScale.Crop
+        )
+
+        Column(
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(16.dp)
+                .padding(8.dp)
+        ) {
+            Icon(
+                painter = rememberAsyncImagePainter(
+                    model = ImageRequest.Builder(context)
+                        .data("android.resource://spectrum.fittech/raw/info")
+                        .decoderFactory(SvgDecoder.Factory())
+                        .build()
+                ),
+                contentDescription = "Info",
+                modifier = Modifier.size(24.dp),
+                tint = Color.White
             )
-            Text(text = "Tipo: ${receita.tipo}", color = Color.Gray, fontSize = 16.sp)
+        }
+
+        Column(
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .padding(16.dp)
+                .padding(8.dp)
+                .padding(bottom = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            Text(
+                text = receita.nome,
+                style = TextStyle(
+                    fontSize = 16.sp,
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold
+                )
+            )
+            Text(
+                text = receita.tipo,
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    color = Color(0xFFFF6E77)
+                )
+            )
+
+
+            Row(
+                modifier = modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
+            ) {
+                Box(
+                    modifier = Modifier
+                        .width(110.dp)
+                        .height(40.dp)
+                        .background(
+                            colorResource(R.color.background_card),
+                            shape = CircleShape
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Row(
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                            .padding(8.dp),
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            painter = rememberAsyncImagePainter(
+                                model = ImageRequest.Builder(LocalContext.current)
+                                    .data("android.resource://spectrum.fittech/raw/hours")
+                                    .decoderFactory(SvgDecoder.Factory())
+                                    .build()
+                            ),
+                            contentDescription = "tempo",
+                            modifier = Modifier.size(20.dp),
+                            tint = colorResource(R.color.day)
+                        )
+
+                        Text(
+                            text = "${receita.tempoPreparo.split(" ").first()} min",
+                            style = TextStyle(color = Color.White)
+                        )
+                    }
+                }
+
+
+                Box(
+                    modifier = Modifier
+                        .width(110.dp)
+                        .height(40.dp)
+                        .background(
+                            colorResource(R.color.background_card),
+                            shape = CircleShape
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Row(
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                            .padding(8.dp),
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            painter = rememberAsyncImagePainter(
+                                model = ImageRequest.Builder(LocalContext.current)
+                                    .data("android.resource://spectrum.fittech/raw/kcal")
+                                    .decoderFactory(SvgDecoder.Factory())
+                                    .build()
+                            ),
+                            contentDescription = "tempo",
+                            modifier = Modifier.size(20.dp),
+                            tint = colorResource(R.color.fire)
+                        )
+
+                        Text(
+                            text = "${receita.calorias} kcal",
+                            style = TextStyle(color = Color.White)
+                        )
+                    }
+                }
+            }
         }
     }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun ReceitaRunPreview() {
+    ReceitaRun(
+        modifier = Modifier,
+        navController = rememberNavController(),
+    )
 }

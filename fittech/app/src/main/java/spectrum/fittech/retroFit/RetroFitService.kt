@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit
 
 object RetroFitService {
 
-    private const val BASE_URL = "https://fittech.azurewebsites.net/api/"
+    private const val BASE_URL = "http://ec2-44-207-190-160.compute-1.amazonaws.com/api/"
 
     fun usuarioApi(): UsuarioInterface {
         val client = OkHttpClient.Builder()
@@ -53,9 +53,9 @@ object RetroFitService {
 
     fun receitaApi(): ReceitaInterface {
         val client = OkHttpClient.Builder()
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(120, TimeUnit.SECONDS)
+            .readTimeout(120, TimeUnit.SECONDS)
+            .writeTimeout(120, TimeUnit.SECONDS)
             .build()
 
         return Retrofit.Builder()

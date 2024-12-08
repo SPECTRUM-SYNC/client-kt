@@ -1,14 +1,16 @@
 package spectrum.fittech.backend.dtos
 
 data class Receita(
+    val id: Long,
     val nome: String,
     val ingredientes: List<String>,
-    val modoDePreparo: String,
-    val calorias: Int,
-    val tempoDePreparo: String,
+    val modoPreparo: String,
+    val calorias: String,
+    val tempoPreparo: String,
     val tipo: String,
-    val proteinas: Double,
-    val carboidratos: Double,
-    val gorduras: Double,
-    val acucar: Double
+    val proteina: String,
+    val carboidratos: String,
+    val gorduras: String,
+    val acucar: String,
+    var img: String
 )
